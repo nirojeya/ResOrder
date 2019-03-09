@@ -1,4 +1,4 @@
-package andros.tc.resorder.helper;
+package com.niro.resorder.helper;
 
 public class Utils {
     //Email Validation pattern

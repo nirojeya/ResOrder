@@ -1,11 +1,11 @@
-package andros.tc.resorder;
+package com.niro.resorder;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import andros.tc.resorder.helper.Utils;
+import com.niro.resorder.helper.Utils;
 
 public class MainActivity extends AppCompatActivity {
 

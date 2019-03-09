@@ -1,4 +1,4 @@
-package andros.tc.resorder;
+package com.niro.resorder;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
