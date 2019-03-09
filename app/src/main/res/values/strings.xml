@@ -4,5 +4,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="close_button"><![CDATA[<string name=\"cloClose Button for Activity]]></string>
+    <string name="login">Log in</string>
+    <string name="newUser"><![CDATA[Not an account yet? Sign Up here.]]></string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 
 </resources>
