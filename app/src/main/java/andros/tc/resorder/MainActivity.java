@@ -3,6 +3,7 @@ package andros.tc.resorder;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import andros.tc.resorder.helper.Utils;
 
@@ -18,6 +19,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
+
+        // If savedinstnacestate is null then replace login fragment
+        if (savedInstanceState == null) {
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frameContainer, new LoginFragment(),
+                            Utils.LoginFragment).commit();
+        }
+
+        // On close icon click finish activity
+        findViewById(R.id.close_activity).setOnClickListener(
+                new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        finish();
+
+                    }
+                });
 
 
 
