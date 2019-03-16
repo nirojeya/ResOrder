@@ -8,5 +8,7 @@
     <string name="newUser"><![CDATA[Not an account yet? Sign Up here.]]></string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="title_activity_item_selection">ActivityItemSelection</string>
+    <string name="item_img">item_img</string>
 
 </resources>
