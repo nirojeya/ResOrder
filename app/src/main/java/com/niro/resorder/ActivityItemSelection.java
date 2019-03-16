@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
 import com.niro.resorder.pojo.Item;
@@ -21,6 +22,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
     private ItemSelectionAdapter selectionAdapter;
     private List<Item> selectedItemList;
+    private TextView totalCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
     private void assignViews(){
         RecyclerView orderListRV = findViewById(R.id.orderList);
+        totalCount = findViewById(R.id.total_count);
         selectedItemList = new ArrayList<>();
         List<Item> itemList = new ArrayList<>();
 
@@ -68,6 +71,8 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
     @Override
     public void selectedItems(Item item) {
+        //Log.e("DDDDDDDFq","item pojo "+item.getItemQty()+" "+item.getItemDesc());
+
         if (selectedItemList.size()>0){
             int itemCount = 0;
             int index = -1;
@@ -85,6 +90,8 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
                 selectedItemList.add(item);
                 //setOrderTotal();
             }else {
+                //Log.e("DDDDDDDF","before "+item.getItemQty());
+
                 selectedItemList.get(index).setItemQty(selectedItemList.get(index).getItemQty()+item.getItemQty());
                 selectedItemList.get(index).setSelingPrice(selectedItemList.get(index).getSelingPrice()+item.getItemPrice());
                 //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
@@ -100,10 +107,11 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
         }
        // noOfItem.setText(calNoOfItem(selectIdlist));
         selectionAdapter.notifyDataSetChanged();
+        totalCount.setText(String.valueOf(calOrderQty()));
     }
 
     private void setOrderTotal(){
-        Double orderTotal = 0.0;
+        double orderTotal = 0.0;
         //Double discount = 0.0  ;
         for (Item item:selectedItemList){
 
@@ -112,5 +120,15 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
         }
 
         Log.e("Totoal",""+orderTotal);
+    }
+
+    private Double calOrderQty(){
+        double orderQty = 0.0;
+        for (Item item:selectedItemList){
+            orderQty= orderQty + item.getItemQty();
+
+            Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
+        }
+        return orderQty;
     }
 }
