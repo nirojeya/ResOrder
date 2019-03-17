@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
 import com.niro.resorder.pojo.Item;
+import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ActivityItemSelection extends AppCompatActivity implements ItemSelectionAdapter.SelectionDelegate {
 
     private ItemSelectionAdapter selectionAdapter;
+    private Order order;
     private List<OrderDetail> selectedItemList;
     private TextView totalCount;
 
@@ -48,6 +51,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
         RecyclerView orderListRV = findViewById(R.id.orderList);
         totalCount = findViewById(R.id.total_count);
         selectedItemList = new ArrayList<>();
+        order = new Order();
         List<Item> itemList = new ArrayList<>();
 
         for(int i = 0; i<20; i++){
@@ -119,7 +123,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
             orderTotal= orderTotal + orderDetail.getSellingPrice();
         }
-
+        order.setOrderTotal(orderTotal);
         Log.e("Totoal",""+orderTotal);
     }
 
