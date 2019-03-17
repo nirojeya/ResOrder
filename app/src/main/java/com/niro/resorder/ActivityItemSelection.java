@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
 import com.niro.resorder.pojo.Item;
+import com.niro.resorder.pojo.OrderDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 public class ActivityItemSelection extends AppCompatActivity implements ItemSelectionAdapter.SelectionDelegate {
 
     private ItemSelectionAdapter selectionAdapter;
-    private List<Item> selectedItemList;
+    private List<OrderDetail> selectedItemList;
     private TextView totalCount;
 
     @Override
@@ -70,16 +71,16 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
     }
 
     @Override
-    public void selectedItems(Item item) {
+    public void selectedItems(OrderDetail orderDetail) {
         //Log.e("DDDDDDDFq","item pojo "+item.getItemQty()+" "+item.getItemDesc());
 
         if (selectedItemList.size()>0){
             int itemCount = 0;
             int index = -1;
 
-            for (Item itemPojo:selectedItemList){
+            for (OrderDetail orderDetails:selectedItemList){
 
-                if (itemPojo.getItemNumber().equalsIgnoreCase(item.getItemNumber())){
+                if (orderDetails.getItemNumber().equalsIgnoreCase(orderDetails.getItemNumber())){
                     index = itemCount;
                 }
                 itemCount++;
@@ -87,22 +88,22 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
             if (index == -1){
                 //Toast.makeText(getContext(), "please Select item" ,Toast.LENGTH_SHORT).show();
-                selectedItemList.add(item);
+                selectedItemList.add(orderDetail);
                 //setOrderTotal();
             }else {
                 //Log.e("DDDDDDDF","before "+item.getItemQty());
 
-                selectedItemList.get(index).setItemQty(selectedItemList.get(index).getItemQty()+item.getItemQty());
-                selectedItemList.get(index).setSelingPrice(selectedItemList.get(index).getSelingPrice()+item.getItemPrice());
+                selectedItemList.get(index).setItemQty(selectedItemList.get(index).getItemQty()+orderDetail.getItemQty());
+                selectedItemList.get(index).setSellingPrice(selectedItemList.get(index).getSellingPrice()+orderDetail.getItemPrice());
                 //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
                 setOrderTotal();
             }
 
         }else {
 
-            item.setSelingPrice(item.getItemPrice()*item.getItemQty());
+            orderDetail.setSellingPrice(orderDetail.getItemPrice()*orderDetail.getItemQty());
             //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
-            selectedItemList.add(item);
+            selectedItemList.add(orderDetail);
             setOrderTotal();
         }
        // noOfItem.setText(calNoOfItem(selectIdlist));
@@ -113,10 +114,10 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
     private void setOrderTotal(){
         double orderTotal = 0.0;
         //Double discount = 0.0  ;
-        for (Item item:selectedItemList){
+        for (OrderDetail orderDetail:selectedItemList){
 
 
-            orderTotal= orderTotal + item.getSelingPrice();
+            orderTotal= orderTotal + orderDetail.getSellingPrice();
         }
 
         Log.e("Totoal",""+orderTotal);
@@ -124,10 +125,10 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
     private Double calOrderQty(){
         double orderQty = 0.0;
-        for (Item item:selectedItemList){
-            orderQty= orderQty + item.getItemQty();
+        for (OrderDetail orderDetail:selectedItemList){
+            orderQty= orderQty + orderDetail.getItemQty();
 
-            Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
+            //Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
         }
         return orderQty;
     }

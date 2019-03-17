@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.niro.resorder.R;
 import com.niro.resorder.pojo.Item;
+import com.niro.resorder.pojo.OrderDetail;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdapter.ItemSelectViewHolder> {
 
     public interface SelectionDelegate{
-        void selectedItems(Item item);
+        void selectedItems(OrderDetail orderDetail);
     }
 
     private List<Item> itemList;
@@ -46,17 +47,17 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
         holder.itemDesc.setText(item.getItemDesc());
         holder.itemPrice.setText(df.format(item.getItemPrice()));
 
-        final Item selectItem = new Item();
-        selectItem.setItemNumber(item.getItemNumber());
-        selectItem.setItemDesc(item.getItemDesc());
-        selectItem.setItemPrice(item.getItemPrice());
-        selectItem.setItemQty(1.0);
+        final OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setItemNumber(item.getItemNumber());
+        orderDetail.setItemDesc(item.getItemDesc());
+        orderDetail.setItemPrice(item.getItemPrice());
+        orderDetail.setItemQty(1.0);
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delegate.selectedItems(selectItem);
+                delegate.selectedItems(orderDetail);
             }
         });
     }
