@@ -15,6 +15,7 @@ import com.niro.resorder.adapter.ItemSelectionAdapter;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
+import com.niro.resorder.popup.ConfirmationPopup;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,8 +40,15 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+        */
+                ConfirmationPopup.orderDetailsView(ActivityItemSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+                    @Override
+                    public void processOrderConfirm() {
+
+                    }
+                });
             }
         });
 
@@ -76,25 +84,33 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
     @Override
     public void selectedItems(OrderDetail orderDetail) {
-        //Log.e("DDDDDDDFq","item pojo "+item.getItemQty()+" "+item.getItemDesc());
+        Log.e("DDDDDDDFq","item pojo "+orderDetail.getItemNumber()+" "+orderDetail.getItemQty()+" "+orderDetail.getItemDesc());
+        Log.e("DDDDDDDFq","selectedItemList "+selectedItemList.size());
 
         if (selectedItemList.size()>0){
+            Log.e("FIND_IS","IF 1");
             int itemCount = 0;
             int index = -1;
 
             for (OrderDetail orderDetails:selectedItemList){
 
-                if (orderDetails.getItemNumber().equalsIgnoreCase(orderDetails.getItemNumber())){
+                if (orderDetails.getItemNumber().equalsIgnoreCase(orderDetail.getItemNumber())){
+                    Log.e("FIND_IS","equal num");
+
                     index = itemCount;
                 }
                 itemCount++;
             }
 
             if (index == -1){
+                Log.e("FIND_IS","IF -1");
+
                 //Toast.makeText(getContext(), "please Select item" ,Toast.LENGTH_SHORT).show();
                 selectedItemList.add(orderDetail);
                 //setOrderTotal();
             }else {
+                Log.e("FIND_IS","ELSE "+index);
+
                 //Log.e("DDDDDDDF","before "+item.getItemQty());
 
                 selectedItemList.get(index).setItemQty(selectedItemList.get(index).getItemQty()+orderDetail.getItemQty());
@@ -104,6 +120,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
             }
 
         }else {
+            Log.e("FIND_IS","ELSE 1");
 
             orderDetail.setSellingPrice(orderDetail.getItemPrice()*orderDetail.getItemQty());
             //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
