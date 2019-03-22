@@ -84,18 +84,18 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
 
     @Override
     public void selectedItems(OrderDetail orderDetail) {
-        Log.e("DDDDDDDFq","item pojo "+orderDetail.getItemNumber()+" "+orderDetail.getItemQty()+" "+orderDetail.getItemDesc());
-        Log.e("DDDDDDDFq","selectedItemList "+selectedItemList.size());
+       // Log.e("DDDDDDDFq","item pojo "+orderDetail.getItemNumber()+" "+orderDetail.getItemQty()+" "+orderDetail.getItemDesc());
+       // Log.e("DDDDDDDFq","selectedItemList "+selectedItemList.size());
 
         if (selectedItemList.size()>0){
-            Log.e("FIND_IS","IF 1");
+            //Log.e("FIND_IS","IF 1");
             int itemCount = 0;
             int index = -1;
 
             for (OrderDetail orderDetails:selectedItemList){
 
                 if (orderDetails.getItemNumber().equalsIgnoreCase(orderDetail.getItemNumber())){
-                    Log.e("FIND_IS","equal num");
+                    //Log.e("FIND_IS","equal num");
 
                     index = itemCount;
                 }
@@ -103,26 +103,34 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
             }
 
             if (index == -1){
-                Log.e("FIND_IS","IF -1");
+                //Log.e("FIND_IS","IF -1");
+
+                orderDetail.setSellingPrice(orderDetail.getItemPrice()*orderDetail.getItemQty());
 
                 //Toast.makeText(getContext(), "please Select item" ,Toast.LENGTH_SHORT).show();
                 selectedItemList.add(orderDetail);
                 //setOrderTotal();
             }else {
-                Log.e("FIND_IS","ELSE "+index);
+                //Log.e("FIND_IS","ELSE "+index);
 
                 //Log.e("DDDDDDDF","before "+item.getItemQty());
 
                 selectedItemList.get(index).setItemQty(selectedItemList.get(index).getItemQty()+orderDetail.getItemQty());
                 selectedItemList.get(index).setSellingPrice(selectedItemList.get(index).getSellingPrice()+orderDetail.getItemPrice());
                 //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
+
+                //Log.e("FIND_IS1","ELSE "+selectedItemList.get(index).getSellingPrice());
+
                 setOrderTotal();
             }
 
         }else {
-            Log.e("FIND_IS","ELSE 1");
+            //Log.e("FIND_IS","ELSE 1");
 
             orderDetail.setSellingPrice(orderDetail.getItemPrice()*orderDetail.getItemQty());
+
+            //Log.e("FIND_IS1","ELSE "+orderDetail.getSellingPrice());
+
             //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
             selectedItemList.add(orderDetail);
             setOrderTotal();
@@ -141,7 +149,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
             orderTotal= orderTotal + orderDetail.getSellingPrice();
         }
         order.setOrderTotal(orderTotal);
-        Log.e("Totoal",""+orderTotal);
+        //Log.e("Totoal",""+orderTotal);
     }
 
     private Double calOrderQty(){
