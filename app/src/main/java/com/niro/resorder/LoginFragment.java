@@ -73,7 +73,7 @@ public class LoginFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),ActivityItemSelection.class));
+                startActivity(new Intent(getActivity(),OrderSelection.class));
             }
         });
 

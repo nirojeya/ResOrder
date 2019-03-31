@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".OrderSelection"
+            android:label="@string/title_activity_order_selection"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ActivityItemSelection"
             android:label="@string/title_activity_item_selection"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
