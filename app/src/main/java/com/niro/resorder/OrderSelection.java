@@ -74,7 +74,6 @@ public class OrderSelection extends AppCompatActivity
 
     private void assignViews(){
         RecyclerView orderListRV = findViewById(R.id.orderList);
-        totalCount = findViewById(R.id.total_count);
         selectedItemList = new ArrayList<>();
         order = new Order();
         List<Item> itemList = new ArrayList<>();
@@ -118,15 +117,8 @@ public class OrderSelection extends AppCompatActivity
 
         //View a = menu.findItem(R.id.action_settings).getActionView();
 
-        if(view==null){
-            Log.e("nmnmnn","null");
-
-        }else {
-            Log.e("nmnmnn","not null");
-
-            view.findViewById(R.id.txtCount);
-
-
+        if(view != null){
+            totalCount = view.findViewById(R.id.txtCount);
         }
         return true;
     }
