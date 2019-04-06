@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
@@ -33,7 +34,10 @@ public class OrderSelection extends AppCompatActivity
     private ItemSelectionAdapter selectionAdapter;
     private Order order;
     private List<OrderDetail> selectedItemList;
+
+    private RelativeLayout shopingChartRoot;
     private TextView totalCount;
+
 
 
     @Override
@@ -101,7 +105,7 @@ public class OrderSelection extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -113,13 +117,28 @@ public class OrderSelection extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.order_selection, menu);
-        View view = (View) menu.findItem(R.id.action_settings).getActionView();
+        View view =  menu.findItem(R.id.action_settings).getActionView();
 
         //View a = menu.findItem(R.id.action_settings).getActionView();
 
         if(view != null){
+            shopingChartRoot = view.findViewById(R.id.shoping_chart_root);
             totalCount = view.findViewById(R.id.txtCount);
         }
+
+        shopingChartRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ConfirmationPopup.orderDetailsView(OrderSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+                    @Override
+                    public void processOrderConfirm() {
+
+                    }
+                });
+
+            }
+        });
         return true;
     }
 
