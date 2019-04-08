@@ -1,5 +1,6 @@
 package com.niro.resorder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -165,7 +166,8 @@ public class OrderSelection extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_category) {
+            startActivity(new Intent(this,CategoryActivity.class));
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -177,7 +179,7 @@ public class OrderSelection extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -242,7 +244,6 @@ public class OrderSelection extends AppCompatActivity
         double orderTotal = 0.0;
         //Double discount = 0.0  ;
         for (OrderDetail orderDetail:selectedItemList){
-
 
             orderTotal= orderTotal + orderDetail.getSellingPrice();
         }
