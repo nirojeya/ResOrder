@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,7 @@ public class VolleyGetService {
 
     private static Context context;
     private static List<String> categoryList;
+    private static List<Item> itemInvList;
 
 
     public interface ItemDelegate{
@@ -37,42 +39,60 @@ public class VolleyGetService {
         void syncItemCategory(List<String> syncCategoryList);
     }
 
-    public static void syncItem(Context con, String url, ItemDelegate i) {
-        //itemList.clear();
-        final List<Item> searchList = new ArrayList<>();
-        context = con;
-        itemDelegate = i;
 
+    public static void syncAllInventory(Context con,String url, final ItemDelegate delegate) {
+        //itemList.clear();
+        context = con;
+        itemDelegate= delegate;
+
+        itemInvList = new ArrayList<>();
+
+        //Log.e("okfhfhdfhdfhdf","response.toString()");
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.e("okfeffsdsdsgsgg123",response.toString());
-
+                Log.e("okfhfhdfhdfhdf",response.toString());
 
                 try {
 
-                    JSONArray jsonArray = response.getJSONArray("items");
+                    JSONArray jsonArray = response.getJSONArray("inventories");
 
+                    if(itemInvList.size() > 0){
+                        itemInvList.clear();
+
+                    }
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
                         Item item = new Item();
 
-                        if(!object.isNull("category")){
+                        if (!object.isNull("category")) {
                             item.setItemCategory(object.getString("category"));
                         }
 
-                        if(!object.isNull("category")){
-                            item.setItemCategory(object.getString("category"));
+                        if (!object.isNull("item_desc")) {
+                            item.setItemDesc(object.getString("item_desc"));
+                        }
+
+                        if (!object.isNull("item_number")) {
+                            item.setItemNumber(object.getString("item_number"));
+
+                        }
+
+                        if (!object.isNull("subcategory")) {
+                            item.setItemSubCategory(object.getString("subcategory"));
                         }
 
 
-                        searchList.add(item);
-                        // }
+                        if (!object.isNull("selling_price")) {
+                            item.setItemPrice(object.getDouble("selling_price"));
+                        }
+
+                        itemInvList.add(item);
                     }
+                    //storeInvenItemsDB(itemInvList);
+                    itemDelegate.syncItemDetails(itemInvList);
 
-                    itemDelegate.syncItemDetails(searchList);
-                    //storeItemsDB(clQueue,callingFrom);
 
                 } catch (JSONException e){
                     e.printStackTrace();
@@ -83,22 +103,31 @@ public class VolleyGetService {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("RES_ERR",error.toString());
+
                 if(error.toString().trim().equalsIgnoreCase("com.android.volley.TimeoutError") ||
                         error.toString().trim().equalsIgnoreCase("com.android.volley.NoConnectionError: java.net.SocketException: Network is unreachable")) {
                     // Log.e("respomce_order_err","come error");
-                    //OrderHomeFragment.updateNetwork(context, "TimeOut");
+                    //CustomDialog.imeOutExceptionDialog(context);
                 }
+
             }
 
         }){
-           /* @Override
+            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return setHeaderData();
-            }*/
+            }
         };
+
+        // now volley retry policy is 20s
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(20000),
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
+
 
     public static void syncAllItemCategory(Context con,String url, final CategoryDelegate delegate) {
         context = con;
@@ -148,7 +177,7 @@ public class VolleyGetService {
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                //return setHeaderData();
+                return setHeaderData();
             }
         };
 
@@ -160,6 +189,31 @@ public class VolleyGetService {
 
         VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
+
+    //set header
+    private static Map<String, String> setHeaderData(){
+        Map<String, String> headers = new HashMap<>();
+
+        /*String clientId = AppSettings.getClientId(context);
+        String companyId = AppSettings.getCompanyId(context);
+        //DbHandler dbHandler = DBSingleton.getInstance(context);
+        //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
+        String userId = AppSettings.getUniqueId(context);
+        String authId = AppSettings.getAuthId(context);
+*/
+        headers.put("client_id","21OFhI7afsDa5XkS5dHED4FuGGXBY97Pcpm8rDGv");
+        headers.put("company_id","bf21636d3f29957e");
+        headers.put("user_id","cff19b96-04e8-4592-957d-dd1321b950a7");
+        headers.put("authorization","aUC54mGLlJM5lm5KEdpwjiQdg3xjp3feNwHe8iIw2nQzMKFu64HG1MszxMH1sJGxJp561m1XxLO");
+
+       /* headers.put("client_id",clientId);
+        headers.put("company_id",companyId);
+        headers.put("user_id",userId);
+        headers.put("authorization",authId);
+*/
+        return headers;
+    }
+
 
 
 }

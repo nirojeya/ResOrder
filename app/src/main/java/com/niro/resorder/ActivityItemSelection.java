@@ -1,5 +1,6 @@
 package com.niro.resorder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.popup.ConfirmationPopup;
+import com.niro.resorder.service.VolleyGetService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,12 +31,26 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
     private List<OrderDetail> selectedItemList;
     private TextView totalCount;
 
+    private String baseUrl = "http://54.200.81.66:3000/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_selection);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        String category;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                category= null;
+            } else {
+                category= extras.getString("CATEGORY_NAME");
+            }
+        } else {
+            category= (String) savedInstanceState.getSerializable("CATEGORY_NAME");
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,17 +68,19 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
             }
         });
 
-        assignViews();
+
+
+        assignViews(category);
     }
 
-    private void assignViews(){
+    private void assignViews(String category){
         RecyclerView orderListRV = findViewById(R.id.orderList);
         totalCount = findViewById(R.id.total_count);
         selectedItemList = new ArrayList<>();
         order = new Order();
         List<Item> itemList = new ArrayList<>();
 
-        for(int i = 0; i<20; i++){
+        /*for(int i = 0; i<20; i++){
             Item item = new Item();
             item.setItemNumber(String.valueOf(i));
             item.setItemDesc("Item "+i+1);
@@ -70,7 +88,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
             item.setItemPrice(i*10);
 
             itemList.add(item);
-        }
+        }*/
 
 
         selectionAdapter = new ItemSelectionAdapter(itemList,this);
@@ -79,6 +97,17 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
         orderListRV.setLayoutManager(layoutManager);
         orderListRV.setHasFixedSize(true);
         orderListRV.setAdapter(selectionAdapter);
+
+        String url = baseUrl + "api/inv/item/inventories?category="+category+"&&&";
+
+
+        VolleyGetService.syncAllInventory(this, url, new VolleyGetService.ItemDelegate() {
+            @Override
+            public void syncItemDetails(List<Item> itemList) {
+
+            }
+        });
+
 
     }
 

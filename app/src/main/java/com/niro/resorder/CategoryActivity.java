@@ -15,6 +15,8 @@ import java.util.List;
 public class CategoryActivity extends AppCompatActivity {
 
     private List<String> categoryList;
+    private String baseUrl = "http://54.200.81.66:3000/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         orderListRV.setAdapter(categoryAdapter);
 
-        VolleyGetService.syncAllItemCategory(this, "", new VolleyGetService.CategoryDelegate() {
+        VolleyGetService.syncAllItemCategory(this, baseUrl+"api/item/cat/categories", new VolleyGetService.CategoryDelegate() {
             @Override
             public void syncItemCategory(List<String> syncCategoryList) {
                 categoryList.clear();
