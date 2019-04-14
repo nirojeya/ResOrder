@@ -1,6 +1,7 @@
 package com.niro.resorder;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
+import com.niro.resorder.helper.Utils;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
@@ -30,12 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderSelection extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ItemSelectionAdapter.SelectionDelegate{
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ItemSelectionAdapter.SelectionDelegate,CategoryFragment.OnFragmentInteractionListener,ItemSelectionFragment.OnFragmentInteractionListener{
 
-    private ItemSelectionAdapter selectionAdapter;
+    private static android.support.v4.app.FragmentManager fragmentManager;
+
+    /*private ItemSelectionAdapter selectionAdapter;
     private Order order;
     private List<OrderDetail> selectedItemList;
-
+*/
     private RelativeLayout shopingChartRoot;
     private TextView totalCount;
 
@@ -48,13 +53,25 @@ public class OrderSelection extends AppCompatActivity
         Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fragmentManager = getSupportFragmentManager();
+
+        if (savedInstanceState == null) {
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.orderFrameContainer, new LoginFragment(),
+                            Utils.LoginFragment).commit();
+
+
+        }
+
+
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                *//*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-        */    ConfirmationPopup.orderDetailsView(OrderSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+        *//*    ConfirmationPopup.orderDetailsView(OrderSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
 
@@ -63,7 +80,7 @@ public class OrderSelection extends AppCompatActivity
 
 
             }
-        });
+        });*/
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,10 +91,10 @@ public class OrderSelection extends AppCompatActivity
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        assignViews();
+        //assignViews();
     }
 
-    private void assignViews(){
+    /*private void assignViews(){
         RecyclerView orderListRV = findViewById(R.id.orderList);
         selectedItemList = new ArrayList<>();
         order = new Order();
@@ -99,9 +116,9 @@ public class OrderSelection extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         orderListRV.setLayoutManager(layoutManager);
         orderListRV.setHasFixedSize(true);
-        orderListRV.setAdapter(selectionAdapter);
+        //orderListRV.setAdapter(selectionAdapter);
 
-    }
+    }*/
 
 
     @Override
@@ -131,12 +148,12 @@ public class OrderSelection extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                ConfirmationPopup.orderDetailsView(OrderSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+               /* ConfirmationPopup.orderDetailsView(OrderSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
 
                     }
-                });
+                });*/
 
             }
         });
@@ -167,7 +184,9 @@ public class OrderSelection extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_category) {
-            startActivity(new Intent(this,CategoryActivity.class));
+            //startActivity(new Intent(this,CategoryActivity.class));
+
+            replaceCategoryFragment();
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -185,7 +204,8 @@ public class OrderSelection extends AppCompatActivity
     }
 
     @Override
-    public void selectedItems(OrderDetail orderDetail) {
+    public void selectedItems(OrderDetail od){}
+    /*public void selectedItems(OrderDetail orderDetail) {
         if (selectedItemList.size()>0){
             //Log.e("FIND_IS","IF 1");
             int itemCount = 0;
@@ -259,5 +279,36 @@ public class OrderSelection extends AppCompatActivity
             //Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
         }
         return orderQty;
+    }*/
+
+    protected void replaceCategoryFragment() {
+        fragmentManager
+                .beginTransaction()
+                //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
+                .replace(R.id.orderFrameContainer, new CategoryFragment(),
+                        Utils.CategoryFragment).commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void updateShoppingChart(double qty) {
+        totalCount.setText(String.valueOf(qty));
+
+    }
+
+    @Override
+    public void selectedCategory(String category) {
+        ItemSelectionFragment itemSelectionFragment = new ItemSelectionFragment();
+        itemSelectionFragment.passingSelectedCategory(category);
+        fragmentManager
+                .beginTransaction()
+                //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
+                .replace(R.id.orderFrameContainer, itemSelectionFragment,
+                        Utils.ItemSelectionFragment).commit();
+
     }
 }

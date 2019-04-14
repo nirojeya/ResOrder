@@ -201,10 +201,10 @@ public class VolleyGetService {
         String userId = AppSettings.getUniqueId(context);
         String authId = AppSettings.getAuthId(context);
 */
-        headers.put("client_id","21OFhI7afsDa5XkS5dHED4FuGGXBY97Pcpm8rDGv");
-        headers.put("company_id","bf21636d3f29957e");
-        headers.put("user_id","cff19b96-04e8-4592-957d-dd1321b950a7");
-        headers.put("authorization","aUC54mGLlJM5lm5KEdpwjiQdg3xjp3feNwHe8iIw2nQzMKFu64HG1MszxMH1sJGxJp561m1XxLO");
+        headers.put("client_id","tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX");
+        headers.put("company_id","e23197373bd3ce99");
+        headers.put("user_id","62eb0889-7040-42ba-bd44-2aafc2667b0e");
+        headers.put("authorization","KCkZm1t7j86OaTD0YRQWR1kSY7Fn3kcbLrIGp6FPYHRoXBenrNTAGTaXmiy6iHgS9oDuw2wfZE9");
 
        /* headers.put("client_id",clientId);
         headers.put("company_id",companyId);
