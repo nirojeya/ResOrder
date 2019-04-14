@@ -214,7 +214,7 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
             setOrderTotal();
         }
         // noOfItem.setText(calNoOfItem(selectIdlist));
-       // selectionAdapter.notifyDataSetChanged();
+        selectionAdapter.notifyDataSetChanged();
         mListener.updateShoppingChart(calOrderQty());
         //totalCount.setText(String.valueOf(calOrderQty()));
     }
