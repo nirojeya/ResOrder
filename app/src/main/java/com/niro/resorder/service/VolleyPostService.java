@@ -25,9 +25,17 @@ import java.util.concurrent.TimeUnit;
 
 public class VolleyPostService {
 
+    public interface OrderDelegate{
+        void processOrderFinished(String orderId);
+    }
+
+    private static OrderDelegate orderDelegate;
     /* POST Order and Order details */
-    public static void postOrderAndOrderDetails(Context ctx, String url , final Order order, final List<OrderDetail> orderDetailsList){
+    public static void postOrderAndOrderDetails(Context ctx, String url , final Order order, final List<OrderDetail> orderDetailsList, final OrderDelegate delegate){
+        orderDelegate = delegate;
         //context = ctx;
+        Log.e("respomce","orderDetailsList "+orderDetailsList.size());
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -59,7 +67,7 @@ public class VolleyPostService {
                     //Log.e("IDMIS","oId "+orderId+" Temp "+temId);
                     //Log.e("IDMIS","newId "+orderId+" newTemp "+temId);
 
-                    int newId = Integer.parseInt(orderId) + 1;
+                    //int newId = Integer.parseInt(orderId) + 1;
 
                    /* db.updateOrderId(orderId, temId);
                     db.updateOrderDetalisId(orderId, temId);
@@ -79,7 +87,7 @@ public class VolleyPostService {
                     //Log.e("IDs_INFO",response.getJSONObject("salesreceipt").getString("temp_order_id"));
                     //Log.e("IDs_INFO",response.getJSONObject("salesreceipt").getString("order_id"));
 
-
+                    delegate.processOrderFinished(orderId);
 
                     //Log.e("IDs_INFO",response.getString("order_id"));
                 } catch (JSONException e) {
@@ -92,6 +100,9 @@ public class VolleyPostService {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("respomce_order_err",error.toString().trim());
+
+                delegate.processOrderFinished("Error");
+
 
                /* if (delegate != null) {
                     delegate.updateServerOrderId("error");
@@ -169,7 +180,7 @@ public class VolleyPostService {
             order.accumulate("location_id",locationId);
 
 
-
+            Log.e("respomce",""+orderDetailsList.size());
 
             int row_id = 1;
             for(OrderDetail od : orderDetailsList){

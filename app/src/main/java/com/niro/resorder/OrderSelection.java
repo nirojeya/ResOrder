@@ -180,10 +180,17 @@ public class OrderSelection extends AppCompatActivity
 
                         ItemSelectionFragment.order.setOrderStatus(1001);
                         String url = baseUrl + "api/acct/salesreceipt";
-                        VolleyPostService.postOrderAndOrderDetails(OrderSelection.this,url,ItemSelectionFragment.order,ItemSelectionFragment.selectedItemList);
 
-                        ItemSelectionFragment.clearOrder();
-                        replaceCategoryFragment();
+                        Log.e("respomce","OS "+ItemSelectionFragment.selectedItemList.size());
+
+                        VolleyPostService.postOrderAndOrderDetails(OrderSelection.this, url, ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList, new VolleyPostService.OrderDelegate() {
+                            @Override
+                            public void processOrderFinished(String orderId) {
+                                ItemSelectionFragment.clearOrder();
+                                replaceCategoryFragment();
+                            }
+                        });
+
 
                     }
                 });
