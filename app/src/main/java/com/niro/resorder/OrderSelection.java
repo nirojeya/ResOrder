@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -124,11 +125,33 @@ public class OrderSelection extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        Fragment itemSelectionFragment = fragmentManager
+                .findFragmentByTag(Utils.ItemSelectionFragment);
+
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+        if(itemSelectionFragment != null){
+            Log.e("nnnnmm","not null itemSelectionFragment");
+            replaceCategoryFragment();
+        }else {
+            super.onBackPressed();
+
+            //Log.e("nnnnmm","null itemSelectionFragment");
+
+
+
+        }
+
+        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
     }
 
     @Override
@@ -299,6 +322,8 @@ public class OrderSelection extends AppCompatActivity
         totalCount.setText(String.valueOf(qty));
 
     }
+
+
 
     @Override
     public void selectedCategory(String category) {

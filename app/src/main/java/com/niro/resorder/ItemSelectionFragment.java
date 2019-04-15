@@ -92,6 +92,8 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
     }
 
 
+
+
     private void assignViews(View view){
         RecyclerView orderListRV = view.findViewById(R.id.orderList);
        // totalCount = view.findViewById(R.id.total_count);
@@ -139,11 +141,14 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
     }
 
 
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+
+
     }
 
     @Override
