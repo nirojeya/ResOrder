@@ -34,7 +34,7 @@ public class VolleyPostService {
     public static void postOrderAndOrderDetails(Context ctx, String url , final Order order, final List<OrderDetail> orderDetailsList, final OrderDelegate delegate){
         orderDelegate = delegate;
         //context = ctx;
-        Log.e("respomce","orderDetailsList "+orderDetailsList.size());
+        //Log.e("respomce","orderDetailsList "+orderDetailsList.size());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -99,7 +99,7 @@ public class VolleyPostService {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("respomce_order_err",error.toString().trim());
+                //Log.e("respomce_order_err",error.toString().trim());
 
                 delegate.processOrderFinished("Error");
 

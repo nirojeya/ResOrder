@@ -181,7 +181,7 @@ public class OrderSelection extends AppCompatActivity
                         ItemSelectionFragment.order.setOrderStatus(1001);
                         String url = baseUrl + "api/acct/salesreceipt";
 
-                        Log.e("respomce","OS "+ItemSelectionFragment.selectedItemList.size());
+                        //Log.e("respomce","OS "+ItemSelectionFragment.selectedItemList.size());
 
                         VolleyPostService.postOrderAndOrderDetails(OrderSelection.this, url, ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList, new VolleyPostService.OrderDelegate() {
                             @Override
