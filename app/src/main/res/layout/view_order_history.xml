@@ -5,7 +5,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:padding="5dp">
 
         <RelativeLayout
@@ -13,7 +13,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/order"
+                android:id="@+id/orderDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
@@ -23,10 +23,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/orderDetails"
+                android:id="@+id/orderStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
                 android:paddingTop="5dp"
                 android:text="Order has been place"
                 android:textColor="@color/button_selectorcolor"
@@ -36,7 +37,7 @@
                 android:id="@+id/orderId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/order"
+                android:layout_below="@+id/orderDate"
                 android:paddingTop="5dp"
                 android:text="Order num : #100"
                 android:textColor="@color/button_selectorcolor"
@@ -56,13 +57,15 @@
                 android:id="@+id/orderView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="@color/background_color"
-                android:layout_below="@+id/orderDetails"
+                android:layout_below="@+id/orderStatus"
                 android:layout_alignBaseline="@+id/orderTotal"
-                android:text="View details"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="21dp"
+                android:background="@color/background_color"
 
+                android:padding="10dp"
+                android:text="View details"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
