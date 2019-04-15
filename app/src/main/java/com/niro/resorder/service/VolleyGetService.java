@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.niro.resorder.pojo.Item;
+import com.niro.resorder.pojo.Order;
 import com.niro.resorder.singleton.VolleySingleton;
 
 import org.json.JSONArray;
@@ -25,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class VolleyGetService {
     private static ItemDelegate itemDelegate;
     private static CategoryDelegate categoryDelegate;
+    private static ViewOrderDelegate viewOrderDelegate;
 
     private static Context context;
     private static List<String> categoryList;
@@ -37,6 +39,10 @@ public class VolleyGetService {
 
     public interface CategoryDelegate{
         void syncItemCategory(List<String> syncCategoryList);
+    }
+
+    public interface ViewOrderDelegate{
+        void processSyncOrder(List<Order> orderList);
     }
 
 
@@ -193,6 +199,99 @@ public class VolleyGetService {
 
         VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
+
+    public static void syncOrderHistory(Context con, String url,ViewOrderDelegate vod) {
+        /*
+         * Server tab (Sign_up) only need to sync all order.
+         * This function will call by server tab.
+         * So, no nee to check COMPANY_ID.
+         * Before sync order need to check database by (order id and company id) unique
+         * Join tab will show only join tab's sales.
+         *
+         * tk */
+
+        context = con;
+        viewOrderDelegate = vod;
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("okGood",response.toString());
+
+
+
+                try {
+
+                    JSONArray jsonArray = response.getJSONArray("salesreceipt");
+
+                    List<Order> orderList = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject odObj = jsonArray.getJSONObject(i);
+
+                        Order order = new Order();
+
+                        if (!odObj.isNull("order_status") && odObj.getString("order_status").equals("1002")) {
+
+                            // Sync only 1005
+                            if (!odObj.isNull("order_id")
+                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1002")) {
+
+                                order.setOrderId(String.valueOf(odObj.getInt("order_id")));
+                            }
+
+                            /*if (!odObj.isNull("created")) {
+                                order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
+                            }
+*/
+                            /*if (!odObj.isNull("payment_method")) {
+                                order.setPaymentMethod(odObj.getInt("payment_method"));
+                            }*/
+
+                            /*if (!odObj.isNull("discount_total")) {
+                                order.setDiscountTotal(odObj.getDouble("discount_total"));
+                            }*/
+
+                            if (!odObj.isNull("total")) {
+                                order.setOrderTotal(odObj.getDouble("total"));
+                            }
+
+
+
+
+                            //syncAllOrderAndOrderDetails(context,baseURL+"api/acct/salesreceipt/"+order.getId());
+
+                        }
+
+                        orderList.add(order);
+                    }
+
+
+
+                    viewOrderDelegate.processSyncOrder(orderList);
+
+
+                } catch (JSONException e){
+                    e.printStackTrace();
+                    Log.e("JSONERR",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Log.e("RES_ERR",error.toString());
+            }
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+        };
+
+        VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
 
     //set header
     private static Map<String, String> setHeaderData(){
