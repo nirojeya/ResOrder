@@ -51,6 +51,7 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
         orderDetail.setItemNumber(item.getItemNumber());
         orderDetail.setItemDesc(item.getItemDesc());
         orderDetail.setItemPrice(item.getItemPrice());
+        orderDetail.setBatchNo(item.getBid());
         orderDetail.setItemQty(1.0);
 
 

@@ -10,6 +10,7 @@ public class Item {
     private String itemImg;
     private String itemCategory;
     private String itemSubCategory;
+    private int bid;
 
     public String getItemNumber() {
         return itemNumber;
@@ -73,5 +74,13 @@ public class Item {
 
     public void setItemQty(double itemQty) {
         this.itemQty = itemQty;
+    }
+
+    public int getBid() {
+        return bid;
+    }
+
+    public void setBid(int bid) {
+        this.bid = bid;
     }
 }

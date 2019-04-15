@@ -28,6 +28,7 @@ import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.popup.ConfirmationPopup;
+import com.niro.resorder.service.VolleyPostService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class OrderSelection extends AppCompatActivity
 */
     private RelativeLayout shopingChartRoot;
     private TextView totalCount;
+    private String baseUrl = "http://54.200.81.66:3000/";
+
 
 
 
@@ -171,12 +174,19 @@ public class OrderSelection extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-               /* ConfirmationPopup.orderDetailsView(OrderSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+                ConfirmationPopup.orderDetailsView(OrderSelection.this, ItemSelectionFragment.selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
 
+                        ItemSelectionFragment.order.setOrderStatus(1001);
+                        String url = baseUrl + "api/acct/salesreceipt";
+                        VolleyPostService.postOrderAndOrderDetails(OrderSelection.this,url,ItemSelectionFragment.order,ItemSelectionFragment.selectedItemList);
+
+                        ItemSelectionFragment.clearOrder();
+                        replaceCategoryFragment();
+
                     }
-                });*/
+                });
 
             }
         });

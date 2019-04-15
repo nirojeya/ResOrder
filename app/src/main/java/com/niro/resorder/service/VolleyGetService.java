@@ -88,6 +88,10 @@ public class VolleyGetService {
                             item.setItemPrice(object.getDouble("selling_price"));
                         }
 
+                        if (!object.isNull("bid")) {
+                            item.setBid(object.getInt("bid"));
+                        }
+
                         itemInvList.add(item);
                     }
                     //storeInvenItemsDB(itemInvList);

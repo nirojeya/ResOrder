@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,8 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
     private OnFragmentInteractionListener mListener;
 
     private ItemSelectionAdapter selectionAdapter;
-    private Order order;
-    private List<OrderDetail> selectedItemList;
+    public static Order order;
+    public static List<OrderDetail> selectedItemList;
     private List<Item> itemList;
     //private TextView totalCount;
 
@@ -97,8 +98,13 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
     private void assignViews(View view){
         RecyclerView orderListRV = view.findViewById(R.id.orderList);
        // totalCount = view.findViewById(R.id.total_count);
-        selectedItemList = new ArrayList<>();
-        order = new Order();
+        if(selectedItemList == null) {
+            selectedItemList = new ArrayList<>();
+            order = new Order();
+
+            //Log.e("BBBBBBBB","selectedItemList null");
+
+        }
         itemList = new ArrayList<>();
 
         /*for(int i = 0; i<20; i++){
@@ -244,6 +250,12 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
             //Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
         }
         return orderQty;
+    }
+
+    public static void clearOrder(){
+        selectedItemList.clear();
+        selectedItemList = null;
+        order = null;
     }
 
     /**

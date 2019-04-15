@@ -48,6 +48,7 @@ public class ConfirmationPopup {
         buttonClosePopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.dismiss();
                 delegate.processOrderConfirm();
             }
         });

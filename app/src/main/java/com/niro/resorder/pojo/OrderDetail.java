@@ -9,6 +9,7 @@ public class OrderDetail {
     private String itemSubCategory;
     private double itemPrice;
     private double sellingPrice;
+    private int batchNo;
 
 
     public String getItemNumber() {
@@ -65,6 +66,14 @@ public class OrderDetail {
 
     public void setItemQty(double itemQty) {
         this.itemQty = itemQty;
+    }
+
+    public int getBatchNo() {
+        return batchNo;
+    }
+
+    public void setBatchNo(int batchNo) {
+        this.batchNo = batchNo;
     }
 }
 
