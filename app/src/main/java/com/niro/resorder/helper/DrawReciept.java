@@ -42,7 +42,7 @@ public class DrawReciept {
             e.printStackTrace();
         }
     }
-    public Bitmap salesPrintReceiptNormalImage(Order order, List<OrderDetail> orderDetails, Company company, String type , String state){
+    public Bitmap salesPrintReceiptNormalImage(Order order, List<OrderDetail> orderDetails,String type , String state){
 
         receipt.setMargin(30, 10);
         receipt.setAlign(Paint.Align.CENTER);
@@ -50,12 +50,12 @@ public class DrawReciept {
         receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Regular.ttf");
 
         String person = AppSettings.getPrinterUser(context);
-        printHeader(type,company,state);
+        printHeader("Sales Receipt",state);
         receipt.setAlign(Paint.Align.LEFT);
         printTop(String.valueOf(order.getOrderId()),type+" #",person);
         printSalesBodyNormal(orderDetails);
         printBottom(order);
-        printFooter(company);
+        printFooter();
 
         bitmap = receipt.build();
         try {
@@ -195,7 +195,7 @@ public class DrawReciept {
         //es.print_line(itemDetails.toString());
     }
 
-    private void printHeader(String header , Company company , String state ){
+    private void printHeader(String header,String state){
 
         receipt.setTextSize(fontSizeB);
         receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Bold.ttf");
@@ -206,7 +206,10 @@ public class DrawReciept {
         //es.select_code_tab(ESC_POS_EPSON_ANDROID.CodePage.WPC1252);
         //es.justification_center();
         // es.double_height_width_on();
-        test = company.getCompanyName() + "\n" ;
+       // test = company.getCompanyName() + "\n" ;
+
+         test = "Restaurant Order" + "\n" ;
+
         receipt.setTextSize(fontSizeB);
         receipt.setAlign(Paint.Align.CENTER);
         if (!test.isEmpty()) {
@@ -223,12 +226,16 @@ public class DrawReciept {
             //es.print_line(header);
             //receipt.addText(header,true);
 
-            test = company.getCompanyAddress();
+            //test = company.getCompanyAddress();
+            test = null;
+
             if (test != null) {
                 //es.print_line(test);
                 receipt.addText(test,true);
             }
-            test = company.getCompanyContactNumber();
+            //test = company.getCompanyContactNumber();
+            test = null;
+
             if (test != null) {
                 //es.print_line(test);
                 receipt.addText(test,true);
@@ -247,7 +254,7 @@ public class DrawReciept {
         }else {
             //es.print_line(header);
             receipt.addText(header,true);
-            test = ReadableDateFormat.getCurrentDateFormet(new Date(System.currentTimeMillis()));
+            //test = ReadableDateFormat.getCurrentDateFormet(new Date(System.currentTimeMillis()));
             receipt.addText(test,true);
             //es.print_line(test);//+"\n");
 
@@ -269,13 +276,16 @@ public class DrawReciept {
 
 
     String message = "Thank You Come Again";
-    private void printFooter(Company company) {
+    private void printFooter() {
         //es.justification_center();
         receipt.setAlign(Paint.Align.CENTER);
-        if (company.getCompanyMessage() != null && !company.getCompanyMessage().equalsIgnoreCase("n/l")) {
+        /*
+        * company.getCompanyMessage() != null && !company.getCompanyMessage().equalsIgnoreCase("n/l")
+        * */
+        if (false) {
             // if (message.trim() != null && !message.equalsIgnoreCase("N")) {
             //es.print_line(company.getCompanyMessage());
-            receipt.addText(company.getCompanyMessage(),true);
+           // receipt.addText(company.getCompanyMessage(),true);
             //es.print_line(message);
             //}
             //es.horizontalLine();
@@ -306,10 +316,10 @@ public class DrawReciept {
             es.barcode_height((byte) 100);
             es.select_position_hri((byte) 2);*/
             receipt.addText("\n");
-            test = "Designed by Kale Systems (pvt) Ltd";
+            test = "Designed by Niro";
             //es.print_line(test);
             receipt.addText(test,true);
-            test = "www.kalesystems.com \n";
+            test = "\n";
             //es.print_line(test);
             receipt.addText(test,true);
 
