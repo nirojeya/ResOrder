@@ -158,18 +158,18 @@ public class DrawReciept {
             }
 
             itemDetails.append(" ");// for printing character in a proper Alignment
-            itemDetails.append(df.format(order.getSellingPrice() +  order.getItemDiscount())); // for print 1 item price
-            int oneItemPricerCharLength = 15 - df.format((order.getSellingPrice() - order.getItemDiscount()) * order.getItemQty()).length();
+            itemDetails.append(df.format(order.getItemPrice() +  order.getItemDiscount())); // for print 1 item price
+            int oneItemPricerCharLength = 15 - df.format((order.getItemPrice() - order.getItemDiscount()) * order.getItemQty()).length();
             for(int l=0; l<oneItemPricerCharLength;l++){
                 itemDetails.append(" ");
             }
             if (order.getVatCode() == 1) {
                 //itemPriceChar = 15;
-                int itemPriceCharLength = 12 - df.format(order.getSellingPrice() * order.getItemQty() ).length();
+                int itemPriceCharLength = 12 - df.format(order.getItemPrice() * order.getItemQty() ).length();
                 itemDetails.append(df.format((order.getSellingPrice()  )* order.getItemQty())); // for print item price
             } else {
-                int itemPriceCharLength = 12 - df.format(order.getSellingPrice()* order.getItemQty()).length();
-                itemDetails.append(df.format((order.getSellingPrice())* order.getItemQty())); // for print item price
+                int itemPriceCharLength = 12 - df.format(order.getItemPrice()* order.getItemQty()).length();
+                itemDetails.append(df.format((order.getItemPrice())* order.getItemQty())); // for print item price
             }
             itemDetails.append("\n");
             receipt.addText(itemDetails.toString(),true);
@@ -177,10 +177,10 @@ public class DrawReciept {
             if (order.getItemDiscount() > 0.0) {
                 itemDetails.append(" ");// for printing character space
                 itemDetails.append("Reg "); // for print reqular price label
-                int regularPriceLength = 15 - df.format((order.getSellingPrice()+ order.getItemDiscount()) * order.getItemQty()).length();
+                int regularPriceLength = 15 - df.format((order.getItemPrice()+ order.getItemDiscount()) * order.getItemQty()).length();
                 itemDetails.append(" ");// for printing character space
                 Log.e("eeeeeeeeeeee",""+order.getSellingPrice());
-                itemDetails.append(df.format((order.getSellingPrice()+ order.getItemDiscount())  * order.getItemQty())); // for price reqular price
+                itemDetails.append(df.format((order.getItemPrice()+ order.getItemDiscount())  * order.getItemQty())); // for price reqular price
                 for (int i = 0; i < regularPriceLength; i++) {
                     itemDetails.append(" ");// for printing character in a proper Alignment
                 }
