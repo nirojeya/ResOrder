@@ -198,6 +198,8 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
 
                 //Toast.makeText(getContext(), "please Select item" ,Toast.LENGTH_SHORT).show();
                 selectedItemList.add(orderDetail);
+                setOrderTotal();
+
                 //setOrderTotal();
             }else {
                 //Log.e("FIND_IS","ELSE "+index);
@@ -235,11 +237,13 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
         //Double discount = 0.0  ;
         for (OrderDetail orderDetail:selectedItemList){
 
+            Log.e("Totoal","indi "+orderDetail.getSellingPrice());
+
 
             orderTotal= orderTotal + orderDetail.getSellingPrice();
         }
         order.setOrderTotal(orderTotal);
-        //Log.e("Totoal",""+orderTotal);
+        Log.e("Totoal",""+orderTotal);
     }
 
     private Double calOrderQty(){
