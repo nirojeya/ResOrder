@@ -237,13 +237,13 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
         //Double discount = 0.0  ;
         for (OrderDetail orderDetail:selectedItemList){
 
-            Log.e("Totoal","indi "+orderDetail.getSellingPrice());
+            //Log.e("Totoal","indi "+orderDetail.getSellingPrice());
 
 
             orderTotal= orderTotal + orderDetail.getSellingPrice();
         }
         order.setOrderTotal(orderTotal);
-        Log.e("Totoal",""+orderTotal);
+        //Log.e("Totoal",""+orderTotal);
     }
 
     private Double calOrderQty(){
