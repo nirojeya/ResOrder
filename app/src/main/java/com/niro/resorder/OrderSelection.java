@@ -35,7 +35,8 @@ import java.util.List;
 
 public class OrderSelection extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ItemSelectionAdapter.SelectionDelegate,CategoryFragment.OnFragmentInteractionListener,ItemSelectionFragment.OnFragmentInteractionListener{
+        ItemSelectionAdapter.SelectionDelegate,CategoryFragment.OnFragmentInteractionListener,
+        ItemSelectionFragment.OnFragmentInteractionListener,ViewOrderFragment.OnFragmentInteractionListener{
 
     private static android.support.v4.app.FragmentManager fragmentManager;
 
