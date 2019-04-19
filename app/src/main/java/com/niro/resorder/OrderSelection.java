@@ -46,7 +46,7 @@ import java.util.List;
 public class OrderSelection extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ItemSelectionAdapter.SelectionDelegate,CategoryFragment.OnFragmentInteractionListener,
-        ItemSelectionFragment.OnFragmentInteractionListener,ViewOrderFragment.OnFragmentInteractionListener{
+        ItemSelectionFragment.OnFragmentInteractionListener,ViewOrderFragment.OnFragmentInteractionListener,AddItemFragment.OnFragmentInteractionListener{
 
     private static android.support.v4.app.FragmentManager fragmentManager;
 
@@ -73,8 +73,8 @@ public class OrderSelection extends AppCompatActivity
         if (savedInstanceState == null) {
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.orderFrameContainer, new LoginFragment(),
-                            Utils.LoginFragment).commit();
+                    .replace(R.id.orderFrameContainer, new AddItemFragment(),
+                            Utils.AddItemFragment).commit();
 
 
         }
