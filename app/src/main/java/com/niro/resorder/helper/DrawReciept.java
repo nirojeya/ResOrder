@@ -1,4 +1,3 @@
-/*
 package com.niro.resorder.helper;
 
 import android.content.Context;
@@ -7,6 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Environment;
 import android.util.Log;
+
+import com.niro.resorder.pojo.Order;
+import com.niro.resorder.pojo.OrderDetail;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,7 +41,7 @@ public class DrawReciept {
             e.printStackTrace();
         }
     }
-    public Bitmap salesPrintReceiptNormalImage(Order order, List<OrderDetails> orderDetails, Company company, String type , String state){
+    public Bitmap salesPrintReceiptNormalImage(Order order, List<OrderDetail> orderDetails, Company company, String type , String state){
 
         receipt.setMargin(30, 10);
         receipt.setAlign(Paint.Align.CENTER);
@@ -64,7 +66,7 @@ public class DrawReciept {
         return bitmap;
     }
 
-    private void printSalesBodyNormal(List<OrderDetails> printOrder){
+    private void printSalesBodyNormal(List<OrderDetail> printOrder){
         int itemNumberSpace;
         int itemNameSpace = 0;
         StringBuffer itemDetails = new StringBuffer();
@@ -79,13 +81,13 @@ public class DrawReciept {
         itemDetails = new StringBuffer();
         receipt.addText("\n");
 
-        for(OrderDetails order : printOrder){
+        for(OrderDetail order : printOrder){
             noofItems++;
-            if(order.getOrderDetailsDiscount() != null) {
+            /*if(order.getOrderDetailsDiscount() != null) {
                 dis = dis + order.getOrderDetailsDiscount();
-            }
+            }*/
 
-            String orderItemName = order.getOrderDetailsItemName();
+            String orderItemName = order.getItemDesc();
             String fistLetter = orderItemName.substring(0, 1).toUpperCase();
             String otherLetter = orderItemName.substring(1, orderItemName.length()).toLowerCase();
             itemDetails.append(" ").append(fistLetter);
@@ -105,25 +107,25 @@ public class DrawReciept {
                 }
             }
 
-            Double div = (order.getOrderDetailsItemQty()) % 1;
+            Double div = (order.getItemQty()) % 1;
             String displayQty;
 
             if (!order.getUom().equalsIgnoreCase("no")) {
                 int itemQuntityCharLength;
                 if (div == 0.0) {
-                    long k = ((order.getOrderDetailsItemQty())).longValue();
+                    long k = ((order.getItemQty())).longValue();
                     displayQty = Long.toString(k);
                     itemDetails.append(displayQty).append(" ").append(order.getUom());
-                    itemQuntityCharLength = 13 - (displayQty.length() + 1 + order.getUom().length()+df.format(order.getOrderDetailsItemPrice()).length());
+                    itemQuntityCharLength = 13 - (displayQty.length() + 1 + order.getUom().length()+df.format(order.getSellingPrice()).length());
                 } else {
-                    itemDetails.append(df.format(order.getOrderDetailsItemQty())).append(" ").append(order.getUom());
-                    itemQuntityCharLength = 13 - (df.format(order.getOrderDetailsItemQty()).length() + 1 + order.getUom().length()+String.valueOf(order.getOrderDetailsItemPrice()).length());
+                    itemDetails.append(df.format(order.getItemQty())).append(" ").append(order.getUom());
+                    itemQuntityCharLength = 13 - (df.format(order.getItemQty()).length() + 1 + order.getUom().length()+String.valueOf(order.getSellingPrice()).length());
                 }
 
                 for (int i = 0; i < itemQuntityCharLength; i++) {
                     itemDetails.append(" ");// for printing character in a proper Alignment
                 }
-            } else {
+            } /*else {
                 if (div == 0.0) {
                     long k = ((order.getOrderDetailsItemQty())).longValue();
                     displayQty = Long.toString(k);
@@ -147,25 +149,25 @@ public class DrawReciept {
                         itemDetails.append(" ");// for printing character in a proper Alignment
                     }
                 }
-            }
+            }*/
             itemDetails.append(" ");// for printing character in a proper Alignment
-            itemDetails.append(df.format(order.getOrderDetailsItemPrice() +  order.getOrderDetailsItemDiscount())); // for print 1 item price
-            int oneItemPricerCharLength = 15 - df.format((order.getOrderDetailsItemPrice() - order.getOrderDetailsItemDiscount()) * order.getOrderDetailsItemQty()).length();
+            itemDetails.append(df.format(order.getSellingPrice() +  order.getItemDiscount())); // for print 1 item price
+            int oneItemPricerCharLength = 15 - df.format((order.getSellingPrice() - order.getItemDiscount()) * order.getItemQty()).length();
             for(int l=0; l<oneItemPricerCharLength;l++){
                 itemDetails.append(" ");
             }
             if (order.getVatCode() == 1) {
                 //itemPriceChar = 15;
-                int itemPriceCharLength = 12 - df.format(order.getOrderDetailsItemPrice() * order.getOrderDetailsItemQty() ).length();
-                itemDetails.append(df.format((order.getOrderDetailsItemPrice()  )* order.getOrderDetailsItemQty())); // for print item price
+                int itemPriceCharLength = 12 - df.format(order.getSellingPrice() * order.getItemQty() ).length();
+                itemDetails.append(df.format((order.getSellingPrice()  )* order.getItemQty())); // for print item price
             } else {
-                int itemPriceCharLength = 12 - df.format(order.getOrderDetailsItemPrice()* order.getOrderDetailsItemQty()).length();
-                itemDetails.append(df.format((order.getOrderDetailsItemPrice())* order.getOrderDetailsItemQty())); // for print item price
+                int itemPriceCharLength = 12 - df.format(order.getSellingPrice()* order.getItemQty()).length();
+                itemDetails.append(df.format((order.getSellingPrice())* order.getItemQty())); // for print item price
             }
             itemDetails.append("\n");
             receipt.addText(itemDetails.toString(),true);
             itemDetails = new StringBuffer();
-            if (order.getOrderDetailsItemDiscount() > 0.0) {
+            if (order.getItemDiscount() > 0.0) {
                 itemDetails.append(" ");// for printing character space
                 itemDetails.append("Reg "); // for print reqular price label
                 int regularPriceLength = 15 - df.format((order.getOrderDetailsItemPrice()+ order.getOrderDetailsItemDiscount()) * order.getOrderDetailsItemQty()).length();
@@ -279,11 +281,9 @@ public class DrawReciept {
             receipt.addText("________________________________________________",true);
             String test;
 
-            */
-/*es.print_and_feed_lines((byte) 0.5);
+            /*es.print_and_feed_lines((byte) 0.5);
             es.barcode_height((byte) 100);
-            es.select_position_hri((byte) 2);*//*
-
+            es.select_position_hri((byte) 2);*/
             receipt.addText("\n");
 
             test = "Designed by Kale Systems (pvt) Ltd";
@@ -301,11 +301,9 @@ public class DrawReciept {
             receipt.addText("________________________________________________",true);
             String test;
 
-            */
-/*es.print_and_feed_lines((byte) 0.5);
+            /*es.print_and_feed_lines((byte) 0.5);
             es.barcode_height((byte) 100);
-            es.select_position_hri((byte) 2);*//*
-
+            es.select_position_hri((byte) 2);*/
             receipt.addText("\n");
             test = "Designed by Kale Systems (pvt) Ltd";
             //es.print_line(test);
@@ -361,8 +359,7 @@ public class DrawReciept {
         receiptHead.append(orderNo).append("\n");
         //es.print_line_without_linefeed(receiptHead.toString());
         receipt.addText(receiptHead.toString(),true);
-        */
-/*if(company.getCompanyIndustry().equalsIgnoreCase("Restaurant")){
+        /*if(company.getCompanyIndustry().equalsIgnoreCase("Restaurant")){
             String resType = printOrder.get(0).getResOrderType();
             if(resType.length()>0) {
                 String output = resType.substring(0, 1).toUpperCase() + resType.substring(1).toLowerCase();
@@ -377,8 +374,7 @@ public class DrawReciept {
                 es.print_line(stringBuffer.toString());
                 es.normal();
             }
-        }*//*
-
+        }*/
         //es.print_dotline_without_linefeed();
         receipt.addText("------------------------------------------------"+"\n");
     }
@@ -419,8 +415,7 @@ public class DrawReciept {
                 subtotalBuffer.append(df.format(order.getOrderTotal()));
                 receipt.addText(subtotalBuffer.toString(),true);
                 //es.print_line(subtotalBuffer.toString());
-            }*/
-/*
+            }/*
             //------------------------------------------------print service charge / delivery charge for resturant company type
             if(company.getCompanyIndustry().equalsIgnoreCase("Restaurant")){
                 if(resturantDetails[1].equalsIgnoreCase("Table")){
@@ -444,8 +439,7 @@ public class DrawReciept {
                     }
                 }
 
-            }*//*
-
+            }*/
             //-----------------------------------------------adding discount amount
 
             String orderDisCount = "Included Discount";
@@ -475,20 +469,17 @@ public class DrawReciept {
                 }
             }
             //-----------------------------------------------adding return amount
-            */
-/*if (ord.getRetrurnAmount()!=0.0) {
+            /*if (ord.getRetrurnAmount()!=0.0) {
                 returnBuffer.append(" Sales Return");
                 int returnAmountCharLength = 47 - (df.format(ord.getRetrurnAmount()).length()+14);
                 returnBuffer.append(getSpaceInPrint(returnAmountCharLength));//for line spacing
                 returnBuffer.append("-");
                 returnBuffer.append(df.format(ord.getRetrurnAmount()));
                 es.print_line(returnBuffer.toString());
-            }*//*
-
+            }*/
             //-----------------------------------------------adding vat amount
 
-            */
-/*Double ordVat = Double.parseDouble(ord.getVat());
+            /*Double ordVat = Double.parseDouble(ord.getVat());
 
             if (ordVat>0.0) {
                 if(accept){
@@ -503,8 +494,7 @@ public class DrawReciept {
                 vat.append(" ");
                 vat.append(df.format(ordVat));
                 es.print_line(vat.toString());
-            }*//*
-
+            }*/
 
             //----------------------------------------------adding nettotal
             test=" Net Total";
@@ -575,8 +565,7 @@ public class DrawReciept {
 
             //------------------------------------------------------------adding diffrent vat types
 
-                */
-/*if(vatDetail.size()>0) {
+                /*if(vatDetail.size()>0) {
                     for (int i = 0; i < vatDetail.size(); i++) {
                         cgstType= new StringBuffer();
                         cgstType.append(" ").append(vatDetail.get(i).getVatCodeName());
@@ -586,8 +575,7 @@ public class DrawReciept {
                         es.print_line(cgstType.toString());
                     }
                 }
-*//*
-
+*/
             String formatDis = df.format(dis);
             if (AppSettings.getDisType(context).equals("Y") && dis != 0.00 && dis != null) {
                 //es.justification_center();
@@ -604,16 +592,14 @@ public class DrawReciept {
                 receipt.setAlign(Paint.Align.LEFT);
             }
 
-                */
-/*if (printType.equalsIgnoreCase("Packing List")) {
+                /*if (printType.equalsIgnoreCase("Packing List")) {
                     issuedMsg.append("------------");
                     issuedMsg.append("                        ------------");
                     issuedMsg.append("Issued By");
                     issuedMsg.append("                            Received BY");
                     es.print_linefeed();
                     es.print_line(issuedMsg.toString());
-                }*//*
-
+                }*/
             // }
             receipt.addText("\n",true);
         }catch (Exception ignored){
@@ -671,4 +657,3 @@ public class DrawReciept {
         return unit;
     }
 }
-*/
