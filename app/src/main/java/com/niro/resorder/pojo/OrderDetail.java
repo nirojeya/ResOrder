@@ -10,6 +10,9 @@ public class OrderDetail {
     private double itemPrice;
     private double sellingPrice;
     private int batchNo;
+    private String uom = "no";
+    private double itemDiscount = 0.0;
+    private int vatCode = 0;
 
 
     public String getItemNumber() {
@@ -60,7 +63,7 @@ public class OrderDetail {
         this.sellingPrice = sellingPrice;
     }
 
-    public double getItemQty() {
+    public Double getItemQty() {
         return itemQty;
     }
 
@@ -74,6 +77,30 @@ public class OrderDetail {
 
     public void setBatchNo(int batchNo) {
         this.batchNo = batchNo;
+    }
+
+    public String getUom() {
+        return uom;
+    }
+
+    public void setUom(String uom) {
+        this.uom = uom;
+    }
+
+    public double getItemDiscount() {
+        return itemDiscount;
+    }
+
+    public void setItemDiscount(double itemDiscount) {
+        this.itemDiscount = itemDiscount;
+    }
+
+    public int getVatCode() {
+        return vatCode;
+    }
+
+    public void setVatCode(int vatCode) {
+        this.vatCode = vatCode;
     }
 }
 

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Environment;
 import android.util.Log;
 
+import com.niro.resorder.ResOrderApp;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 
@@ -46,7 +47,7 @@ public class DrawReciept {
         receipt.setMargin(30, 10);
         receipt.setAlign(Paint.Align.CENTER);
         receipt.setColor(Color.BLACK);
-        receipt.setTypeface(WallActivity.appContext, "fonts/RobotoMono-Regular.ttf");
+        receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Regular.ttf");
 
         String person = AppSettings.getPrinterUser(context);
         printHeader(type,company,state);
@@ -170,19 +171,19 @@ public class DrawReciept {
             if (order.getItemDiscount() > 0.0) {
                 itemDetails.append(" ");// for printing character space
                 itemDetails.append("Reg "); // for print reqular price label
-                int regularPriceLength = 15 - df.format((order.getOrderDetailsItemPrice()+ order.getOrderDetailsItemDiscount()) * order.getOrderDetailsItemQty()).length();
+                int regularPriceLength = 15 - df.format((order.getSellingPrice()+ order.getItemDiscount()) * order.getItemQty()).length();
                 itemDetails.append(" ");// for printing character space
-                Log.e("eeeeeeeeeeee",""+order.getOrderDetailsItemPrice());
-                itemDetails.append(df.format((order.getOrderDetailsItemPrice()+ order.getOrderDetailsItemDiscount())  * order.getOrderDetailsItemQty())); // for price reqular price
+                Log.e("eeeeeeeeeeee",""+order.getSellingPrice());
+                itemDetails.append(df.format((order.getSellingPrice()+ order.getItemDiscount())  * order.getItemQty())); // for price reqular price
                 for (int i = 0; i < regularPriceLength; i++) {
                     itemDetails.append(" ");// for printing character in a proper Alignment
                 }
                 itemDetails.append(" ");// for printing character space
                 itemDetails.append("Dis"); // for print discount label
-                int oneItemDiscountCharLength = 15 - df.format(order.getOrderDetailsItemDiscount() * order.getOrderDetailsItemQty() ).length();
+                int oneItemDiscountCharLength = 15 - df.format(order.getItemDiscount() * order.getItemQty() ).length();
                 itemDetails.append(" ");// for printing character space
                 itemDetails.append("-"); // for print discount indicate
-                itemDetails.append(df.format(order.getOrderDetailsItemDiscount() * order.getOrderDetailsItemQty()));  // for print 1 item discount
+                itemDetails.append(df.format(order.getItemDiscount() * order.getItemQty()));  // for print 1 item discount
                 for (int i = 0; i < oneItemDiscountCharLength; i++) {
                     itemDetails.append(" ");// for printing character in a proper Alignment
                 }
@@ -197,7 +198,7 @@ public class DrawReciept {
     private void printHeader(String header , Company company , String state ){
 
         receipt.setTextSize(fontSizeB);
-        receipt.setTypeface(WallActivity.appContext, "fonts/RobotoMono-Bold.ttf");
+        receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Bold.ttf");
         String test;
         //es.init_printer();
 
@@ -216,7 +217,7 @@ public class DrawReciept {
         //es.print_and_feed_lines((byte) 0.9);
         receipt.setAlign(Paint.Align.CENTER);
         receipt.setTextSize(fontSizeC);
-        receipt.setTypeface(WallActivity.appContext, "fonts/RobotoMono-Regular.ttf");
+        receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Regular.ttf");
 
         if(header.equalsIgnoreCase("Sales Receipt")){
             //es.print_line(header);
@@ -260,7 +261,7 @@ public class DrawReciept {
         receipt.setTextSize(fontSizeD);
         //receipt.addText(printType,true);
         receipt.addText("________________________________________________",true);
-        receipt.setTypeface(WallActivity.appContext, "fonts/RobotoMono-Regular.ttf");
+        receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Regular.ttf");
         receipt.addText("\n");
         receipt.setAlign(Paint.Align.LEFT);
 
@@ -515,16 +516,16 @@ public class DrawReciept {
             //----------------------------------------------adding payment type
             //  if(!printType.equalsIgnoreCase("Hold Print")) {
             // if (!printType.equalsIgnoreCase("Packing List")) {
-            paymentMethod.append(" Paid By ");
-            if (order.getOrderPaymentMethod() == 1001) {
-                paymentMethod.append("Cash");
-            } else if (order.getOrderPaymentMethod() == 1002) {
+            paymentMethod.append(" Order Status ");
+            if (order.getOrderStatus() == 1001) {
+                paymentMethod.append("Pending");
+            } /*else if (order.getOrderStatus() == 1002) {
                 paymentMethod.append("Cheque");
-            } else if (order.getOrderPaymentMethod() == 1003) {
+            } else if (order.getOrderStatus() == 1003) {
                 paymentMethod.append("Card");
-            } else if (order.getOrderPaymentMethod() == 1004) {
+            } else if (order.getOrderStatus() == 1004) {
                 paymentMethod.append("Credit");
-            }
+            }*/
 
             //es.print_line(paymentMethod.toString());
             receipt.addText(paymentMethod.toString(),true);
@@ -581,14 +582,14 @@ public class DrawReciept {
                 //es.justification_center();
                 //es.bold();
                 receipt.setAlign(Paint.Align.CENTER);
-                receipt.setTypeface(WallActivity.appContext, "fonts/RobotoMono-Bold.ttf");
+                receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Bold.ttf");
                 totalDisBuffer.append("You Saved ");
                 totalDisBuffer.append(formatDis);
                 //es.print_line(totalDisBuffer.toString());
                 //es.justification_left();
                 //es.normal();
                 receipt.addText(totalDisBuffer.toString(),true);
-                receipt.setTypeface(WallActivity.appContext, "fonts/RobotoMono-Regular.ttf");
+                receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Regular.ttf");
                 receipt.setAlign(Paint.Align.LEFT);
             }
 
