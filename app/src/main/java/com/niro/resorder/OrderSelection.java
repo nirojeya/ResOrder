@@ -1,8 +1,12 @@
 package com.niro.resorder;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,8 +25,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
+import com.niro.resorder.helper.DrawReciept;
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
@@ -30,6 +36,10 @@ import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.popup.ConfirmationPopup;
 import com.niro.resorder.service.VolleyPostService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,9 +194,12 @@ public class OrderSelection extends AppCompatActivity
 
                         //Log.e("respomce","OS "+ItemSelectionFragment.selectedItemList.size());
 
+                        createShareImageInBackground(ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList);
+
                         VolleyPostService.postOrderAndOrderDetails(OrderSelection.this, url, ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList, new VolleyPostService.OrderDelegate() {
                             @Override
                             public void processOrderFinished(String orderId) {
+
                                 ItemSelectionFragment.clearOrder();
                                 replaceCategoryFragment();
                             }
@@ -340,6 +353,112 @@ public class OrderSelection extends AppCompatActivity
         totalCount.setText(String.valueOf(qty));
 
     }
+
+    private void createShareImageInBackground(final Order order, final List<OrderDetail> list){
+
+        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                DrawReciept drawReciept = new DrawReciept(OrderSelection.this);
+                Bitmap bitmap = drawReciept.salesPrintReceiptNormalImage(order,list,"Sales Receipt","normal");
+
+                openImage(bitmap);
+                return null;
+            }
+        };
+        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public void openImage(Bitmap bitmap){
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        Bitmap icon = bitmap;
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        icon.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
+        //File f = new File(Environment.getExternalStorageDirectory().toString() + "POS_images/" + "temporary_file.jpg");
+        try {
+            f.createNewFile();
+            FileOutputStream fo = new FileOutputStream(f);
+            fo.write(bytes.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
+        share.putExtra(Intent.EXTRA_STREAM, Uri.parse(root + "/temporary_file.jpg"));
+        startActivity(Intent.createChooser(share, "Share Image"));
+
+    }
+
+
+
+    private void sentSMS(String name , String phone){
+        //Log.e("phoneVerify",name + "  "+phone);
+       /* String phoneNumber = "0771751365";
+        String message = "Hello Sujan! \n your bill amount 500.00 \n receive amount 1000.00 \n your balnce 500.00 \n Thank you \n KALE MOBILE POS \n Ha..Haa.Haa";
+*/
+        String phoneNumber = phone;//"775272030";
+        String message = "Hello! " + name + " \n Your bill amount "+ ItemSelectionFragment.order +" \n " +
+                " \n Thank you \n Send by Niro";
+
+        /*try {
+                // Get the default instance of the SmsManager
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNumber,
+                        null,
+                        message,
+                        null,
+                        null);
+                Toast.makeText(getContext(), "Your sms has successfully sent!",
+                        Toast.LENGTH_LONG).show();
+            } catch (Exception ex) {
+                Toast.makeText(getContext(),"Your sms has failed...",
+                        Toast.LENGTH_LONG).show();
+                ex.printStackTrace();
+            }*/
+
+
+        // public void sendSmsBySIntent() {
+        // add the phone number in the data
+        Uri uri = Uri.parse("smsto:" + phoneNumber);
+
+        Intent smsSIntent = new Intent(Intent.ACTION_SENDTO, uri);
+        // add the message at the sms_body extra field
+        smsSIntent.putExtra("sms_body", message);
+        try{
+            startActivity(smsSIntent);
+        } catch (Exception ex) {
+            Toast.makeText(OrderSelection.this, "Your sms has failed...",
+                    Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
+        // }
+
+       /* public void sendSmsByVIntent() {
+
+            Intent smsVIntent = new Intent(Intent.ACTION_VIEW);
+            // prompts only sms-mms clients
+            smsVIntent.setType("vnd.android-dir/mms-sms");
+
+            // extra fields for number and message respectively
+            smsVIntent.putExtra("address", phoneNumber.getText().toString());
+            smsVIntent.putExtra("sms_body", smsBody.getText().toString());
+            try{
+                startActivity(smsVIntent);
+            } catch (Exception ex) {
+                Toast.makeText(MainActivity.this, "Your sms has failed...",
+                        Toast.LENGTH_LONG).show();
+                ex.printStackTrace();
+            }
+
+        }*/
+
+    }
+
+
+
 
 
 
