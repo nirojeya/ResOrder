@@ -14,9 +14,12 @@ import com.niro.resorder.pojo.OrderDetail;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class DrawReciept {
@@ -49,7 +52,9 @@ public class DrawReciept {
         receipt.setColor(Color.BLACK);
         receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Regular.ttf");
 
-        String person = AppSettings.getPrinterUser(context);
+        //String person = AppSettings.getPrinterUser(context);
+        String person = "User";
+
         printHeader("Sales Receipt",state);
         receipt.setAlign(Paint.Align.LEFT);
         printTop(String.valueOf(order.getOrderId()),type+" #",person);
@@ -336,7 +341,7 @@ public class DrawReciept {
 
         String id = "Sales Receipt";
 
-        test = ReadableDateFormat.getCurrentDateFormet(new Date(System.currentTimeMillis()));
+        test = getCurrentDateFormet(new Date(System.currentTimeMillis()));
         dateAndTime.append(" ").append(test.substring(0, 8)); // for get date only
         dateAndTime.append(test.substring(8, 10)); // for get date only
         dateAndTime.append(getSpaceInPrint(27)); // for printing character in a proper Alignment
@@ -453,7 +458,7 @@ public class DrawReciept {
             }*/
             //-----------------------------------------------adding discount amount
 
-            String orderDisCount = "Included Discount";
+          /*  String orderDisCount = "Included Discount";
             //if(appPreferences.getOrderDiscount().equals("Included Discount")){
             if(AppSettings.getDisType(context).equals("N")){
                 if (order.getOrderDiscount() > 0 ) {
@@ -479,6 +484,9 @@ public class DrawReciept {
                     receipt.addText(discountBuffer.toString(),true);
                 }
             }
+
+            */
+
             //-----------------------------------------------adding return amount
             /*if (ord.getRetrurnAmount()!=0.0) {
                 returnBuffer.append(" Sales Return");
@@ -541,7 +549,7 @@ public class DrawReciept {
             receipt.addText(paymentMethod.toString(),true);
 
             //----------------------------------------------adding received amount
-            test = " Received";
+       /*     test = " Received";
             receivedBuffer.append(test);
             int valueReceived = 47 - (df.format(order.getOredrUserPayment()).length() + 9);
             receivedBuffer.append(getSpaceInPrint(valueReceived));// for printing character in a proper Alignment
@@ -563,6 +571,10 @@ public class DrawReciept {
             //es.print_line(balanceBuffer.toString());
             receipt.addText(balanceBuffer.toString(),true);
             //   }
+
+            */
+
+
             //-----------------------------------------------adding no of items
             //es.print_linefeed();
             receipt.addText("\n");
@@ -588,7 +600,7 @@ public class DrawReciept {
                 }
 */
             String formatDis = df.format(dis);
-            if (AppSettings.getDisType(context).equals("Y") && dis != 0.00 && dis != null) {
+         /*   if (AppSettings.getDisType(context).equals("Y") && dis != 0.00 && dis != null) {
                 //es.justification_center();
                 //es.bold();
                 receipt.setAlign(Paint.Align.CENTER);
@@ -601,7 +613,7 @@ public class DrawReciept {
                 receipt.addText(totalDisBuffer.toString(),true);
                 receipt.setTypeface(ResOrderApp.getContext(), "fonts/RobotoMono-Regular.ttf");
                 receipt.setAlign(Paint.Align.LEFT);
-            }
+            }*/
 
                 /*if (printType.equalsIgnoreCase("Packing List")) {
                     issuedMsg.append("------------");
@@ -666,5 +678,13 @@ public class DrawReciept {
             unit = "cm";
         }
         return unit;
+    }
+
+
+    private String getCurrentDateFormet(Date date){
+
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.US); // Monday 01/01/2016, 11:00 am
+
+        return df.format(date);
     }
 }
