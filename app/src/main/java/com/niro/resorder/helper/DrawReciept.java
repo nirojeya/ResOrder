@@ -131,31 +131,32 @@ public class DrawReciept {
                 for (int i = 0; i < itemQuntityCharLength; i++) {
                     itemDetails.append(" ");// for printing character in a proper Alignment
                 }
-            } /*else {
+            } else {
                 if (div == 0.0) {
-                    long k = ((order.getOrderDetailsItemQty())).longValue();
+                    long k = ((order.getItemQty())).longValue();
                     displayQty = Long.toString(k);
                     itemDetails.append(displayQty);
                 } else {
-                    itemDetails.append(df.format(order.getOrderDetailsItemQty()));
+                    itemDetails.append(df.format(order.getItemQty()));
                 }
 
                 if (div == 0.0) {
-                    long k = ((order.getOrderDetailsItemQty())).longValue();
+                    long k = ((order.getItemQty())).longValue();
                     displayQty = Long.toString(k);
-                    int itemQuntityCharLength = 13 - (displayQty.length()+df.format(order.getOrderDetailsItemPrice() - order.getOrderDetailsItemDiscount()).length());
+                    int itemQuntityCharLength = 13 - (displayQty.length()+df.format(order.getSellingPrice() - order.getItemDiscount()).length());
                     for (int i = 0; i < itemQuntityCharLength; i++) {
                         itemDetails.append(" ");// for printing character in a proper Alignment
                     }
                 } else {
-                    long k = ((order.getOrderDetailsItemQty())).longValue();
+                    long k = ((order.getItemQty())).longValue();
                     displayQty = Long.toString(k);
-                    int itemQuntityCharLength = 10 - (displayQty.length()+df.format(order.getOrderDetailsItemPrice()- order.getOrderDetailsItemDiscount()).length());
+                    int itemQuntityCharLength = 10 - (displayQty.length()+df.format(order.getSellingPrice()- order.getItemDiscount()).length());
                     for (int i = 0; i < itemQuntityCharLength; i++) {
                         itemDetails.append(" ");// for printing character in a proper Alignment
                     }
                 }
-            }*/
+            }
+
             itemDetails.append(" ");// for printing character in a proper Alignment
             itemDetails.append(df.format(order.getSellingPrice() +  order.getItemDiscount())); // for print 1 item price
             int oneItemPricerCharLength = 15 - df.format((order.getSellingPrice() - order.getItemDiscount()) * order.getItemQty()).length();
