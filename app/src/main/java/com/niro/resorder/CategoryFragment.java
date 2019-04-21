@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.niro.resorder.adapter.CategoryAdapter;
+import com.niro.resorder.helper.Utils;
 import com.niro.resorder.service.VolleyGetService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -87,8 +89,8 @@ public class CategoryFragment extends Fragment {
     private void initializeView(View view){
         RecyclerView orderListRV = view.findViewById(R.id.categoryList);
         //  RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
+        int spanCount = Utils.calculateNoOfColumns(Objects.requireNonNull(getActivity()));
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), spanCount, GridLayoutManager.VERTICAL, false);
         orderListRV.setLayoutManager(manager);
         orderListRV.setHasFixedSize(true);
 
