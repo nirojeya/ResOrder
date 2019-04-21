@@ -2,6 +2,7 @@ package com.niro.resorder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -90,6 +91,7 @@ public class CategoryFragment extends Fragment {
         RecyclerView orderListRV = view.findViewById(R.id.categoryList);
         //  RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         int spanCount = Utils.calculateNoOfColumns(Objects.requireNonNull(getActivity()));
+        spanCount = spanCount - 1;
         GridLayoutManager manager = new GridLayoutManager(getActivity(), spanCount, GridLayoutManager.VERTICAL, false);
         orderListRV.setLayoutManager(manager);
         orderListRV.setHasFixedSize(true);
@@ -142,6 +144,12 @@ public class CategoryFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        newConfig.getLayoutDirection();
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.niro.resorder.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryHolder categoryHolder, final int i) {
         categoryHolder.categoryName.setText(categoryList.get(i));
 
-        categoryHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        categoryHolder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 categoryClickDelegate.categoryOnClick(i);
@@ -52,11 +53,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     class CategoryHolder extends RecyclerView.ViewHolder{
-        LinearLayout linearLayout;
+        CardView rootLayout;
         TextView categoryName;
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
-            linearLayout = itemView.findViewById(R.id.category_root);
+            rootLayout = itemView.findViewById(R.id.category_root);
             categoryName = itemView.findViewById(R.id.category_name);
         }
     }
