@@ -149,7 +149,7 @@ public class OrderSelection extends AppCompatActivity
         }
 
         if(itemSelectionFragment != null){
-            Log.e("nnnnmm","not null itemSelectionFragment");
+            //Log.e("nnnnmm","not null itemSelectionFragment");
             replaceCategoryFragment();
         }else {
             super.onBackPressed();
