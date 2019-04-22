@@ -194,7 +194,7 @@ public class OrderSelection extends AppCompatActivity
 
                         //Log.e("respomce","OS "+ItemSelectionFragment.selectedItemList.size());
 
-                        createShareImageInBackground(ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList);
+                        //createShareImageInBackground(ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList);
 
                         VolleyPostService.postOrderAndOrderDetails(OrderSelection.this, url, ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList, new VolleyPostService.OrderDelegate() {
                             @Override
@@ -364,43 +364,6 @@ public class OrderSelection extends AppCompatActivity
 
     }
 
-    private void createShareImageInBackground(final Order order, final List<OrderDetail> list){
-
-        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                DrawReciept drawReciept = new DrawReciept(OrderSelection.this);
-                Bitmap bitmap = drawReciept.salesPrintReceiptNormalImage(order,list,"Sales Receipt","normal");
-
-                openImage(bitmap);
-                return null;
-            }
-        };
-        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    public void openImage(Bitmap bitmap){
-
-        String root = Environment.getExternalStorageDirectory().toString();
-        Bitmap icon = bitmap;
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("image/jpeg");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        icon.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
-        //File f = new File(Environment.getExternalStorageDirectory().toString() + "POS_images/" + "temporary_file.jpg");
-        try {
-            f.createNewFile();
-            FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
-        share.putExtra(Intent.EXTRA_STREAM, Uri.parse(root + "/temporary_file.jpg"));
-        startActivity(Intent.createChooser(share, "Share Image"));
-
-    }
 
 
 

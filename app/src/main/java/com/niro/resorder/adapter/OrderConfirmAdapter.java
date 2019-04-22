@@ -15,12 +15,10 @@ import java.util.List;
 
 public class OrderConfirmAdapter extends BaseAdapter {
 
-    private Context context;
     private LayoutInflater inflater;
     private List<OrderDetail> orderDetails;
 
-    public OrderConfirmAdapter(Context context, List<OrderDetail> orderDetails){
-        this.context = context;
+    public OrderConfirmAdapter(List<OrderDetail> orderDetails){
         this.orderDetails = orderDetails;
     }
 
@@ -45,8 +43,8 @@ public class OrderConfirmAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
         if(view == null){
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.order_confirm_single_row, null);
+            inflater = (LayoutInflater) viewGroup.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.order_confirm_single_row, viewGroup,false);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         }else {
@@ -54,7 +52,7 @@ public class OrderConfirmAdapter extends BaseAdapter {
         }
 
         OrderDetail orderDetail = orderDetails.get(i);
-        Log.e("mmmmmmm",orderDetail.getItemDesc());
+      //  Log.e("mmmmmmm",orderDetail.getItemDesc());
         viewHolder.itemDesc.setText(orderDetail.getItemDesc());
         viewHolder.itemQty.setText(String.valueOf(orderDetail.getItemQty()));
         viewHolder.itemPrice.setText(String.valueOf(orderDetail.getSellingPrice()));

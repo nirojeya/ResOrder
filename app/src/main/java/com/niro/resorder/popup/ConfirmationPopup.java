@@ -40,7 +40,7 @@ public class ConfirmationPopup {
         final ListView inventorySelectorLV = dialog.findViewById(R.id.order_details_list);
         Button buttonClosePopup =  dialog.findViewById(R.id.order_confirm_btn);
 
-        OrderConfirmAdapter adapter = new OrderConfirmAdapter(context,list);
+        OrderConfirmAdapter adapter = new OrderConfirmAdapter(list);
         inventorySelectorLV.setAdapter(adapter);
 
         dialog.show();

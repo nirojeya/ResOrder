@@ -16,6 +16,7 @@ import java.util.List;
 public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.ViewOrderHolder> {
     public interface ViewOrderDelegate{
         void viewDetailsButtonClick(String orderId);
+        void orderConfirmButtonClick(Order order);
     }
 
     private List<Order> orderList;
@@ -55,6 +56,13 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
                 viewOrderDelegate.viewDetailsButtonClick(order.getOrderId());
             }
         });
+
+        viewOrderHolder.orderConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewOrderDelegate.orderConfirmButtonClick(order);
+            }
+        });
     }
 
     @Override
@@ -64,7 +72,7 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
 
 
      class ViewOrderHolder extends RecyclerView.ViewHolder{
-        TextView orderDate,orderStatus,orderId,orderTotal,orderDetailView;
+        TextView orderDate,orderStatus,orderId,orderTotal,orderDetailView,orderConfirm;
          ViewOrderHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -73,6 +81,7 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
             orderId = itemView.findViewById(R.id.orderId);
             orderTotal = itemView.findViewById(R.id.orderTotal);
             orderDetailView = itemView.findViewById(R.id.orderDetailView);
+            orderConfirm = itemView.findViewById(R.id.orderConfirm);
 
         }
     }
