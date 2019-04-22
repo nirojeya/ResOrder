@@ -244,6 +244,8 @@ public class OrderSelection extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
+            replaceViewOrderFragment();
+
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -341,6 +343,14 @@ public class OrderSelection extends AppCompatActivity
                 //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
                 .replace(R.id.orderFrameContainer, new CategoryFragment(),
                         Utils.CategoryFragment).commit();
+    }
+
+    protected void replaceViewOrderFragment() {
+        fragmentManager
+                .beginTransaction()
+                //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
+                .replace(R.id.orderFrameContainer, new ViewOrderFragment(),
+                        Utils.ViewOrderFragment).commit();
     }
 
     @Override

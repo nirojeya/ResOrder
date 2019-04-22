@@ -98,11 +98,12 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(viewOrderAdapter);
 
-        VolleyGetService.syncOrderHistory(getActivity(), "", new VolleyGetService.ViewOrderDelegate() {
+        VolleyGetService.syncOrderHistory(getActivity(), "http://54.200.81.66:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
             @Override
             public void processSyncOrder(List<Order> orderList) {
                 viewOrder.clear();
                 viewOrder.addAll(orderList);
+                viewOrderAdapter.notifyDataSetChanged();
             }
         });
 

@@ -2,6 +2,7 @@ package com.niro.resorder.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +38,14 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
     public void onBindViewHolder(@NonNull ViewOrderHolder viewOrderHolder, int i) {
          final Order order = orderList.get(i);
 
+//        Log.e("orderDate",order.getDate());
+        Log.e("orderStatus",order.getOrderStatus()+"");
+//        Log.e("orderId",order.getOrderId());
+        Log.e("orderTotal",order.getOrderTotal()+"");
+       // Log.e("orderDate",order.getDate());
+
         viewOrderHolder.orderDate.setText(order.getDate());
-        viewOrderHolder.orderStatus.setText(order.getOrderStatus());
+        viewOrderHolder.orderStatus.setText(String.valueOf(order.getOrderStatus()));
         viewOrderHolder.orderId.setText(order.getOrderId());
         viewOrderHolder.orderTotal.setText(String.valueOf(order.getOrderTotal()));
 

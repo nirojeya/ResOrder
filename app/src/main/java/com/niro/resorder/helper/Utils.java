@@ -13,6 +13,8 @@ public class Utils {
     public static final String CategoryFragment = "CategoryFragment";
     public static final String ItemSelectionFragment = "ItemSelectionFragment";
     public static final String AddItemFragment= "AddItemFragment";
+    public static final String ViewOrderFragment= "ViewOrderFragment";
+
 
 
     public static int calculateNoOfColumns(Context context) {

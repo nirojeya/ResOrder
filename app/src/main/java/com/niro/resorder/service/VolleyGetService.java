@@ -231,19 +231,21 @@ public class VolleyGetService {
 
                         Order order = new Order();
 
-                        if (!odObj.isNull("order_status") && odObj.getString("order_status").equals("1002")) {
+                        if (!odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
 
                             // Sync only 1005
                             if (!odObj.isNull("order_id")
-                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1002")) {
+                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
 
                                 order.setOrderId(String.valueOf(odObj.getInt("order_id")));
                             }
 
-                            /*if (!odObj.isNull("created")) {
-                                order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
+                            if (!odObj.isNull("created")) {
+                                //order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
+                                order.setDate(odObj.getString("created"));
+
                             }
-*/
+
                             /*if (!odObj.isNull("payment_method")) {
                                 order.setPaymentMethod(odObj.getInt("payment_method"));
                             }*/
