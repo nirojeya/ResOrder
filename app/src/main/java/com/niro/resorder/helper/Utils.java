@@ -2,6 +2,7 @@ package com.niro.resorder.helper;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.widget.EditText;
 
 public class Utils {
     //Email Validation pattern
@@ -21,6 +22,14 @@ public class Utils {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         return (int) (dpWidth /120);
+    }
+
+    public static boolean checkNotNullEditText(EditText editText){
+        return editText.getText().toString().trim().length() > 0;
+    }
+
+    public static String getInput(EditText editText){
+        return editText.getText().toString().trim();
     }
 
 

@@ -6,7 +6,7 @@
     <string name="close_button"><![CDATA[<string name=\"cloClose Button for Activity]]></string>
     <string name="login">Log in</string>
     <string name="newUser"><![CDATA[Not an account yet? Sign Up here.]]></string>
-    <string name="email">Email</string>
+    <string name="email">User name</string>
     <string name="password">Password</string>
     <string name="title_activity_item_selection">ActivityItemSelection</string>
     <string name="item_img">item_img</string>

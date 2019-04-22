@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.niro.resorder.helper.Utils;
 
 
 /**
@@ -24,7 +28,6 @@ public class LoginFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private View rootView;
 
     // TODO: Rename and change types of parameters
     //private String mParam1;
@@ -68,17 +71,52 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        Button button = rootView.findViewById(R.id.loginBtn);
+        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+
+        initializeView(rootView);
+
+        return rootView;
+    }
+
+    private void initializeView(View view){
+        Button button = view.findViewById(R.id.loginBtn);
+        final EditText userName = view.findViewById(R.id.login_user_name);
+        final EditText password = view.findViewById(R.id.login_password);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),OrderSelection.class));
+
+                if(Utils.checkNotNullEditText(userName)
+                        && Utils.checkNotNullEditText(password)){
+
+                    String un = Utils.getInput(userName);
+                    String pwd = Utils.getInput(password);
+
+                    if(un.equalsIgnoreCase("Admin") && pwd.equalsIgnoreCase("1234")){
+                        ResOrderApp resOrderApp = new ResOrderApp();
+                        resOrderApp.setUserName(un);
+                        resOrderApp.setUserDesignation(un);
+
+                        startActivity(new Intent(getActivity(),OrderSelection.class));
+
+                    }else if(un.equalsIgnoreCase("User") && pwd.equalsIgnoreCase("1111")){
+                        ResOrderApp resOrderApp = new ResOrderApp();
+                        resOrderApp.setUserName(un);
+                        resOrderApp.setUserDesignation(un);
+
+                        startActivity(new Intent(getActivity(),OrderSelection.class));
+
+                    }else {
+                        Toast.makeText(getActivity(), "Incorrect username or password", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(getActivity(), "Can not be empty", Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
-
-
-        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

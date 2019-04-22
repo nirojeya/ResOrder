@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.niro.resorder.helper.Utils;
 import com.niro.resorder.pojo.Item;
 
 
@@ -91,22 +92,22 @@ public class AddItemFragment extends Fragment {
         itemCategory = view.findViewById(R.id.addItemCategory);
         itemSubCategory = view.findViewById(R.id.addItemSubCategory);
 
-        if(checkNotNullEditText(itemNumber) && checkNotNullEditText(itemName)
-                && checkNotNullEditText(itemQty) && checkNotNullEditText(itemPrice)){
+        if(Utils.checkNotNullEditText(itemNumber) && Utils.checkNotNullEditText(itemName)
+                && Utils.checkNotNullEditText(itemQty) && Utils.checkNotNullEditText(itemPrice)){
 
-            itemNo = getInput(itemNumber);
-            itemDesc = getInput(itemName);
-            itemQtatity = Double.parseDouble(getInput(itemQty));
-            itemPcs = Double.parseDouble(getInput(itemPrice));
+            itemNo = Utils.getInput(itemNumber);
+            itemDesc = Utils.getInput(itemName);
+            itemQtatity = Double.parseDouble(Utils.getInput(itemQty));
+            itemPcs = Double.parseDouble(Utils.getInput(itemPrice));
 
-            if(checkNotNullEditText(itemCategory)){
-                itemCat = getInput(itemCategory);
+            if(Utils.checkNotNullEditText(itemCategory)){
+                itemCat = Utils.getInput(itemCategory);
             }else {
                 itemCat = "Others";
             }
 
-            if(checkNotNullEditText(itemSubCategory)){
-                itemSubCat = getInput(itemSubCategory);
+            if(Utils.checkNotNullEditText(itemSubCategory)){
+                itemSubCat = Utils.getInput(itemSubCategory);
             }else {
                 itemSubCat = "Others";
             }
@@ -162,11 +163,5 @@ public class AddItemFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private boolean checkNotNullEditText(EditText editText){
-        return editText.getText().toString().trim().length() > 0;
-    }
 
-    private String getInput(EditText editText){
-        return editText.getText().toString().trim();
-    }
 }
