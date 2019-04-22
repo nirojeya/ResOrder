@@ -347,6 +347,8 @@ public class VolleyGetService {
                             od.setSellingPrice(odObj.getDouble("item_price"));
                         }
 
+                        od.setItemPrice(od.getSellingPrice() / od.getItemQty());
+
                         /*if (!odObj.isNull("bid")) {
                             od.setBatchNo(String.valueOf(odObj.getInt("bid")));
                         }
