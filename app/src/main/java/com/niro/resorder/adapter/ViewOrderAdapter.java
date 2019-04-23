@@ -2,6 +2,7 @@ package com.niro.resorder.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.ViewOrderHolder> {
     public interface ViewOrderDelegate{
         void viewDetailsButtonClick(String orderId);
+        void orderConfirmButtonClick(Order order);
     }
 
     private List<Order> orderList;
@@ -37,8 +39,14 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
     public void onBindViewHolder(@NonNull ViewOrderHolder viewOrderHolder, int i) {
          final Order order = orderList.get(i);
 
+//        Log.e("orderDate",order.getDate());
+        Log.e("orderStatus",order.getOrderStatus()+"");
+//        Log.e("orderId",order.getOrderId());
+        Log.e("orderTotal",order.getOrderTotal()+"");
+       // Log.e("orderDate",order.getDate());
+
         viewOrderHolder.orderDate.setText(order.getDate());
-        viewOrderHolder.orderStatus.setText(order.getOrderStatus());
+        viewOrderHolder.orderStatus.setText(String.valueOf(order.getOrderStatus()));
         viewOrderHolder.orderId.setText(order.getOrderId());
         viewOrderHolder.orderTotal.setText(String.valueOf(order.getOrderTotal()));
 
@@ -46,6 +54,13 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
             @Override
             public void onClick(View view) {
                 viewOrderDelegate.viewDetailsButtonClick(order.getOrderId());
+            }
+        });
+
+        viewOrderHolder.orderConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewOrderDelegate.orderConfirmButtonClick(order);
             }
         });
     }
@@ -57,7 +72,7 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
 
 
      class ViewOrderHolder extends RecyclerView.ViewHolder{
-        TextView orderDate,orderStatus,orderId,orderTotal,orderDetailView;
+        TextView orderDate,orderStatus,orderId,orderTotal,orderDetailView,orderConfirm;
          ViewOrderHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -66,6 +81,7 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
             orderId = itemView.findViewById(R.id.orderId);
             orderTotal = itemView.findViewById(R.id.orderTotal);
             orderDetailView = itemView.findViewById(R.id.orderDetailView);
+            orderConfirm = itemView.findViewById(R.id.orderConfirm);
 
         }
     }

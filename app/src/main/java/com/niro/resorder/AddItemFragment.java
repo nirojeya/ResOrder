@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import com.niro.resorder.helper.Utils;
+import com.niro.resorder.pojo.Item;
 
 
 /**
@@ -22,6 +26,13 @@ public class AddItemFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private EditText itemNumber;
+    private EditText itemName;
+    private EditText itemQty;
+    private EditText itemPrice;
+    private EditText itemCategory;
+    private EditText itemSubCategory;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,7 +75,53 @@ public class AddItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_item, container, false);
+        assignViews(view);
+        return view;
+    }
+
+    private void assignViews(View view){
+        Item item;
+        String itemNo,itemDesc,itemCat,itemSubCat;
+        double itemQtatity,itemPcs;
+
+        itemNumber = view.findViewById(R.id.addItemNumber);
+        itemName = view.findViewById(R.id.addItemName);
+        itemQty = view.findViewById(R.id.addItemQty);
+        itemPrice = view.findViewById(R.id.addItemPrice);
+        itemCategory = view.findViewById(R.id.addItemCategory);
+        itemSubCategory = view.findViewById(R.id.addItemSubCategory);
+
+        if(Utils.checkNotNullEditText(itemNumber) && Utils.checkNotNullEditText(itemName)
+                && Utils.checkNotNullEditText(itemQty) && Utils.checkNotNullEditText(itemPrice)){
+
+            itemNo = Utils.getInput(itemNumber);
+            itemDesc = Utils.getInput(itemName);
+            itemQtatity = Double.parseDouble(Utils.getInput(itemQty));
+            itemPcs = Double.parseDouble(Utils.getInput(itemPrice));
+
+            if(Utils.checkNotNullEditText(itemCategory)){
+                itemCat = Utils.getInput(itemCategory);
+            }else {
+                itemCat = "Others";
+            }
+
+            if(Utils.checkNotNullEditText(itemSubCategory)){
+                itemSubCat = Utils.getInput(itemSubCategory);
+            }else {
+                itemSubCat = "Others";
+            }
+
+            item = new Item();
+            item.setItemNumber(itemNo);
+            item.setItemDesc(itemDesc);
+            item.setItemQty(itemQtatity);
+            item.setItemPrice(itemPcs);
+            item.setItemCategory(itemCat);
+            item.setItemSubCategory(itemSubCat);
+        }
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +162,6 @@ public class AddItemFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

@@ -24,7 +24,7 @@
 
 
             <EditText
-                android:id="@+id/login_emailId"
+                android:id="@+id/login_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
@@ -32,7 +32,7 @@
                 android:textSize="25sp"
                 android:padding="10dp"
                 android:drawablePadding="8dp"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 android:drawableStart="@drawable/email"
                 />
 

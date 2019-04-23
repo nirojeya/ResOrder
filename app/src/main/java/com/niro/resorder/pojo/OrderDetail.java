@@ -3,6 +3,7 @@ package com.niro.resorder.pojo;
 public class OrderDetail {
 
     private String itemNumber;
+    private String oederId;
     private String itemDesc;
     private double itemQty;
     private String itemCategory;
@@ -101,6 +102,14 @@ public class OrderDetail {
 
     public void setVatCode(int vatCode) {
         this.vatCode = vatCode;
+    }
+
+    public String getOederId() {
+        return oederId;
+    }
+
+    public void setOederId(String oederId) {
+        this.oederId = oederId;
     }
 }
 

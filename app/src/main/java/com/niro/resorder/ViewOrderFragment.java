@@ -1,8 +1,13 @@
 package com.niro.resorder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.niro.resorder.adapter.ViewOrderAdapter;
+import com.niro.resorder.helper.DrawReciept;
 import com.niro.resorder.pojo.Order;
+import com.niro.resorder.pojo.OrderDetail;
+import com.niro.resorder.popup.ConfirmationPopup;
 import com.niro.resorder.service.VolleyGetService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,11 +110,12 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(viewOrderAdapter);
 
-        VolleyGetService.syncOrderHistory(getActivity(), "", new VolleyGetService.ViewOrderDelegate() {
+        VolleyGetService.syncOrderHistory(getActivity(), "http://54.200.81.66:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
             @Override
             public void processSyncOrder(List<Order> orderList) {
                 viewOrder.clear();
                 viewOrder.addAll(orderList);
+                viewOrderAdapter.notifyDataSetChanged();
             }
         });
 
@@ -134,8 +147,69 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
 
     @Override
     public void viewDetailsButtonClick(String orderId) {
+        VolleyGetService.syncOrdersDetails(getActivity(), "http://54.200.81.66:3000/api/acct/salesreceipt/"+orderId, new VolleyGetService.ViewOrderDetailsDelrgate() {
+            @Override
+            public void processSyncOrderDetails(List<OrderDetail> list) {
+                ConfirmationPopup.orderDetailsView(getActivity(), list, new ConfirmationPopup.OrderConfirmDelegate() {
+                    @Override
+                    public void processOrderConfirm() {
+                        // nothing to do
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public void orderConfirmButtonClick(final Order order) {
+        VolleyGetService.syncOrdersDetails(getActivity(),
+                "http://54.200.81.66:3000/api/acct/salesreceipt/"+order.getOrderId(),
+                new VolleyGetService.ViewOrderDetailsDelrgate() {
+            @Override
+            public void processSyncOrderDetails(List<OrderDetail> list) {
+                createShareImageInBackground(order,list);
+            }
+        });
+    }
+
+    private void createShareImageInBackground(final Order order, final List<OrderDetail> list){
+
+        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                DrawReciept drawReciept = new DrawReciept(getActivity());
+                Bitmap bitmap = drawReciept.salesPrintReceiptNormalImage(order,list,"Sales Receipt","normal");
+
+                openImage(bitmap);
+                return null;
+            }
+        };
+        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public void openImage(Bitmap bitmap){
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        Bitmap icon = bitmap;
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        icon.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
+        //File f = new File(Environment.getExternalStorageDirectory().toString() + "POS_images/" + "temporary_file.jpg");
+        try {
+            f.createNewFile();
+            FileOutputStream fo = new FileOutputStream(f);
+            fo.write(bytes.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
+        share.putExtra(Intent.EXTRA_STREAM, Uri.parse(root + "/temporary_file.jpg"));
+        startActivity(Intent.createChooser(share, "Share Image"));
 
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
+import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.singleton.VolleySingleton;
 
 import org.json.JSONArray;
@@ -27,6 +28,7 @@ public class VolleyGetService {
     private static ItemDelegate itemDelegate;
     private static CategoryDelegate categoryDelegate;
     private static ViewOrderDelegate viewOrderDelegate;
+    private static ViewOrderDetailsDelrgate viewOrderDetailsDelrgate;
 
     private static Context context;
     private static List<String> categoryList;
@@ -44,6 +46,11 @@ public class VolleyGetService {
     public interface ViewOrderDelegate{
         void processSyncOrder(List<Order> orderList);
     }
+
+    public interface ViewOrderDetailsDelrgate{
+        void processSyncOrderDetails(List<OrderDetail> list);
+    }
+
 
 
     public static void syncAllInventory(Context con,String url, final ItemDelegate delegate) {
@@ -231,19 +238,21 @@ public class VolleyGetService {
 
                         Order order = new Order();
 
-                        if (!odObj.isNull("order_status") && odObj.getString("order_status").equals("1002")) {
+                        if (!odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
 
                             // Sync only 1005
                             if (!odObj.isNull("order_id")
-                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1002")) {
+                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
 
                                 order.setOrderId(String.valueOf(odObj.getInt("order_id")));
                             }
 
-                            /*if (!odObj.isNull("created")) {
-                                order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
+                            if (!odObj.isNull("created")) {
+                                //order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
+                                order.setDate(odObj.getString("created"));
+
                             }
-*/
+
                             /*if (!odObj.isNull("payment_method")) {
                                 order.setPaymentMethod(odObj.getInt("payment_method"));
                             }*/
@@ -291,6 +300,119 @@ public class VolleyGetService {
 
         VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
+
+    public static void syncOrdersDetails(Context con,String url,ViewOrderDetailsDelrgate r) {
+        viewOrderDetailsDelrgate = r;
+        /*
+         * Server tab (Sign_up) only need to sync all order.
+         * This function will call by server tab.
+         * So, no nee to check COMPANY_ID.
+         * Before sync order need to check database by (order id, item number, bid and company id) unique
+         * Join tab will show only join tab's sales.
+         *
+         * tk */
+
+        context = con;
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject obj) {
+                Log.e("okGood111",obj.toString());
+
+                try {
+
+                    List<OrderDetail> orderDetailsList = new ArrayList<>();
+
+                    JSONObject object = obj.getJSONObject("salesreceipt");
+
+
+                    // order details
+                    JSONArray jsonArray = object.getJSONArray("details");
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject odObj = jsonArray.getJSONObject(i);
+
+                        OrderDetail od = new OrderDetail();
+                        //Log.e("COUNTCCC","also come "+object.getString("item_number"));
+
+
+                        if (!object.isNull("order_id")) {
+                            od.setOederId(String.valueOf(object.getInt("order_id")));
+                        }
+                        if (!odObj.isNull("qty")) {
+                            od.setItemQty(odObj.getDouble("qty"));
+                        }
+                        if (!odObj.isNull("item_price")) {
+                            od.setSellingPrice(odObj.getDouble("item_price"));
+                        }
+
+                        od.setItemPrice(od.getSellingPrice() / od.getItemQty());
+
+                        /*if (!odObj.isNull("bid")) {
+                            od.setBatchNo(String.valueOf(odObj.getInt("bid")));
+                        }
+                        if (!odObj.isNull("item_number")) {
+                            od.setItemNumber(odObj.getString("item_number"));
+                        }
+                        if (!odObj.isNull("item_discount")) {
+                            od.setDiscount(odObj.getDouble("item_discount"));
+                        }
+                        if (!odObj.isNull("category")) {
+                            od.setItemCategory(odObj.getString("category"));
+                        }
+                        if (!odObj.isNull("subcategory")) {
+                            od.setItemSubCategory(odObj.getString("subcategory"));
+                        }
+                        Log.e("DESC",odObj.getString("item_desc"));*/
+                        if (!odObj.isNull("item_desc")) {
+                            od.setItemDesc(odObj.getString("item_desc"));
+                        }
+
+                        /*if (!object.isNull("company_id")) {
+                            od.setCompanyId((object.getString("company_id")));
+                        }
+
+                        if (!odObj.isNull("purchase_price")) {
+                            od.setPurchasePrice((odObj.getDouble("purchase_price")));
+                        }
+
+                        if(!odObj.isNull("location_id")){
+                            od.setLocationId(odObj.getInt("location_id"));
+                        }
+
+                        od.setRegularPrice(od.getSales_price() + od.getDiscount());
+*/
+                        orderDetailsList.add(od);
+
+                    }
+
+                    viewOrderDetailsDelrgate.processSyncOrderDetails(orderDetailsList);
+
+
+
+
+                } catch (JSONException e){
+                    e.printStackTrace();
+                    Log.e("JSONERR",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("RES_ERR",error.toString());
+            }
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+        };
+
+        VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
 
 
     //set header
