@@ -9,10 +9,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.singleton.VolleySingleton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +32,130 @@ public class VolleyPostService {
     }
 
     private static OrderDelegate orderDelegate;
+
+    public static void postItem(Context ctx,String url , final Item item){
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("respomce_item",response.toString());
+
+
+                // updateItemBatchId
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("respomce_item_err",error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+
+            @Override
+            public byte[] getBody() {
+                return setItemParams(item);
+            }
+        };
+
+        // now volley retry policy is 20s
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(20000),
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getmInstance(ctx.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private static byte[] setItemParams(Item item){
+
+        //String clientId = AppSettings.getClientId(context);
+        //String companyId = AppSettings.getCompanyId(context);
+
+        String clientId = "tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX";
+        String companyId = "e23197373bd3ce99";
+
+        //DBHandler dbHandler = DBSingleton.getInstance(context);
+        //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
+
+        JSONObject params = new JSONObject();
+        String body = null;
+        try{
+            //Here are your parameters:
+
+            //String date = ConversionClass.postServerDateFormat(item.getDate());
+
+            /*String date = "n/l";
+            if(!item.getBidExpDate().equalsIgnoreCase("n/l")){
+                date = ConversionClass.postServerDateFormat(item.getBidExpDate());
+
+            }else if(!item.getDate().equalsIgnoreCase("n/l")){
+                date = ConversionClass.postServerDateFormat(item.getDate());
+            }*/
+
+            params.put("client_id", clientId);
+            params.put("company_id", companyId);
+            params.put("item_number", item.getItemNumber());
+            params.put("temp_bid",item.getBid());
+            params.put("bid", 0);
+            params.put("track_inventory","Y");
+            params.put("item_desc", item.getItemDesc());
+            params.put("category", item.getItemCategory());
+            params.put("subcategory", item.getItemSubCategory());
+            params.put("uom", "no");
+            params.put("vat_code", "1");
+            params.put("selling_price", item.getItemPrice());
+            params.put("max_discount", 0.0);
+            params.put("max_discount_type",1);
+            params.put("default_discount", 0.0);
+            params.put("default_discount_type",1);
+            //Log.e("ProductType",item.getProductType());
+            /*if(item.getProductType().equalsIgnoreCase("P")) {
+                params.put("type", 0); // this is product item
+            }else if(item.getProductType().equalsIgnoreCase("M")) {
+                params.put("type", 1); // this is manufacture item
+            }else if(item.getProductType().equalsIgnoreCase("MI")){
+                params.put("type", 2); // this is manufacture item
+            }*/
+            params.put("type", 1); // this is manufacture item
+            params.put("purchase_price", item.getItemPrice());
+            params.put("bid_exp_date", "n/l"); // this is convertion date
+            params.put("qoh", item.getItemQty());
+            params.put("qoh_count", item.getItemQty());
+            params.put("reorder_qty", 0.0);
+            params.put("location_id",1);
+            params.put("bid_text", "n/l");
+            params.put("bid_rcd_qty", item.getItemQty());
+            params.put("supplier_id", "1");
+            params.put("allow_sales","1");
+
+
+
+
+
+
+
+
+            body = params.toString();
+            Log.e("BODY",body);
+
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        try{
+            return body.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     /* POST Order and Order details */
     public static void postOrderAndOrderDetails(Context ctx, String url , final Order order, final List<OrderDetail> orderDetailsList, final OrderDelegate delegate){
         orderDelegate = delegate;
