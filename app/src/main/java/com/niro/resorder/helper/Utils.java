@@ -3,6 +3,7 @@ package com.niro.resorder.helper;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class Utils {
     //Email Validation pattern
@@ -26,6 +27,10 @@ public class Utils {
 
     public static boolean checkNotNullEditText(EditText editText){
         return editText.getText().toString().trim().length() > 0;
+    }
+
+    public static boolean checkNotNullTextView(TextView textView){
+        return !textView.getText().toString().equals("0");
     }
 
     public static String getInput(EditText editText){
