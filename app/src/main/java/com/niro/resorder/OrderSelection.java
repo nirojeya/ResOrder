@@ -181,38 +181,39 @@ public class OrderSelection extends AppCompatActivity
             totalCount = view.findViewById(R.id.txtCount);
         }
 
-        if(Utils.checkNotNullTextView(totalCount)) {
             shopingChartRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(Utils.checkNotNullTextView(totalCount)) {
 
-                    ConfirmationPopup.orderDetailsView(OrderSelection.this, ItemSelectionFragment.selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
-                        @Override
-                        public void processOrderConfirm() {
+                        ConfirmationPopup.orderDetailsView(OrderSelection.this, ItemSelectionFragment.selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+                            @Override
+                            public void processOrderConfirm() {
 
-                            ItemSelectionFragment.order.setOrderStatus(1001);
-                            String url = baseUrl + "api/acct/salesreceipt";
+                                ItemSelectionFragment.order.setOrderStatus(1001);
+                                String url = baseUrl + "api/acct/salesreceipt";
 
-                            //Log.e("respomce","OS "+ItemSelectionFragment.selectedItemList.size());
+                                //Log.e("respomce","OS "+ItemSelectionFragment.selectedItemList.size());
 
-                            //createShareImageInBackground(ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList);
+                                //createShareImageInBackground(ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList);
 
-                            VolleyPostService.postOrderAndOrderDetails(OrderSelection.this, url, ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList, new VolleyPostService.OrderDelegate() {
-                                @Override
-                                public void processOrderFinished(String orderId) {
-                                    totalCount.setText("0");
-                                    ItemSelectionFragment.clearOrder();
-                                    replaceCategoryFragment();
-                                }
-                            });
+                                VolleyPostService.postOrderAndOrderDetails(OrderSelection.this, url, ItemSelectionFragment.order, ItemSelectionFragment.selectedItemList, new VolleyPostService.OrderDelegate() {
+                                    @Override
+                                    public void processOrderFinished(String orderId) {
+                                        totalCount.setText("0");
+                                        ItemSelectionFragment.clearOrder();
+                                        replaceCategoryFragment();
+                                    }
+                                });
 
 
-                        }
-                    });
+                            }
+                        });
+                    }
 
                 }
             });
-        }
+
         return true;
     }
 

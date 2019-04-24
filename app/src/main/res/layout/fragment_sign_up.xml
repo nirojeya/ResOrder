@@ -60,19 +60,6 @@
         android:drawableStart="@drawable/phone" />
 
 
-    <EditText
-        android:id="@+id/signLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/location"
-        android:hint="@string/location"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:drawablePadding="8dp"
-        android:inputType="textCapWords"
-        android:drawableStart="@drawable/location" />
-
 
     <EditText
         android:id="@+id/signPassword"
@@ -102,14 +89,6 @@
         android:drawableStart="@drawable/password" />
 
 
-<CheckBox
-    android:id="@+id/terms_conditions"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="7dp"
-    android:text="@string/terms_conditions"
-    android:textColor="@color/white"
-    android:textSize="14sp" />
 
 <Button
     android:id="@+id/signUpBtn"
