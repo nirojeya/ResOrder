@@ -110,17 +110,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
 
         <Button
             android:id="@+id/addAItemButton"
             android:layout_width="150dp"
             android:layout_height="45dp"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="216dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:layout_marginStart="10dp"
             android:text="Add Item" />
 
         <Button
@@ -128,7 +126,8 @@
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:text="clear"
-           android:layout_toEndOf="@+id/addAItemButton"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/addAItemButton"
             android:layout_toRightOf="@+id/addAItemButton"
             android:layout_alignBaseline="@+id/addAItemButton"/>
 
