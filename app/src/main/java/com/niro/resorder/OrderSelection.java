@@ -248,9 +248,9 @@ public class OrderSelection extends AppCompatActivity
 
             replaceViewOrderFragment();
 
-        } /*else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_log_out) {
+            processLogout();
+        }/* else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
@@ -259,6 +259,10 @@ public class OrderSelection extends AppCompatActivity
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void processLogout() {
+        finish();
     }
 
     @Override
