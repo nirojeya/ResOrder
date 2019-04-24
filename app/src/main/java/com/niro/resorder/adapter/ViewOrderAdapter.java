@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.niro.resorder.R;
+import com.niro.resorder.ResOrderApp;
 import com.niro.resorder.pojo.Order;
 
 import java.util.List;
@@ -56,6 +57,14 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
                 viewOrderDelegate.viewDetailsButtonClick(order.getOrderId());
             }
         });
+
+        ResOrderApp orderApp = new ResOrderApp();
+
+        if(orderApp.getUserDesignation().equalsIgnoreCase("Admin")){
+            viewOrderHolder.orderConfirm.setVisibility(View.VISIBLE);
+        }else {
+            viewOrderHolder.orderConfirm.setVisibility(View.GONE);
+        }
 
         viewOrderHolder.orderConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
