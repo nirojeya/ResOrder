@@ -235,24 +235,24 @@ public class OrderSelection extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_category) {
             //startActivity(new Intent(this,CategoryActivity.class));
 
             replaceCategoryFragment();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_view_order) {
 
             replaceViewOrderFragment();
 
-        } else if (id == R.id.nav_manage) {
+        } /*else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -261,81 +261,7 @@ public class OrderSelection extends AppCompatActivity
 
     @Override
     public void selectedItems(OrderDetail od){}
-    /*public void selectedItems(OrderDetail orderDetail) {
-        if (selectedItemList.size()>0){
-            //Log.e("FIND_IS","IF 1");
-            int itemCount = 0;
-            int index = -1;
 
-            for (OrderDetail orderDetails:selectedItemList){
-
-                if (orderDetails.getItemNumber().equalsIgnoreCase(orderDetail.getItemNumber())){
-                    //Log.e("FIND_IS","equal num");
-
-                    index = itemCount;
-                }
-                itemCount++;
-            }
-
-            if (index == -1){
-                //Log.e("FIND_IS","IF -1");
-
-                orderDetail.setSellingPrice(orderDetail.getItemPrice()*orderDetail.getItemQty());
-
-                //Toast.makeText(getContext(), "please Select item" ,Toast.LENGTH_SHORT).show();
-                selectedItemList.add(orderDetail);
-                //setOrderTotal();
-            }else {
-                //Log.e("FIND_IS","ELSE "+index);
-
-                //Log.e("DDDDDDDF","before "+item.getItemQty());
-
-                selectedItemList.get(index).setItemQty(selectedItemList.get(index).getItemQty()+orderDetail.getItemQty());
-                selectedItemList.get(index).setSellingPrice(selectedItemList.get(index).getSellingPrice()+orderDetail.getItemPrice());
-                //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
-
-                //Log.e("FIND_IS1","ELSE "+selectedItemList.get(index).getSellingPrice());
-
-                setOrderTotal();
-            }
-
-        }else {
-            //Log.e("FIND_IS","ELSE 1");
-
-            orderDetail.setSellingPrice(orderDetail.getItemPrice()*orderDetail.getItemQty());
-
-            //Log.e("FIND_IS1","ELSE "+orderDetail.getSellingPrice());
-
-            //od.setOrderDetailsItemSellingPrice(od.getOrderDetailsItemPrice());
-            selectedItemList.add(orderDetail);
-            setOrderTotal();
-        }
-        // noOfItem.setText(calNoOfItem(selectIdlist));
-        selectionAdapter.notifyDataSetChanged();
-        totalCount.setText(String.valueOf(calOrderQty()));
-
-    }
-
-    private void setOrderTotal(){
-        double orderTotal = 0.0;
-        //Double discount = 0.0  ;
-        for (OrderDetail orderDetail:selectedItemList){
-
-            orderTotal= orderTotal + orderDetail.getSellingPrice();
-        }
-        order.setOrderTotal(orderTotal);
-        //Log.e("Totoal",""+orderTotal);
-    }
-
-    private Double calOrderQty(){
-        double orderQty = 0.0;
-        for (OrderDetail orderDetail:selectedItemList){
-            orderQty= orderQty + orderDetail.getItemQty();
-
-            //Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
-        }
-        return orderQty;
-    }*/
 
     protected void replaceCategoryFragment() {
         fragmentManager
