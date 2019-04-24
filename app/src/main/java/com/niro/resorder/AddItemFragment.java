@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.niro.resorder.helper.Utils;
@@ -25,7 +26,7 @@ import java.util.Objects;
  * Use the {@link AddItemFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddItemFragment extends Fragment {
+public class AddItemFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,6 +38,8 @@ public class AddItemFragment extends Fragment {
     private EditText itemPrice;
     private EditText itemCategory;
     private EditText itemSubCategory;
+
+    private Button buttonAddItem;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -85,9 +88,6 @@ public class AddItemFragment extends Fragment {
     }
 
     private void assignViews(View view){
-        Item item;
-        String itemNo,itemDesc,itemCat,itemSubCat;
-        double itemQtatity,itemPcs;
 
         itemNumber = view.findViewById(R.id.addItemNumber);
         itemName = view.findViewById(R.id.addItemName);
@@ -96,43 +96,18 @@ public class AddItemFragment extends Fragment {
         itemCategory = view.findViewById(R.id.addItemCategory);
         itemSubCategory = view.findViewById(R.id.addItemSubCategory);
 
-        if(Utils.checkNotNullEditText(itemNumber) && Utils.checkNotNullEditText(itemName)
-                && Utils.checkNotNullEditText(itemQty) && Utils.checkNotNullEditText(itemPrice)){
+        buttonAddItem = view.findViewById(R.id.addAItemButton);
 
-            itemNo = Utils.getInput(itemNumber);
-            itemDesc = Utils.getInput(itemName);
-            itemQtatity = Double.parseDouble(Utils.getInput(itemQty));
-            itemPcs = Double.parseDouble(Utils.getInput(itemPrice));
+        buttonAddItem.setOnClickListener(this);
 
-            if(Utils.checkNotNullEditText(itemCategory)){
-                itemCat = Utils.getInput(itemCategory);
-            }else {
-                itemCat = "Others";
-            }
-
-            if(Utils.checkNotNullEditText(itemSubCategory)){
-                itemSubCat = Utils.getInput(itemSubCategory);
-            }else {
-                itemSubCat = "Others";
-            }
-
-            item = new Item();
-            item.setItemNumber(itemNo);
-            item.setItemDesc(itemDesc);
-            item.setItemQty(itemQtatity);
-            item.setItemPrice(itemPcs);
-            item.setItemCategory(itemCat);
-            item.setItemSubCategory(itemSubCat);
-
-            processAddItem(item);
-            processClear();
-        }
 
 
     }
 
     private void processAddItem(Item item){
-        VolleyPostService.postItem(Objects.requireNonNull(getActivity()),"",item);
+        String  itemURL = "http://54.200.81.66:3000/"+"api/item/item";
+
+        VolleyPostService.postItem(Objects.requireNonNull(getActivity()),itemURL,item);
     }
 
     private void processClear(){
@@ -166,6 +141,50 @@ public class AddItemFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(Utils.checkNotNullEditText(itemNumber) && Utils.checkNotNullEditText(itemName)
+                && Utils.checkNotNullEditText(itemQty) && Utils.checkNotNullEditText(itemPrice)){
+
+            Item item;
+
+
+            String itemNo,itemDesc,itemCat,itemSubCat;
+            double itemQtatity,itemPcs;
+
+
+            itemNo = Utils.getInput(itemNumber);
+            itemDesc = Utils.getInput(itemName);
+            itemQtatity = Double.parseDouble(Utils.getInput(itemQty));
+            itemPcs = Double.parseDouble(Utils.getInput(itemPrice));
+
+            if(Utils.checkNotNullEditText(itemCategory)){
+                itemCat = Utils.getInput(itemCategory);
+            }else {
+                itemCat = "Others";
+            }
+
+            if(Utils.checkNotNullEditText(itemSubCategory)){
+                itemSubCat = Utils.getInput(itemSubCategory);
+            }else {
+                itemSubCat = "Others";
+            }
+
+            item = new Item();
+            item.setItemNumber(itemNo);
+            item.setItemDesc(itemDesc);
+            item.setItemQty(itemQtatity);
+            item.setItemPrice(itemPcs);
+            item.setItemCategory(itemCat);
+            item.setItemSubCategory(itemSubCat);
+
+            processAddItem(item);
+            processClear();
+        }
+
+
     }
 
     /**
