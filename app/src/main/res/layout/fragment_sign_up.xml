@@ -1,14 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SignUpFragment">
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="@string/signUp"
+    android:textColor="@color/white_greyish"
+    android:textSize="25sp"
+    android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/signFullName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/user"
+        android:hint="@string/fullName"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:drawablePadding="8dp"
+        android:inputType="textCapWords"
+        android:drawableStart="@drawable/user" />
 
-</FrameLayout>
+
+    <EditText
+        android:id="@+id/signEmailId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/email"
+        android:hint="@string/email"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:drawablePadding="8dp"
+        android:inputType="textEmailAddress"
+        android:drawableStart="@drawable/email" />
+
+
+    <EditText
+        android:id="@+id/signPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/phone"
+        android:hint="@string/phone"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:drawablePadding="8dp"
+        android:inputType="phone"
+        android:drawableStart="@drawable/phone" />
+
+
+    <EditText
+        android:id="@+id/signLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/location"
+        android:hint="@string/location"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:drawablePadding="8dp"
+        android:inputType="textCapWords"
+        android:drawableStart="@drawable/location" />
+
+
+    <EditText
+        android:id="@+id/signPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/password"
+        android:hint="@string/password"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:drawablePadding="8dp"
+        android:inputType="textPassword"
+        android:drawableStart="@drawable/password" />
+
+
+    <EditText
+        android:id="@+id/signConPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/password"
+        android:hint="@string/con_password"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:drawablePadding="8dp"
+        android:inputType="textPassword"
+        android:drawableStart="@drawable/password" />
+
+
+<CheckBox
+    android:id="@+id/terms_conditions"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="7dp"
+    android:text="@string/terms_conditions"
+    android:textColor="@color/white"
+    android:textSize="14sp" />
+
+<Button
+    android:id="@+id/signUpBtn"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/login_btn_selector"
+    android:padding="3dp"
+    android:text="@string/signUp"
+    android:textColor="@color/background_color"
+    android:textSize="17sp"
+    android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/already_user"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="5dp"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="@string/already_user"
+    android:textColor="@color/white_greyish"
+    android:textSize="15sp" />
+
+</LinearLayout>
