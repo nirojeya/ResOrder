@@ -61,11 +61,11 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
 
         //Log.e("bjbjb",ResOrderApp.getUserDesignation());
 
-        /*if(orderApp.getUserDesignation().equalsIgnoreCase("Admin")){
+        if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")){
             viewOrderHolder.orderConfirm.setVisibility(View.VISIBLE);
         }else {
-            viewOrderHolder.orderConfirm.setVisibility(View.GONE);
-        }*/
+            viewOrderHolder.orderConfirm.setVisibility(View.INVISIBLE);
+        }
 
         viewOrderHolder.orderConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
