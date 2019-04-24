@@ -6,8 +6,8 @@ import android.content.Context;
 public class ResOrderApp extends Application {
     private static Context applicationContext;
 
-    private String userName = "";
-    private String userDesignation = "";
+    private static String userName = "";
+    private static String userDesignation = "";
 
     @Override
     public void onCreate() {
@@ -23,15 +23,15 @@ public class ResOrderApp extends Application {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public static void setUserName(String un) {
+        userName = un;
     }
 
-    public String getUserDesignation() {
+    public static String getUserDesignation() {
         return userDesignation;
     }
 
-    public void setUserDesignation(String userDesignation) {
-        this.userDesignation = userDesignation;
+    public static void setUserDesignation(String ud) {
+        userDesignation = ud;
     }
 }

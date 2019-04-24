@@ -94,16 +94,15 @@ public class LoginFragment extends Fragment {
                     String pwd = Utils.getInput(password);
 
                     if(un.equalsIgnoreCase("Admin") && pwd.equalsIgnoreCase("1234")){
-                        ResOrderApp resOrderApp = new ResOrderApp();
-                        resOrderApp.setUserName(un);
-                        resOrderApp.setUserDesignation(un);
+                        ResOrderApp.setUserName(un);
+                        ResOrderApp.setUserDesignation("Admin");
 
                         startActivity(new Intent(getActivity(),OrderSelection.class));
 
                     }else if(un.equalsIgnoreCase("User") && pwd.equalsIgnoreCase("1111")){
-                        ResOrderApp resOrderApp = new ResOrderApp();
-                        resOrderApp.setUserName(un);
-                        resOrderApp.setUserDesignation(un);
+                        ResOrderApp.setUserName(un);
+                        ResOrderApp.setUserDesignation("User");
+
 
                         startActivity(new Intent(getActivity(),OrderSelection.class));
 

@@ -58,13 +58,14 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
             }
         });
 
-        ResOrderApp orderApp = new ResOrderApp();
 
-        if(orderApp.getUserDesignation().equalsIgnoreCase("Admin")){
+        //Log.e("bjbjb",ResOrderApp.getUserDesignation());
+
+        /*if(orderApp.getUserDesignation().equalsIgnoreCase("Admin")){
             viewOrderHolder.orderConfirm.setVisibility(View.VISIBLE);
         }else {
             viewOrderHolder.orderConfirm.setVisibility(View.GONE);
-        }
+        }*/
 
         viewOrderHolder.orderConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
