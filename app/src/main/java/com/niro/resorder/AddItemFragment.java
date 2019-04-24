@@ -3,6 +3,7 @@ package com.niro.resorder;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.widget.EditText;
 
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.pojo.Item;
+import com.niro.resorder.service.VolleyPostService;
+
+import java.util.Objects;
 
 
 /**
@@ -72,7 +76,7 @@ public class AddItemFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_item, container, false);
@@ -119,9 +123,25 @@ public class AddItemFragment extends Fragment {
             item.setItemPrice(itemPcs);
             item.setItemCategory(itemCat);
             item.setItemSubCategory(itemSubCat);
+
+            processAddItem(item);
+            processClear();
         }
 
 
+    }
+
+    private void processAddItem(Item item){
+        VolleyPostService.postItem(Objects.requireNonNull(getActivity()),"",item);
+    }
+
+    private void processClear(){
+        itemNumber.setText("");
+        itemName.setText("");
+        itemQty.setText("");
+        itemPrice.setText("");
+        itemCategory.setText("");
+        itemSubCategory.setText("");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
