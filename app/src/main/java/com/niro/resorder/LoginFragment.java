@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.niro.resorder.helper.Utils;
@@ -82,6 +83,14 @@ public class LoginFragment extends Fragment {
         Button button = view.findViewById(R.id.loginBtn);
         final EditText userName = view.findViewById(R.id.login_user_name);
         final EditText password = view.findViewById(R.id.login_password);
+        TextView createNew = view.findViewById(R.id.createAccount);
+
+        createNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MainActivity().replaceSignUpFragment();
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

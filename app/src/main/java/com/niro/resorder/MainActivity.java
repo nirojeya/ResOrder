@@ -70,4 +70,13 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.frameContainer, new LoginFragment(),
                         Utils.LoginFragment).commit();
     }
+
+    protected void replaceSignUpFragment() {
+        fragmentManager
+                .beginTransaction()
+                //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
+                .replace(R.id.frameContainer, new SignUpFragment(),
+                        Utils.SignupFragment).commit();
+    }
+
 }
