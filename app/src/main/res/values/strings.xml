@@ -23,6 +23,7 @@
     <string name="already_user">Already registered? Login here</string>
     <string name="con_password">Confirm password</string>
     <string name="phone">Phone</string>
+    <string name="add_item">Add item</string>
 
 
 </resources>
