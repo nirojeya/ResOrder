@@ -136,6 +136,8 @@ public class LoginFragment extends Fragment {
 
 
                                     startActivity(new Intent(getActivity(),OrderSelection.class));
+                                    getActivity().finish();
+
 
                                 }else {
                                     Toast.makeText(getActivity(), "Wrong user name or password", Toast.LENGTH_SHORT).show();

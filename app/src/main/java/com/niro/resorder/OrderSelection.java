@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
+import com.niro.resorder.helper.AppSettings;
 import com.niro.resorder.helper.DrawReciept;
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.pojo.Item;
@@ -275,6 +276,13 @@ public class OrderSelection extends AppCompatActivity
     }
 
     private void processLogout() {
+        ResOrderApp.setUserId("");
+        ResOrderApp.setFullName("");
+        ResOrderApp.setPassword("");
+        ResOrderApp.setMobileNo("");
+        ResOrderApp.setUserDesignation("User");
+        ResOrderApp.setUserAddress("address");
+        AppSettings.setUserSession(this,0);
         finish();
     }
 
