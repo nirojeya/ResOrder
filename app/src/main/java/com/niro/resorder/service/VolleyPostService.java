@@ -9,6 +9,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.niro.resorder.ResOrderApp;
+import com.niro.resorder.helper.AppSettings;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
@@ -31,7 +33,138 @@ public class VolleyPostService {
         void processOrderFinished(String orderId);
     }
 
+    public interface UserSignUpDelegate{
+        void processRegisterFinished(String type);
+    }
+
     private static OrderDelegate orderDelegate;
+
+    public static void postUser(final Context ctx, String url, UserSignUpDelegate delegate){
+        final UserSignUpDelegate signUpDelegate = delegate;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("respomce_item",response.toString());
+
+                int currentUserId = AppSettings.getUniqueId(ctx);
+                currentUserId = currentUserId + 1;
+                AppSettings.setUniqueId(ctx,currentUserId);
+
+                signUpDelegate.processRegisterFinished("ok");;
+
+
+                // updateItemBatchId
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("respomce_item_err",error.toString());
+                signUpDelegate.processRegisterFinished("error");;
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+
+            @Override
+            public byte[] getBody() {
+                return setUserParams(ctx);
+            }
+        };
+
+        // now volley retry policy is 20s
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(20000),
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getmInstance(ctx.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private static byte[] setUserParams(Context context){
+
+        //String clientId = AppSettings.getClientId(context);
+        //String companyId = AppSettings.getCompanyId(context);
+
+        String clientId = "tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX";
+        String companyId = "e23197373bd3ce99";
+
+        //DBHandler dbHandler = DBSingleton.getInstance(context);
+        //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
+
+        JSONObject parent = new JSONObject();
+        String body = null;
+        try{
+            //Here are your parameters:
+
+            parent.put("client_id",clientId);
+            //  Log.e("DATA","client_id "+clientId);
+
+            parent.put("company_id",companyId);
+            //  Log.e("DATA","company_id "+user.getUserUniqueId());
+
+            parent.put("user_id",String.valueOf(AppSettings.getUniqueId(context)));
+            //   Log.e("DATA","user_id "+String.valueOf(user.getUserID()));
+
+            parent.put("user_unique_id","62eb0889-7040-42ba-bd44-2aafc2667b0e");
+            //  Log.e("DATA","user_unique_id "+user.getUserUniqueId());
+
+            parent.put("user_auth","KCkZm1t7j86OaTD0YRQWR1kSY7Fn3kcbLrIGp6FPYHRoXBenrNTAGTaXmiy6iHgS9oDuw2wfZE9");
+            //  Log.e("DATA","user_auth "+user.getUserAuthId());
+
+            parent.put("user_name", ResOrderApp.getUserName());
+            //  Log.e("DATA","user_name "+user.getUserName());
+
+            parent.put("user_type",ResOrderApp.getUserDesignation());
+            //  Log.e("DATA","user_type "+user.getUserDesignation());
+
+            parent.put("designation",ResOrderApp.getUserDesignation());
+            //  Log.e("DATA","designation "+user.getUserDesignation());
+
+            parent.put("password",ResOrderApp.getPassword());
+            //   Log.e("DATA","password "+user.getUserPassward());
+
+            parent.put("name",ResOrderApp.getUserName());
+            //   Log.e("DATA","name " +user.getUserName());
+
+            parent.put("phone_number",ResOrderApp.getMobileNo());
+            //   Log.e("DATA","phone_number "+user.getUserPNO());
+
+            parent.put("email","n@g.com");
+
+            parent.put("address",ResOrderApp.getUserAddress());
+            //   Log.e("DATA","address "+user.getUserAddress());
+
+            parent.put("status",0);
+
+
+
+
+
+
+
+
+
+
+            body = parent.toString();
+            Log.e("BODY",body);
+
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        try{
+            return body.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public static void postItem(Context ctx,String url , final Item item){
 

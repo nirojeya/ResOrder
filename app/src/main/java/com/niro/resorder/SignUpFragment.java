@@ -7,6 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.niro.resorder.helper.Utils;
+import com.niro.resorder.service.VolleyPostService;
+
+import javax.xml.validation.Validator;
 
 
 /**
@@ -17,7 +25,7 @@ import android.view.ViewGroup;
  * Use the {@link SignUpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,6 +75,65 @@ public class SignUpFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_sign_up, container, false);
     }
 
+
+    private void initializeView(View view){
+
+        EditText fullName = view.findViewById(R.id.signFullName);
+        EditText userName = view.findViewById(R.id.signEmailId);
+        EditText mobileNumber = view.findViewById(R.id.signPhone);
+        EditText password = view.findViewById(R.id.signPassword);
+        EditText confirmPassword = view.findViewById(R.id.signConPassword);
+        Button signUpButton = view.findViewById(R.id.signUpBtn);
+
+        signUpButton.setOnClickListener(this);
+
+        if(Utils.checkNotNullEditText(fullName) && Utils.checkNotNullEditText(userName) &&
+                Utils.checkNotNullEditText(mobileNumber) && Utils.checkNotNullEditText(password) &&
+                Utils.checkNotNullEditText(confirmPassword)){
+
+            if(Utils.getInput(password).equalsIgnoreCase(Utils.getInput(confirmPassword))) {
+
+                ResOrderApp.setFullName(Utils.getInput(fullName));
+                ResOrderApp.setUserName(Utils.getInput(userName));
+                ResOrderApp.setPassword(Utils.getInput(password));
+                ResOrderApp.setMobileNo(Utils.getInput(mobileNumber));
+
+                VolleyPostService.postUser(getActivity(), "", new VolleyPostService.UserSignUpDelegate() {
+                    @Override
+                    public void processRegisterFinished(String type) {
+                        clearPojo();
+
+                        if(!type.equals("error")){
+                            new OrderSelection().replaceCategoryFragment();
+                        }
+                    }
+                });
+
+                fullName.setText("");
+                userName.setText("");
+                mobileNumber.setText("");
+                password.setText("");
+                confirmPassword.setText("");
+
+            }else {
+                Toast.makeText(getActivity(), "Password and confirm password not match", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+
+
+
+    }
+
+    private void clearPojo(){
+        ResOrderApp.setFullName("");
+        ResOrderApp.setUserName("");
+        ResOrderApp.setPassword("");
+        ResOrderApp.setMobileNo("");
+    }
+
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -89,6 +156,11 @@ public class SignUpFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 
     /**

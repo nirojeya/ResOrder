@@ -6,8 +6,13 @@ import android.content.Context;
 public class ResOrderApp extends Application {
     private static Context applicationContext;
 
+    private static String fullName = "";
     private static String userName = "";
+    private static String password = "";
     private static String userDesignation = "";
+    private static String userAddress = "address";
+    private static String mobileNo = "";
+
 
     @Override
     public void onCreate() {
@@ -19,7 +24,7 @@ public class ResOrderApp extends Application {
         return applicationContext;
     }
 
-    public String getUserName() {
+    public static String getUserName() {
         return userName;
     }
 
@@ -33,5 +38,37 @@ public class ResOrderApp extends Application {
 
     public static void setUserDesignation(String ud) {
         userDesignation = ud;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        ResOrderApp.password = password;
+    }
+
+    public static String getUserAddress() {
+        return userAddress;
+    }
+
+    public static void setUserAddress(String userAddress) {
+        ResOrderApp.userAddress = userAddress;
+    }
+
+    public static String getMobileNo() {
+        return mobileNo;
+    }
+
+    public static void setMobileNo(String mobileNo) {
+        ResOrderApp.mobileNo = mobileNo;
+    }
+
+    public static String getFullName() {
+        return fullName;
+    }
+
+    public static void setFullName(String fullName) {
+        ResOrderApp.fullName = fullName;
     }
 }
