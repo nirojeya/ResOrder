@@ -33,6 +33,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private EditText fullName, userName, mobileNumber,
+            password, confirmPassword;
+
+    private Button signUpButton;
+    private TextView loginHere;
+
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -81,17 +88,25 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
 
     private void initializeView(View view){
 
-        EditText fullName = view.findViewById(R.id.signFullName);
-        EditText userName = view.findViewById(R.id.signEmailId);
-        EditText mobileNumber = view.findViewById(R.id.signPhone);
-        EditText password = view.findViewById(R.id.signPassword);
-        EditText confirmPassword = view.findViewById(R.id.signConPassword);
-        Button signUpButton = view.findViewById(R.id.signUpBtn);
-        TextView loginHere = view.findViewById(R.id.already_user);
+        fullName = view.findViewById(R.id.signFullName);
+        userName = view.findViewById(R.id.signEmailId);
+        mobileNumber = view.findViewById(R.id.signPhone);
+        password = view.findViewById(R.id.signPassword);
+        confirmPassword = view.findViewById(R.id.signConPassword);
+
+        signUpButton = view.findViewById(R.id.signUpBtn);
+        loginHere = view.findViewById(R.id.already_user);
 
         signUpButton.setOnClickListener(this);
         loginHere.setOnClickListener(this);
 
+
+
+
+
+    }
+
+    private void processSignUp(){
         if(Utils.checkNotNullEditText(fullName) && Utils.checkNotNullEditText(userName) &&
                 Utils.checkNotNullEditText(mobileNumber) && Utils.checkNotNullEditText(password) &&
                 Utils.checkNotNullEditText(confirmPassword)){
@@ -103,7 +118,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                 ResOrderApp.setPassword(Utils.getInput(password));
                 ResOrderApp.setMobileNo(Utils.getInput(mobileNumber));
 
-                VolleyPostService.postUser(Objects.requireNonNull(getActivity()), "", new VolleyPostService.UserSignUpDelegate() {
+                VolleyPostService.postUser(Objects.requireNonNull(getActivity()), "http://54.200.81.66:3000/api/auth/user", new VolleyPostService.UserSignUpDelegate() {
                     @Override
                     public void processRegisterFinished(String type) {
                         clearPojo();
@@ -125,9 +140,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
             }
 
         }
-
-
-
 
     }
 
@@ -151,7 +163,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.already_user){
+        if(view.getId() == R.id.signUpBtn){
+            processSignUp();
+        } else if(view.getId() == R.id.already_user){
             new MainActivity().replaceLoginFragment();
         }
     }
