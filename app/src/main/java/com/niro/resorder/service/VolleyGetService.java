@@ -482,6 +482,8 @@ public class VolleyGetService {
                                 //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
                             }
                             if (!object.isNull("designation")) {
+                                Log.e("MAX_DIS",""+object.getString("designation"));
+
                                 ResOrderApp.setUserDesignation(object.getString("designation"));
                             }
 

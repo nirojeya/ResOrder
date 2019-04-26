@@ -10,7 +10,7 @@ public class ResOrderApp extends Application {
     private static String fullName = "";
     private static String userName = "";
     private static String password = "";
-    private static String userDesignation = "";
+    private static String userDesignation = "User";
     private static String userAddress = "address";
     private static String mobileNo = "";
 

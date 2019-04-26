@@ -122,7 +122,7 @@ public class VolleyPostService {
             //  Log.e("DATA","user_type "+user.getUserDesignation());
 
             parent.put("designation",ResOrderApp.getUserDesignation());
-            //  Log.e("DATA","designation "+user.getUserDesignation());
+              Log.e("DATA","designation "+ResOrderApp.getUserDesignation());
 
             parent.put("password",ResOrderApp.getPassword());
             //   Log.e("DATA","password "+user.getUserPassward());
