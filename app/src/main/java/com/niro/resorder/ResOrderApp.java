@@ -6,6 +6,7 @@ import android.content.Context;
 public class ResOrderApp extends Application {
     private static Context applicationContext;
 
+    private static String userId = "";
     private static String fullName = "";
     private static String userName = "";
     private static String password = "";
@@ -70,5 +71,13 @@ public class ResOrderApp extends Application {
 
     public static void setFullName(String fullName) {
         ResOrderApp.fullName = fullName;
+    }
+
+    public static String getUserId() {
+        return userId;
+    }
+
+    public static void setUserId(String userId) {
+        ResOrderApp.userId = userId;
     }
 }

@@ -13,7 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.niro.resorder.helper.AppSettings;
 import com.niro.resorder.helper.Utils;
+import com.niro.resorder.service.VolleyGetService;
+
+import java.util.Objects;
 
 
 /**
@@ -106,17 +110,35 @@ public class LoginFragment extends Fragment {
                         ResOrderApp.setUserName(un);
                         ResOrderApp.setUserDesignation("Admin");
 
+                        AppSettings.setUserSession(Objects.requireNonNull(getActivity()),1);
+
                         startActivity(new Intent(getActivity(),OrderSelection.class));
 
                     }else if(un.equalsIgnoreCase("User") && pwd.equalsIgnoreCase("1111")){
                         ResOrderApp.setUserName(un);
                         ResOrderApp.setUserDesignation("User");
 
+                        AppSettings.setUserSession(Objects.requireNonNull(getActivity()),1);
+
 
                         startActivity(new Intent(getActivity(),OrderSelection.class));
 
                     }else {
-                        Toast.makeText(getActivity(), "Incorrect username or password", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Incorrect username or password", Toast.LENGTH_SHORT).show();
+
+                        VolleyGetService.syncAllUsers(getActivity(), "http://54.200.81.66:3000/api/auth/users", un, pwd, new VolleyGetService.LoginUserDelegate() {
+                            @Override
+                            public void checkValidUser(boolean isValid) {
+                                if(isValid){
+                                    AppSettings.setUserSession(Objects.requireNonNull(getActivity()),1);
+
+
+                                    startActivity(new Intent(getActivity(),OrderSelection.class));
+
+                                }
+
+                            }
+                        });
                     }
                 }else {
                     Toast.makeText(getActivity(), "Can not be empty", Toast.LENGTH_SHORT).show();

@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 public class AppSettings {
 
     public static int getUserSession(Context context){
-        int DEFAULT = -1;
+        int DEFAULT = 0;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
 

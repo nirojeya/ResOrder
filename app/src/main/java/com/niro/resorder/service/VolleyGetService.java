@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.niro.resorder.ResOrderApp;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
@@ -49,6 +50,10 @@ public class VolleyGetService {
 
     public interface ViewOrderDetailsDelrgate{
         void processSyncOrderDetails(List<OrderDetail> list);
+    }
+
+    public interface LoginUserDelegate{
+        void checkValidUser(boolean isValid);
     }
 
 
@@ -412,6 +417,111 @@ public class VolleyGetService {
 
         VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
+
+    public static void syncAllUsers(Context con, String url, final String un, final String pwd,LoginUserDelegate delegate) {
+        final LoginUserDelegate userDelegate = delegate;
+        //itemList.clear();
+        context = con;
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            boolean isValidUser = false;
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("okfeffsdsdsgsgg123",response.toString());
+
+
+                try {
+
+                    JSONArray jsonArray = response.getJSONArray("users");
+
+
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+
+                        //Log.e("COUNTCCC","come");
+
+//                if(object.getInt("id") >= 0){
+//
+//                }
+
+
+                        if (!object.isNull("user_name")
+                                && object.getString("user_name").equalsIgnoreCase(un)
+                                && !object.isNull("password")
+                                && object.getString("password").equalsIgnoreCase(pwd)) {
+                            //Log.e("COUNTCCC","also come "+object.getString("item_number"));
+
+                            /*if (!object.isNull("email")) {
+                                user.set(object.getString("category"));
+                            }*/
+
+                            //Log.e("okfeffsdsdsgsgg123","insert name "+object.getString("name"));
+
+                            if (!object.isNull("phone_number")) {
+                                ResOrderApp.setMobileNo(object.getString("phone_number"));
+                                //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                            }
+                            if (!object.isNull("password")) {
+                                ResOrderApp.setPassword(object.getString("password"));
+                            }
+
+                            if (!object.isNull("name")) {
+                                ResOrderApp.setFullName(object.getString("name"));
+                            }
+                            /*if (!object.isNull("user_unique_id")) {
+                                user.setUserUniqueId(object.getString("user_unique_id"));
+                            }
+                            if (!object.isNull("user_auth")) {
+                                user.setUserAuthId(object.getString("user_auth"));
+                            }*/
+                            if (!object.isNull("user_id")) {
+                                ResOrderApp.setUserId(object.getString("user_id"));
+                                //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                            }
+                            if (!object.isNull("designation")) {
+                                ResOrderApp.setUserDesignation(object.getString("designation"));
+                            }
+
+                            if(!object.isNull("user_name")){
+                                ResOrderApp.setUserName(object.getString("user_name"));
+                            }
+                            /*if (!object.isNull("user_type")) {
+                                user.setUserDesignation(object.getString("user_type"));
+                            }*/
+
+
+                            isValidUser = true;
+
+                            //storeUsersDB(userList);
+                        }
+                    }
+
+                    userDelegate.checkValidUser(isValidUser);
+
+                } catch (JSONException e){
+                    e.printStackTrace();
+                    Log.e("JSONERR",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("RES_ERR",error.toString());
+            }
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+        };
+
+        VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
 
 
 
