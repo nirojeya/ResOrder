@@ -14,13 +14,14 @@ import android.widget.Toast;
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.service.VolleyPostService;
 
+import java.util.Objects;
+
 import javax.xml.validation.Validator;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SignUpFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link SignUpFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -97,7 +98,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                 ResOrderApp.setPassword(Utils.getInput(password));
                 ResOrderApp.setMobileNo(Utils.getInput(mobileNumber));
 
-                VolleyPostService.postUser(getActivity(), "", new VolleyPostService.UserSignUpDelegate() {
+                VolleyPostService.postUser(Objects.requireNonNull(getActivity()), "", new VolleyPostService.UserSignUpDelegate() {
                     @Override
                     public void processRegisterFinished(String type) {
                         clearPojo();
