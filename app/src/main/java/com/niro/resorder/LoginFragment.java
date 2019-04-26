@@ -84,7 +84,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void initializeView(View view){
-        Button button = view.findViewById(R.id.loginBtn);
+        final Button button = view.findViewById(R.id.loginBtn);
         final EditText userName = view.findViewById(R.id.login_user_name);
         final EditText password = view.findViewById(R.id.login_password);
         TextView createNew = view.findViewById(R.id.createAccount);
@@ -125,16 +125,20 @@ public class LoginFragment extends Fragment {
 
                     }else {
                         //Toast.makeText(getActivity(), "Incorrect username or password", Toast.LENGTH_SHORT).show();
-
+                        button.setEnabled(false);
                         VolleyGetService.syncAllUsers(getActivity(), "http://54.200.81.66:3000/api/auth/users", un, pwd, new VolleyGetService.LoginUserDelegate() {
                             @Override
                             public void checkValidUser(boolean isValid) {
+                                button.setEnabled(true);
+
                                 if(isValid){
                                     AppSettings.setUserSession(Objects.requireNonNull(getActivity()),1);
 
 
                                     startActivity(new Intent(getActivity(),OrderSelection.class));
 
+                                }else {
+                                    Toast.makeText(getActivity(), "Wrong user name or password", Toast.LENGTH_SHORT).show();
                                 }
 
                             }

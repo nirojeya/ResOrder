@@ -118,13 +118,19 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                 ResOrderApp.setPassword(Utils.getInput(password));
                 ResOrderApp.setMobileNo(Utils.getInput(mobileNumber));
 
+                signUpButton.setEnabled(false);
+
                 VolleyPostService.postUser(Objects.requireNonNull(getActivity()), "http://54.200.81.66:3000/api/auth/user", new VolleyPostService.UserSignUpDelegate() {
                     @Override
                     public void processRegisterFinished(String type) {
                         clearPojo();
+                        signUpButton.setEnabled(true);
 
                         if(!type.equals("error")){
+                            Toast.makeText(getActivity(), "Account create successfully!", Toast.LENGTH_SHORT).show();
                             new MainActivity().replaceLoginFragment();
+                        }else {
+                            Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
