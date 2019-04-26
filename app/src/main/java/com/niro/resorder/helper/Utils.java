@@ -12,6 +12,7 @@ public class Utils {
     //Fragments Tags
     public static final String LoginFragment= "LoginFragment";
     public static final String SignupFragment = "SignupFragment";
+    public static final String WelComeFragment= "WelComeFragment";
     public static final String CategoryFragment = "CategoryFragment";
     public static final String ItemSelectionFragment = "ItemSelectionFragment";
     public static final String AddItemFragment= "AddItemFragment";

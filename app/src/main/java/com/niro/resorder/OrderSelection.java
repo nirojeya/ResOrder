@@ -47,7 +47,9 @@ import java.util.List;
 public class OrderSelection extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ItemSelectionAdapter.SelectionDelegate,CategoryFragment.OnFragmentInteractionListener,
-        ItemSelectionFragment.OnFragmentInteractionListener,ViewOrderFragment.OnFragmentInteractionListener,AddItemFragment.OnFragmentInteractionListener{
+        ItemSelectionFragment.OnFragmentInteractionListener,
+        ViewOrderFragment.OnFragmentInteractionListener,
+        AddItemFragment.OnFragmentInteractionListener,WelComeFragment.OnFragmentInteractionListener{
 
     private static android.support.v4.app.FragmentManager fragmentManager;
 
@@ -74,8 +76,8 @@ public class OrderSelection extends AppCompatActivity
         if (savedInstanceState == null) {
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.orderFrameContainer, new AddItemFragment(),
-                            Utils.AddItemFragment).commit();
+                    .replace(R.id.orderFrameContainer, new WelComeFragment(),
+                            Utils.WelComeFragment).commit();
 
 
         }
@@ -240,6 +242,8 @@ public class OrderSelection extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if (id == R.id.action_add_item) {
+            replaceAddItemFragment();
         }
 
         return super.onOptionsItemSelected(item);
@@ -305,6 +309,15 @@ public class OrderSelection extends AppCompatActivity
                 .replace(R.id.orderFrameContainer, new ViewOrderFragment(),
                         Utils.ViewOrderFragment).commit();
     }
+
+    protected void replaceAddItemFragment() {
+        fragmentManager
+                .beginTransaction()
+                //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
+                .replace(R.id.orderFrameContainer, new AddItemFragment(),
+                        Utils.AddItemFragment).commit();
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
