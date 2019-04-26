@@ -178,6 +178,7 @@ public class OrderSelection extends AppCompatActivity
 
         if(view != null){
             shopingChartRoot = view.findViewById(R.id.shoping_chart_root);
+            shopingChartRoot.setVisibility(View.INVISIBLE);
             totalCount = view.findViewById(R.id.txtCount);
         }
 
