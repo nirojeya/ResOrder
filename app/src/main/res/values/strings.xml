@@ -20,7 +20,7 @@
     <string name="your_chart">Your Cart</string>
     <string name="signUp">Sign up</string>
     <string name="fullName">Full name</string>
-    <string name="already_user">Already registered?</string>
+    <string name="already_user">Already registered? Login here</string>
     <string name="con_password">Confirm password</string>
     <string name="phone">Phone</string>
 

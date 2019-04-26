@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.niro.resorder.helper.Utils;
@@ -72,7 +73,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        initializeView(view);
+        return view;
     }
 
 
@@ -84,8 +87,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
         EditText password = view.findViewById(R.id.signPassword);
         EditText confirmPassword = view.findViewById(R.id.signConPassword);
         Button signUpButton = view.findViewById(R.id.signUpBtn);
+        TextView loginHere = view.findViewById(R.id.already_user);
 
         signUpButton.setOnClickListener(this);
+        loginHere.setOnClickListener(this);
 
         if(Utils.checkNotNullEditText(fullName) && Utils.checkNotNullEditText(userName) &&
                 Utils.checkNotNullEditText(mobileNumber) && Utils.checkNotNullEditText(password) &&
@@ -146,7 +151,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-
+        if(view.getId() == R.id.already_user){
+            new MainActivity().replaceLoginFragment();
+        }
     }
 
     /**
