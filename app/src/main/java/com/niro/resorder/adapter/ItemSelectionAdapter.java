@@ -45,7 +45,24 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
         holder.itemDesc.setText(item.getItemDesc());
         holder.itemPrice.setText(df.format(item.getItemPrice()));
 
-        holder.itemImage.setImageResource(R.drawable.salad);
+        switch (position){
+            case 0:
+                holder.itemImage.setImageResource(R.drawable.burger);
+                break;
+            case 1:
+                holder.itemImage.setImageResource(R.drawable.french);
+                break;
+            case 2:
+                holder.itemImage.setImageResource(R.drawable.noodles);
+                break;
+            case 3:
+                holder.itemImage.setImageResource(R.drawable.salad);
+                break;
+            default:
+                holder.itemImage.setImageResource(R.drawable.salad);
+        }
+
+        //holder.itemImage.setImageResource(R.drawable.salad);
 
         final OrderDetail orderDetail = new OrderDetail();
         orderDetail.setItemNumber(item.getItemNumber());
