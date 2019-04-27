@@ -154,12 +154,11 @@ public class OrderSelection extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.order_selection, menu);
-        View view =  menu.findItem(R.id.action_settings).getActionView();
 
-
-       /* MenuItem menuItem =  menu.findItem(R.id.action_add_item);
-        if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")) {
+        //MenuItem menuItem =  menu.findItem(R.id.action_add_item);
+        /*if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")) {
             menuItem.setVisible(true);
             invalidateOptionsMenu();
         }else {
@@ -167,6 +166,9 @@ public class OrderSelection extends AppCompatActivity
             invalidateOptionsMenu();
 
         }*/
+
+
+        View view =  menu.findItem(R.id.action_settings).getActionView();
 
 
         //View a = menu.findItem(R.id.action_settings).getActionView();
@@ -222,9 +224,9 @@ public class OrderSelection extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }/*else if (id == R.id.action_add_item) {
+        }else if (id == R.id.action_add_item) {
             replaceAddItemFragment();
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
