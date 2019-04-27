@@ -53,7 +53,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 break;
                 default:
                     categoryHolder.imageView.setImageResource(R.drawable.salad);
-                    
+
         }
         categoryHolder.categoryName.setText(categoryList.get(i));
 
