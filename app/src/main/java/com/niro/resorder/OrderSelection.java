@@ -1,21 +1,10 @@
 package com.niro.resorder;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MenuInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,26 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.niro.resorder.adapter.ItemSelectionAdapter;
 import com.niro.resorder.helper.AppSettings;
-import com.niro.resorder.helper.DrawReciept;
 import com.niro.resorder.helper.Utils;
-import com.niro.resorder.pojo.Item;
-import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.popup.ConfirmationPopup;
 import com.niro.resorder.service.VolleyPostService;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrderSelection extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -178,7 +158,7 @@ public class OrderSelection extends AppCompatActivity
         View view =  menu.findItem(R.id.action_settings).getActionView();
 
 
-        MenuItem menuItem =  menu.findItem(R.id.action_add_item);
+       /* MenuItem menuItem =  menu.findItem(R.id.action_add_item);
         if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")) {
             menuItem.setVisible(true);
             invalidateOptionsMenu();
@@ -186,7 +166,7 @@ public class OrderSelection extends AppCompatActivity
             menuItem.setVisible(false);
             invalidateOptionsMenu();
 
-        }
+        }*/
 
 
         //View a = menu.findItem(R.id.action_settings).getActionView();
@@ -242,9 +222,9 @@ public class OrderSelection extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if (id == R.id.action_add_item) {
+        }/*else if (id == R.id.action_add_item) {
             replaceAddItemFragment();
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
