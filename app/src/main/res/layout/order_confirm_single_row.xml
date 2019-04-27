@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_margin="5dp"
+    android:weightSum="3"
+    android:layout_height="50dp">
 
     <TextView
         android:id="@+id/item_desc"

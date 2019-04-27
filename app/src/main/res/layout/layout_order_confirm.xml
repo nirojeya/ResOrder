@@ -18,14 +18,17 @@
         android:id="@+id/order_details_list"
         android:layout_width="match_parent"
         android:layout_below="@+id/order_title"
+        android:dividerHeight="1dp"
+        android:divider="@color/black"
         android:layout_marginTop="15dp"
-        android:layout_height="600dp"/>
+        android:layout_height="400dp"/>
 
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/order_details_list"
+        android:background="@color/colorAccent"
+        android:layout_above="@+id/order_container"
         android:layout_height="1dp"/>
 
 
@@ -34,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/separator"
+        android:layout_above="@+id/order_confirm_btn"
         android:orientation="horizontal">
 
 
