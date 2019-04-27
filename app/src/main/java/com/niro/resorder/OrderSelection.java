@@ -170,6 +170,16 @@ public class OrderSelection extends AppCompatActivity
 
         View view =  menu.findItem(R.id.action_settings).getActionView();
 
+        /*MenuItem menuItem =  menu.findItem(R.id.action_add_item);
+        if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")) {
+            menuItem.setVisible(true);
+            invalidateOptionsMenu();
+        }else {
+            menuItem.setVisible(true);
+            invalidateOptionsMenu();
+
+        }*/
+
 
         //View a = menu.findItem(R.id.action_settings).getActionView();
 
