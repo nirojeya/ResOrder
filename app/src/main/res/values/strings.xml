@@ -24,6 +24,10 @@
     <string name="con_password">Confirm password</string>
     <string name="phone">Phone</string>
     <string name="add_item">Add item</string>
+
+    <string name="res_name">Res Order n Restaurant</string>
+    <string name="res_address">Main street Jaffna, Sri lanka</string>
+
     <string name="start_time">From 9 am to 10 pm week days and 10 am to 11 pm weekends</string>
     <string name="res_desc">A restaurant is a business which prepares and serves food and drinks to customers in exchange for money.
         Meals are generally served and eaten on the premises, but many restaurants also offer take-out and food delivery services.
