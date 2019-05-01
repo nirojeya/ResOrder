@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.niro.resorder.R;
@@ -37,7 +37,27 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder categoryHolder, final int i) {
+
+        switch (i){
+            case 0:
+                categoryHolder.imageView.setImageResource(R.drawable.burger);
+                break;
+            case 1:
+                categoryHolder.imageView.setImageResource(R.drawable.french);
+                break;
+            case 2:
+                categoryHolder.imageView.setImageResource(R.drawable.noodles);
+                break;
+            case 3:
+                categoryHolder.imageView.setImageResource(R.drawable.salad);
+                break;
+                default:
+                    categoryHolder.imageView.setImageResource(R.drawable.salad);
+
+        }
         categoryHolder.categoryName.setText(categoryList.get(i));
+
+
 
         categoryHolder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,11 +74,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     class CategoryHolder extends RecyclerView.ViewHolder{
         CardView rootLayout;
+        ImageView imageView;
         TextView categoryName;
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             rootLayout = itemView.findViewById(R.id.category_root);
             categoryName = itemView.findViewById(R.id.category_name);
+            imageView = itemView.findViewById(R.id.item_img);
         }
     }
 }

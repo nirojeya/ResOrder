@@ -2,13 +2,11 @@ package com.niro.resorder.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.niro.resorder.R;
 import com.niro.resorder.pojo.Item;
@@ -46,6 +44,25 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
 
         holder.itemDesc.setText(item.getItemDesc());
         holder.itemPrice.setText(df.format(item.getItemPrice()));
+
+        switch (position){
+            case 0:
+                holder.itemImage.setImageResource(R.drawable.burger);
+                break;
+            case 1:
+                holder.itemImage.setImageResource(R.drawable.french);
+                break;
+            case 2:
+                holder.itemImage.setImageResource(R.drawable.noodles);
+                break;
+            case 3:
+                holder.itemImage.setImageResource(R.drawable.salad);
+                break;
+            default:
+                holder.itemImage.setImageResource(R.drawable.salad);
+        }
+
+        //holder.itemImage.setImageResource(R.drawable.salad);
 
         final OrderDetail orderDetail = new OrderDetail();
         orderDetail.setItemNumber(item.getItemNumber());
