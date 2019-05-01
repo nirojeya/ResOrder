@@ -262,7 +262,13 @@ public class OrderSelection extends AppCompatActivity
         } else if (id == R.id.nav_log_out) {
             processLogout();
         } else if (id == R.id.nav_add_item) {
-            replaceAddItemFragment();
+
+            if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")){
+                replaceAddItemFragment();
+
+            }else {
+                Toast.makeText(this, "You have no permission", Toast.LENGTH_SHORT).show();
+            }
         } /*else if (id == R.id.nav_send) {
 
         }*/
