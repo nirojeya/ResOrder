@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".WelComeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+            android:background="@drawable/restaurantcover"
+        android:layout_height="250dp">
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/title"
+                android:padding="10dp"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/address"
+                android:text="@string/res_name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/address"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:text="@string/res_address" />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/startTime"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_time" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/desc"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/res_desc" />
+
+    </ScrollView>
+
+
+</LinearLayout>
