@@ -236,8 +236,6 @@ public class OrderSelection extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if (id == R.id.action_add_item) {
-            replaceAddItemFragment();
         }
 
         return super.onOptionsItemSelected(item);
@@ -251,6 +249,7 @@ public class OrderSelection extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
+            replaceHomeFragment();
         } else if (id == R.id.nav_category) {
             //startActivity(new Intent(this,CategoryActivity.class));
 
@@ -262,9 +261,9 @@ public class OrderSelection extends AppCompatActivity
 
         } else if (id == R.id.nav_log_out) {
             processLogout();
-        }/* else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_add_item) {
+            replaceAddItemFragment();
+        } /*else if (id == R.id.nav_send) {
 
         }*/
 
@@ -294,6 +293,14 @@ public class OrderSelection extends AppCompatActivity
                 //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
                 .replace(R.id.orderFrameContainer, new CategoryFragment(),
                         Utils.CategoryFragment).commit();
+    }
+
+    protected void replaceHomeFragment() {
+        fragmentManager
+                .beginTransaction()
+                //.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
+                .replace(R.id.orderFrameContainer, new WelComeFragment(),
+                        Utils.WelComeFragment).commit();
     }
 
     protected void replaceViewOrderFragment() {
