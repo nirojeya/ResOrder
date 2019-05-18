@@ -49,7 +49,7 @@ public class VolleyGetService {
     }
 
     public interface ViewOrderDetailsDelrgate{
-        void processSyncOrderDetails(List<OrderDetail> list);
+        void processSyncOrderDetails(List<OrderDetail> list,Order order);
     }
 
     public interface LoginUserDelegate{
@@ -330,6 +330,9 @@ public class VolleyGetService {
 
                     JSONObject object = obj.getJSONObject("salesreceipt");
 
+                    Order order = new Order();
+                    order.setOrderTotal(object.getDouble("total"));
+
 
                     // order details
                     JSONArray jsonArray = object.getJSONArray("details");
@@ -392,7 +395,7 @@ public class VolleyGetService {
 
                     }
 
-                    viewOrderDetailsDelrgate.processSyncOrderDetails(orderDetailsList);
+                    viewOrderDetailsDelrgate.processSyncOrderDetails(orderDetailsList,order);
 
 
 

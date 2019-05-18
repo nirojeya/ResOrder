@@ -88,8 +88,8 @@ public class VolleyPostService {
         //String clientId = AppSettings.getClientId(context);
         //String companyId = AppSettings.getCompanyId(context);
 
-        String clientId = "m718ZzVdhmcX4e4CmtLUSruDxc4rr8m6yCFfXXdb";
-        String companyId = "9c1b1de272ae427c";
+        String clientId = "E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV";
+        String companyId = "bf21636d3f29957e";
 
 
         JSONObject parent = new JSONObject();
@@ -205,8 +205,8 @@ public class VolleyPostService {
         //String clientId = AppSettings.getClientId(context);
         //String companyId = AppSettings.getCompanyId(context);
 
-        String clientId = "tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX";
-        String companyId = "e23197373bd3ce99";
+        String clientId = "E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV";
+        String companyId = "bf21636d3f29957e";
 
         //DBHandler dbHandler = DBSingleton.getInstance(context);
         //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
@@ -355,7 +355,7 @@ public class VolleyPostService {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.e("respomce_order_err",error.toString().trim());
+                Log.e("respomce_order_err",error.toString().trim());
 
                 delegate.processOrderFinished("Error");
 
@@ -398,8 +398,8 @@ public class VolleyPostService {
     private static byte[] setOrderAndOrderDetailsParams(Order orderData, List<OrderDetail> orderDetailsList){
         DecimalFormat df= new DecimalFormat("0.00");
 
-        String clientId = "tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX";
-        String companyId = "e23197373bd3ce99";
+        String clientId = "E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV";
+        String companyId = "bf21636d3f29957e";
         int locationId = 1;
         //DBHandler dbHandler = DBSingleton.getInstance(context);
         //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
@@ -416,7 +416,7 @@ public class VolleyPostService {
             order.accumulate("client_id", clientId);
             order.accumulate("company_id", companyId);
             order.accumulate("order_id",0);
-            order.accumulate("temp_order_id", 0);
+            order.accumulate("temp_order_id", 1);
             order.accumulate("cashier_id","1");
 
             // Log.e("CRCRCRCR","cashier_id "+orderData.getCashierId()+" payment_method "+orderData.getPaymentMethod()+" payment_total "+orderData.getUserPayment());

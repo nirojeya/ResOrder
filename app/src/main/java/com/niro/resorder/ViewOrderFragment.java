@@ -149,8 +149,9 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
     public void viewDetailsButtonClick(String orderId) {
         VolleyGetService.syncOrdersDetails(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipt/"+orderId, new VolleyGetService.ViewOrderDetailsDelrgate() {
             @Override
-            public void processSyncOrderDetails(List<OrderDetail> list) {
-                ConfirmationPopup.orderDetailsView(getActivity(), list, new ConfirmationPopup.OrderConfirmDelegate() {
+            public void processSyncOrderDetails(List<OrderDetail> list,Order order) {
+
+                ConfirmationPopup.orderDetailsView(getActivity(), list,order,new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
                         // nothing to do
@@ -166,7 +167,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
                 "http://prod.kalesystems.com:3000/api/acct/salesreceipt/"+order.getOrderId(),
                 new VolleyGetService.ViewOrderDetailsDelrgate() {
             @Override
-            public void processSyncOrderDetails(List<OrderDetail> list) {
+            public void processSyncOrderDetails(List<OrderDetail> list,Order order1) {
                 createShareImageInBackground(order,list);
             }
         });

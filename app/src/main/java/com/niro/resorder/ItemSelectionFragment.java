@@ -244,14 +244,14 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
         //Log.e("Totoal",""+orderTotal);
     }
 
-    private Double calOrderQty(){
-        double orderQty = 0.0;
-        for (OrderDetail orderDetail:selectedItemList){
+    private int calOrderQty(){
+        return selectedItemList.size();
+        /*for (OrderDetail orderDetail:selectedItemList){
             orderQty= orderQty + orderDetail.getItemQty();
 
             //Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
-        }
-        return orderQty;
+        }*/
+
     }
 
     public static void clearOrder(){
@@ -274,6 +274,6 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
 
-        void updateShoppingChart(double qty);
+        void updateShoppingChart(int qty);
     }
 }

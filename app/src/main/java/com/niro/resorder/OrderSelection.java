@@ -195,7 +195,7 @@ public class OrderSelection extends AppCompatActivity
                 public void onClick(View view) {
                     if(Utils.checkNotNullTextView(totalCount)) {
 
-                        ConfirmationPopup.orderDetailsView(OrderSelection.this, ItemSelectionFragment.selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+                        ConfirmationPopup.orderDetailsView(OrderSelection.this, ItemSelectionFragment.selectedItemList,ItemSelectionFragment.order,new ConfirmationPopup.OrderConfirmDelegate() {
                             @Override
                             public void processOrderConfirm() {
 
@@ -332,7 +332,7 @@ public class OrderSelection extends AppCompatActivity
     }
 
     @Override
-    public void updateShoppingChart(double qty) {
+    public void updateShoppingChart(int qty) {
         totalCount.setText(String.valueOf(qty));
 
     }

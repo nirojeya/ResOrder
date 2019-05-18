@@ -1,14 +1,11 @@
 package com.niro.resorder;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +15,6 @@ import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.popup.ConfirmationPopup;
 import com.niro.resorder.service.VolleyGetService;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +57,7 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
         */
-                ConfirmationPopup.orderDetailsView(ActivityItemSelection.this, selectedItemList, new ConfirmationPopup.OrderConfirmDelegate() {
+                ConfirmationPopup.orderDetailsView(ActivityItemSelection.this, selectedItemList,order, new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
 
