@@ -177,7 +177,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
             @Override
             public void processSyncOrderDetails(List<OrderDetail> list,Order order) {
 
-                ConfirmationPopup.orderDetailsView(getActivity(), list,order,new ConfirmationPopup.OrderConfirmDelegate() {
+                ConfirmationPopup.orderDetailsView(getActivity(), list,order,false,new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
                         // nothing to do

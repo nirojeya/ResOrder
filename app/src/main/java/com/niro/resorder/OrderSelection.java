@@ -195,7 +195,7 @@ public class OrderSelection extends AppCompatActivity
                 public void onClick(View view) {
                     if(Utils.checkNotNullTextView(totalCount)) {
 
-                        ConfirmationPopup.orderDetailsView(OrderSelection.this, ItemSelectionFragment.selectedItemList,ItemSelectionFragment.order,new ConfirmationPopup.OrderConfirmDelegate() {
+                        ConfirmationPopup.orderDetailsView(OrderSelection.this, ItemSelectionFragment.selectedItemList,ItemSelectionFragment.order,true,new ConfirmationPopup.OrderConfirmDelegate() {
                             @Override
                             public void processOrderConfirm() {
 
