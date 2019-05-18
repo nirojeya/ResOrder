@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.niro.resorder.helper.AppSettings;
+import com.niro.resorder.helper.ToastMessageHelper;
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.service.VolleyGetService;
 
@@ -145,7 +146,8 @@ public class LoginFragment extends Fragment {
 
 
                                 }else {
-                                    Toast.makeText(getActivity(), "Wrong user name or password", Toast.LENGTH_SHORT).show();
+                                    ToastMessageHelper.customErrToast(Objects.requireNonNull(getActivity()),"Wrong user name or password");
+                                    //Toast.makeText(getActivity(), "Wrong user name or password", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
