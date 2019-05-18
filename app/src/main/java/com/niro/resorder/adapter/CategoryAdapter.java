@@ -57,8 +57,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             case 5:
                 categoryHolder.imageView.setImageResource(R.drawable.vege);
                 break;
+            case 6:
+                categoryHolder.imageView.setImageResource(R.drawable.rice);
+                break;
+            case 7:
+                categoryHolder.imageView.setImageResource(R.drawable.ice);
+                break;
                 default:
-                    categoryHolder.imageView.setImageResource(R.drawable.rice);
+                    categoryHolder.imageView.setImageResource(R.drawable.salad);
 
         }
         categoryHolder.categoryName.setText(categoryList.get(i));
