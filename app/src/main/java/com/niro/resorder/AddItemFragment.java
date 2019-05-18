@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.niro.resorder.helper.ToastMessageHelper;
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.service.VolleyGetService;
@@ -163,6 +164,8 @@ public class AddItemFragment extends Fragment implements View.OnClickListener,Vo
 
         VolleyUpdateService.updateItem(Objects.requireNonNull(getActivity()),itemURL,item);
         VolleyPostService.postInventoryItem(getActivity(),inventoryURL,item);
+
+        ToastMessageHelper.customSuccToast(getActivity(),"Update success");
 
     }
 
