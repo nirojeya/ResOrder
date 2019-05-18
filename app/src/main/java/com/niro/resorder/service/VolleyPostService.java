@@ -424,7 +424,7 @@ public class VolleyPostService {
             order.accumulate("company_id", companyId);
             order.accumulate("order_id",0);
             order.accumulate("temp_order_id", 1);
-            order.accumulate("cashier_id",ResOrderApp.getUserName());
+            order.accumulate("cashier_id",ResOrderApp.getUserId());
 
             // Log.e("CRCRCRCR","cashier_id "+orderData.getCashierId()+" payment_method "+orderData.getPaymentMethod()+" payment_total "+orderData.getUserPayment());
 

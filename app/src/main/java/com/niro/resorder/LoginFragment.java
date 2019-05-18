@@ -110,6 +110,8 @@ public class LoginFragment extends Fragment {
                         ResOrderApp.setUserName(un);
                         ResOrderApp.setUserDesignation("Admin");
 
+                        ResOrderApp.setUserId("100");
+
                         AppSettings.setUserSession(Objects.requireNonNull(getActivity()),1);
 
                         startActivity(new Intent(getActivity(),OrderSelection.class));
@@ -117,6 +119,9 @@ public class LoginFragment extends Fragment {
                     }else if(un.equalsIgnoreCase("User") && pwd.equalsIgnoreCase("1111")){
                         ResOrderApp.setUserName(un);
                         ResOrderApp.setUserDesignation("User");
+
+                        ResOrderApp.setUserId("101");
+
 
                         AppSettings.setUserSession(Objects.requireNonNull(getActivity()),1);
 
