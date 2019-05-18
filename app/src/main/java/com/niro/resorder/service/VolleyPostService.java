@@ -1,5 +1,6 @@
 package com.niro.resorder.service;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.niro.resorder.ResOrderApp;
 import com.niro.resorder.helper.AppSettings;
+import com.niro.resorder.helper.ToastMessageHelper;
 import com.niro.resorder.pojo.Item;
 import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
@@ -163,14 +165,14 @@ public class VolleyPostService {
     }
 
 
-    public static void postItem(Context ctx,String url , final Item item){
+    public static void postItem(final Context ctx, String url , final Item item){
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("respomce_item",response.toString());
-
+                ToastMessageHelper.customSuccToast((Activity) ctx,"Item Added");
 
                 // updateItemBatchId
             }
@@ -287,7 +289,7 @@ public class VolleyPostService {
 
 
     /* POST Order and Order details */
-    public static void postOrderAndOrderDetails(Context ctx, String url , final Order order, final List<OrderDetail> orderDetailsList, final OrderDelegate delegate){
+    public static void postOrderAndOrderDetails(final Context ctx, String url , final Order order, final List<OrderDetail> orderDetailsList, final OrderDelegate delegate){
         orderDelegate = delegate;
         //context = ctx;
         //Log.e("respomce","orderDetailsList "+orderDetailsList.size());
@@ -296,6 +298,11 @@ public class VolleyPostService {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("respomce_order",response.toString());
+
+                ToastMessageHelper.customSuccToast((Activity) ctx,"Your order is created");
+
+
+
 
                 //Log.e("respomce_cus",response.toString());
 
@@ -417,7 +424,7 @@ public class VolleyPostService {
             order.accumulate("company_id", companyId);
             order.accumulate("order_id",0);
             order.accumulate("temp_order_id", 1);
-            order.accumulate("cashier_id",ResOrderApp.getUserName());
+            order.accumulate("cashier_id",ResOrderApp.getUserId());
 
             // Log.e("CRCRCRCR","cashier_id "+orderData.getCashierId()+" payment_method "+orderData.getPaymentMethod()+" payment_total "+orderData.getUserPayment());
 
@@ -524,6 +531,7 @@ public class VolleyPostService {
 
         String clientId = "E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV";
         String companyId = "bf21636d3f29957e";
+
         //int locationId = AppSettings.getLocationId(context);
 
        // DBHandler dbHandler = DBSingleton.getInstance(context);
@@ -545,66 +553,7 @@ public class VolleyPostService {
             order.put("new_order_status","1002");
 
 
-            /*order.accumulate("temp_order_id", 0);
-            order.accumulate("cashier_id", String.valueOf(orderData.getCashierId()));
 
-            // Log.e("CRCRCRCR","cashier_id "+orderData.getCashierId()+" payment_method "+orderData.getPaymentMethod()+" payment_total "+orderData.getUserPayment());
-
-            //order.accumulate("date", date);
-            order.accumulate("order_status", String.valueOf(orderData.getStatus()));
-
-            order.accumulate("sub_total", Double.parseDouble(df.format(orderData.getSubTotal())));
-
-            order.accumulate("discount_total", Double.parseDouble(df.format(orderData.getDiscountForTotal())));
-            order.accumulate("vat_total", orderData.getVatTotal());
-            order.accumulate("total", Double.parseDouble(df.format(orderData.getTotal())));
-            if(orderData.getCustomerId() != null) {
-                order.accumulate("customer_id", String.valueOf(orderData.getCustomerId()));
-            }else {
-                order.accumulate("customer_id","0");
-            }
-            order.accumulate("payment_method", orderData.getPaymentMethod());
-            order.accumulate("payment_total",Double.parseDouble(df.format(orderData.getUserPayment())));
-            order.accumulate("service_charge",Double.parseDouble(df.format(orderData.getResturantCharge())));
-            order.accumulate("location_id",locationId);
-*/
-
-
-
-            //int row_id = orderDetailsList.size();
-
-
-            /*for(OrderDetails od : orderDetailsList){
-                //boolean isNotExits = dbHandler.isNotExistOrderDetails(String.valueOf(orderData.getId()),od.getItemNumber(),od.getBatchNo(),od.getLocationId());
-                // Log.e("ERRRRR_UP","befor if "+isNotExits);
-
-                // Log.e("ERRRRR_UP", "locationId 1 "+od.getLocationId()+" locationId 2 "+locationId);
-
-
-                if(od.getLocationId() == locationId) {
-
-                    // Log.e("ERRRRR_UP", "locationId "+od.getLocationId()+" num "+od.getItemNumber());
-
-                    orderDetails = new JSONObject();
-
-                    orderDetails.put("row_id", row_id);
-                    orderDetails.put("item_number", od.getItemNumber());
-                    orderDetails.put("bid", Integer.parseInt(od.getBatchNo()));
-                    orderDetails.put("location_id", od.getLocationId());
-                    orderDetails.put("item_price", od.getSales_price()); // discount minus
-                    orderDetails.put("qty", od.getQty());
-                    orderDetails.put("item_discount", od.getDiscount());
-                    orderDetails.put("final_price", Double.parseDouble(df.format(od.getPrice()))); //todo need check if value exit or not
-
-                    order.accumulate("details", orderDetails);
-
-                    row_id++;
-                }
-
-                // index++;
-
-            }
-*/
             body = order.toString();
 
             Log.e("ERRRRR_UP",body);
@@ -621,6 +570,106 @@ public class VolleyPostService {
         }
         return null;
     }
+
+
+    public static void postInventoryItem(Context ctx,String url , final Item item){
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("respomce_inv",response.toString());
+                /*if(response.toString().contains("{")){
+                    Item i = ItemsJSONParser.sendItem(ctx,response.toString());
+
+                    Log.e("respomce_inven"," num "+i.getItemNumber()+" bid "+i.getBid());
+                    //ItemsJSONParser.sendItem(context,i);
+                    db.updateItemSyncStatus(i);
+
+
+                }*/
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("respomce_inv_err",error.toString());
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+
+            @Override
+            public byte[] getBody() {
+                return setInventoryParams(item);
+            }
+        };
+
+        // now volley retry policy is 20s
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(20000),
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getmInstance(ctx.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+
+    private static byte[] setInventoryParams(Item item){
+
+        //String clientId = AppSettings.getClientId(context);
+        //String companyId = AppSettings.getCompanyId(context);
+        //DBHandler dbHandler = DBSingleton.getInstance(context);
+        //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
+
+        String clientId = "E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV";
+        String companyId = "bf21636d3f29957e";
+
+
+        JSONObject params = new JSONObject();
+        String body = null;
+        try{
+            //Here are your parameters:
+
+            //Log.e("SEND_INV","date "+item.getBidExpDate()+" con "+date);
+
+            //params.put("uom", item.getUom());
+            params.put("client_id", clientId);
+            params.put("company_id", companyId);
+            params.put("item_number", item.getItemNumber());
+            params.put("bid", item.getBid());
+            params.put("qoh", item.getItemQty());
+            params.put("qoh_count", item.getItemQty());
+            params.put("reorder_qty", 0.0);
+            //params.put("track_inventory", item.getItemTrackLevel());
+            params.put("location_id",1);
+            params.put("location_desc","Main store");
+            params.put("purchase_price", 0.0);
+            params.put("avg_cost", 0.0); // todo avg cost
+            params.put("bid_text", "n/l");
+            params.put("bid_exp_date", "n/l"); // this is convertion date
+            params.put("bid_rcd_qty", item.getItemQty());
+            params.put("supplier_id", "1");
+
+            body = params.toString();
+
+            Log.e("SEND_INV",body);
+
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        try{
+            return body.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
 
     private static Map<String, String> setHeaderData(){

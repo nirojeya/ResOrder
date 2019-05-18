@@ -25,7 +25,7 @@ public class ConfirmationPopup {
 
     private static OrderConfirmDelegate delegate;
 
-    public static void orderDetailsView(final Context context, List<OrderDetail> list, Order order, OrderConfirmDelegate i) {
+    public static void orderDetailsView(final Context context, List<OrderDetail> list, Order order,boolean isConfimBtnVisible, OrderConfirmDelegate i) {
         delegate = i;
 
 
@@ -37,6 +37,13 @@ public class ConfirmationPopup {
 
         final ListView inventorySelectorLV = dialog.findViewById(R.id.order_details_list);
         Button buttonClosePopup =  dialog.findViewById(R.id.order_confirm_btn);
+
+        if(isConfimBtnVisible){
+            buttonClosePopup.setVisibility(View.VISIBLE);
+        }else {
+            buttonClosePopup.setVisibility(View.INVISIBLE);
+
+        }
 
         TextView noOfOrder = dialog.findViewById(R.id.order_items);
         TextView totalOrder = dialog.findViewById(R.id.order_total);

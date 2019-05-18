@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,19 @@ import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.popup.ConfirmationPopup;
 import com.niro.resorder.service.VolleyGetService;
+import com.niro.resorder.service.VolleyPostService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -50,10 +57,14 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
 
     private OnFragmentInteractionListener mListener;
 
-    private String baseUrl = "http://54.200.81.66:3000/";
+    private String baseUrl = "http://prod.kalesystems.com:3000/";
 
 
     private ViewOrderAdapter viewOrderAdapter;
+
+    private static String startDate = getTodayDate(new Date(System.currentTimeMillis()));
+    private static String endDate = tomorrowDate(new Date(System.currentTimeMillis()));//getTomorrowDate
+
 
     public ViewOrderFragment() {
         // Required empty public constructor
@@ -110,14 +121,29 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(viewOrderAdapter);
 
-        VolleyGetService.syncOrderHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
-            @Override
-            public void processSyncOrder(List<Order> orderList) {
-                viewOrder.clear();
-                viewOrder.addAll(orderList);
-                viewOrderAdapter.notifyDataSetChanged();
-            }
-        });
+
+
+        if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")){
+
+            VolleyGetService.syncOrderHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts?end_date="+endDate+"&start_date="+startDate+"&", new VolleyGetService.ViewOrderDelegate() {
+                @Override
+                public void processSyncOrder(List<Order> orderList) {
+                    viewOrder.clear();
+                    viewOrder.addAll(orderList);
+                    viewOrderAdapter.notifyDataSetChanged();
+                }
+            });
+
+        }else {
+            VolleyGetService.syncOrderUserHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts?end_date="+endDate+"&start_date="+startDate+"&", new VolleyGetService.ViewOrderDelegate() {
+                @Override
+                public void processSyncOrder(List<Order> orderList) {
+                    viewOrder.clear();
+                    viewOrder.addAll(orderList);
+                    viewOrderAdapter.notifyDataSetChanged();
+                }
+            });
+        }
 
     }
 
@@ -151,7 +177,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
             @Override
             public void processSyncOrderDetails(List<OrderDetail> list,Order order) {
 
-                ConfirmationPopup.orderDetailsView(getActivity(), list,order,new ConfirmationPopup.OrderConfirmDelegate() {
+                ConfirmationPopup.orderDetailsView(getActivity(), list,order,false,new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
                         // nothing to do
@@ -189,11 +215,11 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                /*Log.e("CVCVCBBHGG",""+order.getOrderId());
+                Log.e("CVCVCBBHGG",""+order.getOrderId());
 
                 String updateURL = baseUrl+"api/acct/salesreceipt/update/order-status";
 
-                VolleyPostService.updateOrderStatus(getActivity(),updateURL,Integer.parseInt(order.getOrderId()));*/
+                VolleyPostService.updateOrderStatus(getActivity(),updateURL,Integer.parseInt(order.getOrderId()));
             }
         };
         asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -221,6 +247,27 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
         startActivity(Intent.createChooser(share, "Share Image"));
 
     }
+
+    public static String getTodayDate(Date date){
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US); // Monday 01/01/2016, 11:00 am
+
+        return df.format(date);
+    }
+
+    public static String tomorrowDate(Date todayDate){
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(todayDate);
+        c.add(Calendar.DATE, 1);
+        String daySample = String.valueOf(c.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dayTO = sdf.format(c.getTime());
+
+        return dayTO;
+    }
+
+
 
 
     /**

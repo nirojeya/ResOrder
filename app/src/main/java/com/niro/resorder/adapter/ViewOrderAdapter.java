@@ -41,17 +41,17 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
          final Order order = orderList.get(i);
 
 //        Log.e("orderDate",order.getDate());
-        Log.e("orderStatus",order.getOrderStatus()+"");
+       // Log.e("orderStatus",order.getOrderStatus()+"");
 //        Log.e("orderId",order.getOrderId());
-        Log.e("orderTotal",order.getOrderTotal()+"");
+       // Log.e("orderTotal",order.getOrderTotal()+"");
        // Log.e("orderDate",order.getDate());
 
         viewOrderHolder.orderDate.setText(order.getDate());
 
-        if(order.getOrderStatus()== 0){
+        if(order.getOrderStatus()== 1001){
             viewOrderHolder.orderStatus.setText("Pending..");
         }else{
-            viewOrderHolder.orderStatus.setText("");
+            viewOrderHolder.orderStatus.setText("Delivered");
         }
         viewOrderHolder.orderId.setText(order.getOrderId());
         viewOrderHolder.orderTotal.setText(String.valueOf(order.getOrderTotal()));
@@ -68,6 +68,14 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
 
         if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")){
             viewOrderHolder.orderConfirm.setVisibility(View.VISIBLE);
+
+            if(order.getOrderStatus()== 1001){
+                viewOrderHolder.orderConfirm.setVisibility(View.VISIBLE);
+
+            }else {
+                viewOrderHolder.orderConfirm.setVisibility(View.INVISIBLE);
+
+            }
         }else {
             viewOrderHolder.orderConfirm.setVisibility(View.INVISIBLE);
         }

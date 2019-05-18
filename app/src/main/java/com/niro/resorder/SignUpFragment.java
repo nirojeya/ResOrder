@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.niro.resorder.helper.ToastMessageHelper;
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.service.VolleyPostService;
 
@@ -123,10 +124,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                         signUpButton.setEnabled(true);
 
                         if(!type.equals("error")){
-                            Toast.makeText(getActivity(), "Account create successfully!", Toast.LENGTH_SHORT).show();
+                            ToastMessageHelper.customSuccToast(Objects.requireNonNull(getActivity()),"Account create successfully!");
+                            //Toast.makeText(getActivity(), "Account create successfully!", Toast.LENGTH_SHORT).show();
                             new MainActivity().replaceLoginFragment();
                         }else {
-                            Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                            ToastMessageHelper.customErrToast(Objects.requireNonNull(getActivity()),"Something went wrong!");
+
+                           // Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -138,7 +142,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
                 confirmPassword.setText("");
 
             }else {
-                Toast.makeText(getActivity(), "Password and confirm password not match", Toast.LENGTH_SHORT).show();
+                ToastMessageHelper.customErrToast(getActivity(),"Password and confirm password not match");
+                //Toast.makeText(getActivity(), "Password and confirm password not match", Toast.LENGTH_SHORT).show();
             }
 
         }

@@ -24,7 +24,7 @@ public class OrderConfirmAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        Log.e("DDDDDDDFq1","selectedItemList "+orderDetails.size());
+        //Log.e("DDDDDDDFq1","selectedItemList "+orderDetails.size());
 
         return orderDetails.size();
     }

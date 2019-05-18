@@ -57,12 +57,12 @@ public class ActivityItemSelection extends AppCompatActivity implements ItemSele
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
         */
-                ConfirmationPopup.orderDetailsView(ActivityItemSelection.this, selectedItemList,order, new ConfirmationPopup.OrderConfirmDelegate() {
+                /*ConfirmationPopup.orderDetailsView(ActivityItemSelection.this, selectedItemList,order, new ConfirmationPopup.OrderConfirmDelegate() {
                     @Override
                     public void processOrderConfirm() {
 
                     }
-                });
+                });*/
             }
         });
 
