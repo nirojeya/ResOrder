@@ -92,12 +92,12 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
         switch (category){
             case "Biriyani":
                 if(position == 0){
-                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani); // wrong imgge
+                    holder.itemImage.setImageResource(R.drawable.chicbriyani); // wrong imgge
                 }else if(position == 1){
-                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.muttonbriyani);
 
                 }else if(position == 2){
-                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.eggbiriyanis);
 
                 }else if(position == 3){
                     holder.itemImage.setImageResource(R.drawable.vegbiriyani);
@@ -120,6 +120,26 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
                 }
                 break;
 
+            case "Fish":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.fishcurry);
+                }else if(position == 1){
+                    holder.itemImage.setImageResource(R.drawable.fishpakoda);
+
+                }else if(position == 2){
+                    holder.itemImage.setImageResource(R.drawable.thantoorifish);
+
+                }else if(position == 3){
+                    holder.itemImage.setImageResource(R.drawable.fishfry);
+
+                }
+                break;
+
+            case "Paneer":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.paneer);
+                }break;
+
             case "Fride Rice":
                 if(position == 0){
                     holder.itemImage.setImageResource(R.drawable.friderice);
@@ -137,12 +157,12 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
 
             case "Vegetarian":
                 if(position == 0){
-                    holder.itemImage.setImageResource(R.drawable.chickenbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.dhalmakni);
                 }else if(position == 1){
-                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.biriyani);
 
                 }else if(position == 2){
-                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.yellowrice);
 
                 }else if(position == 3){
                     holder.itemImage.setImageResource(R.drawable.vegbiriyani);
@@ -152,30 +172,30 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
 
             case "Rice":
                 if(position == 0){
-                    holder.itemImage.setImageResource(R.drawable.chickenbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.yellowrice);
                 }else if(position == 1){
-                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.biriyani);
 
                 }else if(position == 2){
-                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.eggbiriyanis);
 
                 }else if(position == 3){
                     holder.itemImage.setImageResource(R.drawable.vegbiriyani);
+
+                }else if(position == 4){
+                    holder.itemImage.setImageResource(R.drawable.salad);
 
                 }
                 break;
 
             case "Ice Cream":
                 if(position == 0){
-                    holder.itemImage.setImageResource(R.drawable.chickenbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.vanila);
                 }else if(position == 1){
-                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+                    holder.itemImage.setImageResource(R.drawable.cocoice);
 
-                }else if(position == 2){
-                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
-
-                }else if(position == 3){
-                    holder.itemImage.setImageResource(R.drawable.vegbiriyani);
+                }else if(position == 2) {
+                    holder.itemImage.setImageResource(R.drawable.stawberyice);
 
                 }
                 break;
