@@ -17,7 +17,7 @@ public class AppSettings {
 
     }
     public static int getUniqueId(Context context){
-        int DEFAULT = 10;
+        int DEFAULT = 100;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
 
