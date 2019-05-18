@@ -478,6 +478,151 @@ public class VolleyPostService {
     /* End POST Order and Order details */
 
 
+    public static void updateOrderStatus(Context ctx, String url , final int orderId){
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("update_order_status",response.toString());
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("respomce_order_err",error.toString());
+                if(error.toString().trim().equalsIgnoreCase("com.android.volley.TimeoutError")) {
+                    // Log.e("respomce_order_err","come error");
+
+                    //OrderHomeFragment.updateNetwork(context, "TimeOut");
+                }
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+
+            @Override
+            public byte[] getBody() {
+                return setOrderStatusParams(orderId);
+            }
+        };
+        // now volley retry policy is 20s
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(20000),
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getmInstance(ctx.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+
+    private static byte[] setOrderStatusParams(int orderId){
+        DecimalFormat df= new DecimalFormat("0.00");
+
+        String clientId = "E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV";
+        String companyId = "bf21636d3f29957e";
+        //int locationId = AppSettings.getLocationId(context);
+
+       // DBHandler dbHandler = DBSingleton.getInstance(context);
+        //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
+
+        JSONObject order = new JSONObject();
+        JSONObject orderDetails;
+
+        String body = null;
+        try{
+            //Here are your parameters:
+
+//            String date = ConversionClass.postServerDateFormat(orderData.getDate());
+
+            order.put("client_id", clientId);
+            order.put("company_id", companyId);
+            order.put("order_id",orderId);
+            order.put("old_order_status","1001");
+            order.put("new_order_status","1002");
+
+
+            /*order.accumulate("temp_order_id", 0);
+            order.accumulate("cashier_id", String.valueOf(orderData.getCashierId()));
+
+            // Log.e("CRCRCRCR","cashier_id "+orderData.getCashierId()+" payment_method "+orderData.getPaymentMethod()+" payment_total "+orderData.getUserPayment());
+
+            //order.accumulate("date", date);
+            order.accumulate("order_status", String.valueOf(orderData.getStatus()));
+
+            order.accumulate("sub_total", Double.parseDouble(df.format(orderData.getSubTotal())));
+
+            order.accumulate("discount_total", Double.parseDouble(df.format(orderData.getDiscountForTotal())));
+            order.accumulate("vat_total", orderData.getVatTotal());
+            order.accumulate("total", Double.parseDouble(df.format(orderData.getTotal())));
+            if(orderData.getCustomerId() != null) {
+                order.accumulate("customer_id", String.valueOf(orderData.getCustomerId()));
+            }else {
+                order.accumulate("customer_id","0");
+            }
+            order.accumulate("payment_method", orderData.getPaymentMethod());
+            order.accumulate("payment_total",Double.parseDouble(df.format(orderData.getUserPayment())));
+            order.accumulate("service_charge",Double.parseDouble(df.format(orderData.getResturantCharge())));
+            order.accumulate("location_id",locationId);
+*/
+
+
+
+            //int row_id = orderDetailsList.size();
+
+
+            /*for(OrderDetails od : orderDetailsList){
+                //boolean isNotExits = dbHandler.isNotExistOrderDetails(String.valueOf(orderData.getId()),od.getItemNumber(),od.getBatchNo(),od.getLocationId());
+                // Log.e("ERRRRR_UP","befor if "+isNotExits);
+
+                // Log.e("ERRRRR_UP", "locationId 1 "+od.getLocationId()+" locationId 2 "+locationId);
+
+
+                if(od.getLocationId() == locationId) {
+
+                    // Log.e("ERRRRR_UP", "locationId "+od.getLocationId()+" num "+od.getItemNumber());
+
+                    orderDetails = new JSONObject();
+
+                    orderDetails.put("row_id", row_id);
+                    orderDetails.put("item_number", od.getItemNumber());
+                    orderDetails.put("bid", Integer.parseInt(od.getBatchNo()));
+                    orderDetails.put("location_id", od.getLocationId());
+                    orderDetails.put("item_price", od.getSales_price()); // discount minus
+                    orderDetails.put("qty", od.getQty());
+                    orderDetails.put("item_discount", od.getDiscount());
+                    orderDetails.put("final_price", Double.parseDouble(df.format(od.getPrice()))); //todo need check if value exit or not
+
+                    order.accumulate("details", orderDetails);
+
+                    row_id++;
+                }
+
+                // index++;
+
+            }
+*/
+            body = order.toString();
+
+            Log.e("ERRRRR_UP",body);
+
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        try{
+            return body.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     private static Map<String, String> setHeaderData(){
         Map<String, String> headers = new HashMap<>();
 

@@ -184,6 +184,17 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
                 openImage(bitmap);
                 return null;
             }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                /*Log.e("CVCVCBBHGG",""+order.getOrderId());
+
+                String updateURL = baseUrl+"api/acct/salesreceipt/update/order-status";
+
+                VolleyPostService.updateOrderStatus(getActivity(),updateURL,Integer.parseInt(order.getOrderId()));*/
+            }
         };
         asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
