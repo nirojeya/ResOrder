@@ -346,7 +346,7 @@ public class VolleyGetService {
 
 
                         if (!object.isNull("order_id")) {
-                            od.setOederId(String.valueOf(object.getInt("order_id")));
+                            od.setOrderId(String.valueOf(object.getInt("order_id")));
                         }
                         if (!odObj.isNull("qty")) {
                             od.setItemQty(odObj.getDouble("qty"));

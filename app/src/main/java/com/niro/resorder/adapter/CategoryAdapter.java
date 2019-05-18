@@ -40,19 +40,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         switch (i){
             case 0:
-                categoryHolder.imageView.setImageResource(R.drawable.burger);
+                categoryHolder.imageView.setImageResource(R.drawable.biriyani);
                 break;
             case 1:
-                categoryHolder.imageView.setImageResource(R.drawable.french);
+                categoryHolder.imageView.setImageResource(R.drawable.juice);
                 break;
             case 2:
-                categoryHolder.imageView.setImageResource(R.drawable.noodles);
+                categoryHolder.imageView.setImageResource(R.drawable.friderice);
                 break;
             case 3:
-                categoryHolder.imageView.setImageResource(R.drawable.salad);
+                categoryHolder.imageView.setImageResource(R.drawable.paneer);
+                break;
+            case 4:
+                categoryHolder.imageView.setImageResource(R.drawable.fish);
+                break;
+            case 5:
+                categoryHolder.imageView.setImageResource(R.drawable.vege);
                 break;
                 default:
-                    categoryHolder.imageView.setImageResource(R.drawable.salad);
+                    categoryHolder.imageView.setImageResource(R.drawable.rice);
 
         }
         categoryHolder.categoryName.setText(categoryList.get(i));

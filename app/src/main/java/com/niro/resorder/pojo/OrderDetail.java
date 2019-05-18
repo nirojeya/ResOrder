@@ -3,11 +3,9 @@ package com.niro.resorder.pojo;
 public class OrderDetail {
 
     private String itemNumber;
-    private String oederId;
+    private String orderId;
     private String itemDesc;
     private double itemQty;
-    private String itemCategory;
-    private String itemSubCategory;
     private double itemPrice;
     private double sellingPrice;
     private int batchNo;
@@ -30,22 +28,6 @@ public class OrderDetail {
 
     public void setItemDesc(String itemDesc) {
         this.itemDesc = itemDesc;
-    }
-
-    public String getItemCategory() {
-        return itemCategory;
-    }
-
-    public void setItemCategory(String itemCategory) {
-        this.itemCategory = itemCategory;
-    }
-
-    public String getItemSubCategory() {
-        return itemSubCategory;
-    }
-
-    public void setItemSubCategory(String itemSubCategory) {
-        this.itemSubCategory = itemSubCategory;
     }
 
     public double getItemPrice() {
@@ -104,12 +86,12 @@ public class OrderDetail {
         this.vatCode = vatCode;
     }
 
-    public String getOederId() {
-        return oederId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOederId(String oederId) {
-        this.oederId = oederId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }
 
