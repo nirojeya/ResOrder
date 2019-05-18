@@ -126,7 +126,7 @@ public class LoginFragment extends Fragment {
                     }else {
                         //Toast.makeText(getActivity(), "Incorrect username or password", Toast.LENGTH_SHORT).show();
                         button.setEnabled(false);
-                        VolleyGetService.syncAllUsers(getActivity(), "http://54.200.81.66:3000/api/auth/users", un, pwd, new VolleyGetService.LoginUserDelegate() {
+                        VolleyGetService.syncAllUsers(getActivity(), "http://prod.kalesystems.com:3000/api/auth/users", un, pwd, new VolleyGetService.LoginUserDelegate() {
                             @Override
                             public void checkValidUser(boolean isValid) {
                                 button.setEnabled(true);

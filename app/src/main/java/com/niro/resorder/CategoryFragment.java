@@ -1,14 +1,11 @@
 package com.niro.resorder;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +40,7 @@ public class CategoryFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private List<String> categoryList;
-    private String baseUrl = "http://54.200.81.66:3000/";
+    private String baseUrl = "http://prod.kalesystems.com:3000/";
 
 
     public CategoryFragment() {

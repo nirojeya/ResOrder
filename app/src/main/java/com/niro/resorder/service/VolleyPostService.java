@@ -16,7 +16,6 @@ import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.singleton.VolleySingleton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,11 +88,9 @@ public class VolleyPostService {
         //String clientId = AppSettings.getClientId(context);
         //String companyId = AppSettings.getCompanyId(context);
 
-        String clientId = "tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX";
-        String companyId = "e23197373bd3ce99";
+        String clientId = "m718ZzVdhmcX4e4CmtLUSruDxc4rr8m6yCFfXXdb";
+        String companyId = "9c1b1de272ae427c";
 
-        //DBHandler dbHandler = DBSingleton.getInstance(context);
-        //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
 
         JSONObject parent = new JSONObject();
         String body = null;
@@ -109,10 +106,10 @@ public class VolleyPostService {
             parent.put("user_id",String.valueOf(AppSettings.getUniqueId(context)));
             //   Log.e("DATA","user_id "+String.valueOf(user.getUserID()));
 
-            parent.put("user_unique_id","62eb0889-7040-42ba-bd44-2aafc2667b0e");
+            parent.put("user_unique_id","ae6ac1f1-b4ea-4b80-ac5c-121b9e3b384a");
             //  Log.e("DATA","user_unique_id "+user.getUserUniqueId());
 
-            parent.put("user_auth","KCkZm1t7j86OaTD0YRQWR1kSY7Fn3kcbLrIGp6FPYHRoXBenrNTAGTaXmiy6iHgS9oDuw2wfZE9");
+            parent.put("user_auth","YBG0AWQJbWDSBgDY5WcwrJ3iGPd0eG74PNwVfFkgyGXk8g8ihUa4BTTp7IIrQ07vqQjXJXYuv3W");
             //  Log.e("DATA","user_auth "+user.getUserAuthId());
 
             parent.put("user_name", ResOrderApp.getUserName());
@@ -491,10 +488,10 @@ public class VolleyPostService {
         String userId = AppSettings.getUniqueId(context);
         String authId = AppSettings.getAuthId(context);
 */
-        headers.put("client_id","tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX");
-        headers.put("company_id","e23197373bd3ce99");
-        headers.put("user_id","62eb0889-7040-42ba-bd44-2aafc2667b0e");
-        headers.put("authorization","KCkZm1t7j86OaTD0YRQWR1kSY7Fn3kcbLrIGp6FPYHRoXBenrNTAGTaXmiy6iHgS9oDuw2wfZE9");
+        headers.put("client_id","E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV");
+        headers.put("company_id","bf21636d3f29957e");
+        headers.put("user_id","626d596e-48a5-45ab-8477-448f9155e6f9");
+        headers.put("authorization","IWRKJkdnF3ZzRtkqpFUp7F1VwQlw22zzxmeO4XpowO4tC70VxBObHYnjuggmy1j4lsQWwxwUyf1");
 
        /* headers.put("client_id",clientId);
         headers.put("company_id",companyId);

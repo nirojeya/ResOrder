@@ -160,7 +160,7 @@ public class VolleyGetService {
 
             @Override
             public void onResponse(JSONObject response) {
-                //Log.e("33333333333"," erankirantaa "  );
+                Log.e("33333333333"," erankirantaa "+response  );
                 try {
 
                     JSONArray jsonArray = response.getJSONArray("categories");
@@ -315,7 +315,7 @@ public class VolleyGetService {
          * Before sync order need to check database by (order id, item number, bid and company id) unique
          * Join tab will show only join tab's sales.
          *
-         * tk */
+         * nj */
 
         context = con;
 
@@ -538,10 +538,10 @@ public class VolleyGetService {
         String userId = AppSettings.getUniqueId(context);
         String authId = AppSettings.getAuthId(context);
 */
-        headers.put("client_id","tfuVDOVyAAI6R2aFMvXT4yVlsiXmalJDtMSVyVoX");
-        headers.put("company_id","e23197373bd3ce99");
-        headers.put("user_id","62eb0889-7040-42ba-bd44-2aafc2667b0e");
-        headers.put("authorization","KCkZm1t7j86OaTD0YRQWR1kSY7Fn3kcbLrIGp6FPYHRoXBenrNTAGTaXmiy6iHgS9oDuw2wfZE9");
+        headers.put("client_id","E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV");
+        headers.put("company_id","bf21636d3f29957e");
+        headers.put("user_id","626d596e-48a5-45ab-8477-448f9155e6f9");
+        headers.put("authorization","IWRKJkdnF3ZzRtkqpFUp7F1VwQlw22zzxmeO4XpowO4tC70VxBObHYnjuggmy1j4lsQWwxwUyf1");
 
        /* headers.put("client_id",clientId);
         headers.put("company_id",companyId);

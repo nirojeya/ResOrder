@@ -110,7 +110,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(viewOrderAdapter);
 
-        VolleyGetService.syncOrderHistory(getActivity(), "http://54.200.81.66:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
+        VolleyGetService.syncOrderHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
             @Override
             public void processSyncOrder(List<Order> orderList) {
                 viewOrder.clear();
@@ -147,7 +147,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
 
     @Override
     public void viewDetailsButtonClick(String orderId) {
-        VolleyGetService.syncOrdersDetails(getActivity(), "http://54.200.81.66:3000/api/acct/salesreceipt/"+orderId, new VolleyGetService.ViewOrderDetailsDelrgate() {
+        VolleyGetService.syncOrdersDetails(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipt/"+orderId, new VolleyGetService.ViewOrderDetailsDelrgate() {
             @Override
             public void processSyncOrderDetails(List<OrderDetail> list) {
                 ConfirmationPopup.orderDetailsView(getActivity(), list, new ConfirmationPopup.OrderConfirmDelegate() {
@@ -163,7 +163,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
     @Override
     public void orderConfirmButtonClick(final Order order) {
         VolleyGetService.syncOrdersDetails(getActivity(),
-                "http://54.200.81.66:3000/api/acct/salesreceipt/"+order.getOrderId(),
+                "http://prod.kalesystems.com:3000/api/acct/salesreceipt/"+order.getOrderId(),
                 new VolleyGetService.ViewOrderDetailsDelrgate() {
             @Override
             public void processSyncOrderDetails(List<OrderDetail> list) {

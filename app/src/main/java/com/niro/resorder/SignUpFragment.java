@@ -1,7 +1,5 @@
 package com.niro.resorder;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,8 +14,6 @@ import com.niro.resorder.helper.Utils;
 import com.niro.resorder.service.VolleyPostService;
 
 import java.util.Objects;
-
-import javax.xml.validation.Validator;
 
 
 /**
@@ -120,7 +116,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener{
 
                 signUpButton.setEnabled(false);
 
-                VolleyPostService.postUser(Objects.requireNonNull(getActivity()), "http://54.200.81.66:3000/api/auth/user", new VolleyPostService.UserSignUpDelegate() {
+                VolleyPostService.postUser(Objects.requireNonNull(getActivity()), "http://prod.kalesystems.com:3000/api/auth/user", new VolleyPostService.UserSignUpDelegate() {
                     @Override
                     public void processRegisterFinished(String type) {
                         clearPojo();

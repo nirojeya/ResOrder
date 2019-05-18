@@ -105,7 +105,7 @@ public class AddItemFragment extends Fragment implements View.OnClickListener{
     }
 
     private void processAddItem(Item item){
-        String  itemURL = "http://54.200.81.66:3000/"+"api/item/item";
+        String  itemURL = "http://prod.kalesystems.com:3000/"+"api/item/item";
 
         VolleyPostService.postItem(Objects.requireNonNull(getActivity()),itemURL,item);
     }

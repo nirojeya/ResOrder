@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoryActivity extends AppCompatActivity {
 
     private List<String> categoryList;
-    private String baseUrl = "http://54.200.81.66:3000/";
+    private String baseUrl = "http://prod.kalesystems.com:3000/";
 
 
     @Override
