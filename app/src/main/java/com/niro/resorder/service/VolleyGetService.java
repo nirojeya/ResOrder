@@ -254,13 +254,18 @@ public class VolleyGetService {
                        // if (!odObj.isNull("cashier_id") && odObj.getString("cashier_id").equals(ResOrderApp.getUserId())) {
 
                             // Sync only 1005
-                            if (!odObj.isNull("order_id")
-                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
+                            if (!odObj.isNull("order_id")) {
 
                                 order.setOrderId(String.valueOf(odObj.getInt("order_id")));
                             }
 
-                            if (!odObj.isNull("created")) {
+                        if (!odObj.isNull("order_status")) {
+
+                            order.setOrderStatus(Integer.parseInt(odObj.getString("order_status")));
+                        }
+
+
+                        if (!odObj.isNull("created")) {
                                 //order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
                                 order.setDate(odObj.getString("created"));
 
@@ -348,8 +353,7 @@ public class VolleyGetService {
                         if (!odObj.isNull("cashier_id") && odObj.getString("cashier_id").equals(ResOrderApp.getUserId())) {
 
                             // Sync only 1005
-                            if (!odObj.isNull("order_id")
-                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
+                            if (!odObj.isNull("order_id")) {
 
                                 order.setOrderId(String.valueOf(odObj.getInt("order_id")));
                             }
@@ -358,6 +362,11 @@ public class VolleyGetService {
                                 //order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
                                 order.setDate(odObj.getString("created"));
 
+                            }
+
+                            if (!odObj.isNull("order_status")) {
+
+                                order.setOrderStatus(Integer.parseInt(odObj.getString("order_status")));
                             }
 
                             /*if (!odObj.isNull("payment_method")) {

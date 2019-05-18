@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.niro.resorder.pojo.Order;
 import com.niro.resorder.pojo.OrderDetail;
 import com.niro.resorder.popup.ConfirmationPopup;
 import com.niro.resorder.service.VolleyGetService;
+import com.niro.resorder.service.VolleyPostService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -55,7 +57,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
 
     private OnFragmentInteractionListener mListener;
 
-    private String baseUrl = "http://54.200.81.66:3000/";
+    private String baseUrl = "http://prod.kalesystems.com:3000/";
 
 
     private ViewOrderAdapter viewOrderAdapter;
@@ -133,7 +135,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
             });
 
         }else {
-            VolleyGetService.syncOrderUserHistory(getActivity(), "http://prod.kalesystems.com:3000api/acct/salesreceipts?end_date="+endDate+"&start_date="+startDate+"&", new VolleyGetService.ViewOrderDelegate() {
+            VolleyGetService.syncOrderUserHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts?end_date="+endDate+"&start_date="+startDate+"&", new VolleyGetService.ViewOrderDelegate() {
                 @Override
                 public void processSyncOrder(List<Order> orderList) {
                     viewOrder.clear();
@@ -213,11 +215,11 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                /*Log.e("CVCVCBBHGG",""+order.getOrderId());
+                Log.e("CVCVCBBHGG",""+order.getOrderId());
 
                 String updateURL = baseUrl+"api/acct/salesreceipt/update/order-status";
 
-                VolleyPostService.updateOrderStatus(getActivity(),updateURL,Integer.parseInt(order.getOrderId()));*/
+                VolleyPostService.updateOrderStatus(getActivity(),updateURL,Integer.parseInt(order.getOrderId()));
             }
         };
         asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
