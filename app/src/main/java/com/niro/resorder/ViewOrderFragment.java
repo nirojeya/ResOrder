@@ -26,8 +26,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -54,6 +59,10 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
 
 
     private ViewOrderAdapter viewOrderAdapter;
+
+    private static String startDate = getTodayDate(new Date(System.currentTimeMillis()));
+    private static String endDate = tomorrowDate(new Date(System.currentTimeMillis()));//getTomorrowDate
+
 
     public ViewOrderFragment() {
         // Required empty public constructor
@@ -114,7 +123,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
 
         if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")){
 
-            VolleyGetService.syncOrderHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
+            VolleyGetService.syncOrderHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts?end_date="+endDate+"&start_date="+startDate+"&", new VolleyGetService.ViewOrderDelegate() {
                 @Override
                 public void processSyncOrder(List<Order> orderList) {
                     viewOrder.clear();
@@ -124,7 +133,7 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
             });
 
         }else {
-            VolleyGetService.syncOrderUserHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
+            VolleyGetService.syncOrderUserHistory(getActivity(), "http://prod.kalesystems.com:3000api/acct/salesreceipts?end_date="+endDate+"&start_date="+startDate+"&", new VolleyGetService.ViewOrderDelegate() {
                 @Override
                 public void processSyncOrder(List<Order> orderList) {
                     viewOrder.clear();
@@ -236,6 +245,27 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
         startActivity(Intent.createChooser(share, "Share Image"));
 
     }
+
+    public static String getTodayDate(Date date){
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US); // Monday 01/01/2016, 11:00 am
+
+        return df.format(date);
+    }
+
+    public static String tomorrowDate(Date todayDate){
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(todayDate);
+        c.add(Calendar.DATE, 1);
+        String daySample = String.valueOf(c.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dayTO = sdf.format(c.getTime());
+
+        return dayTO;
+    }
+
+
 
 
     /**
