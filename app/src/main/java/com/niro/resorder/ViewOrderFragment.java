@@ -110,14 +110,29 @@ public class ViewOrderFragment extends Fragment implements ViewOrderAdapter.View
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(viewOrderAdapter);
 
-        VolleyGetService.syncOrderHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
-            @Override
-            public void processSyncOrder(List<Order> orderList) {
-                viewOrder.clear();
-                viewOrder.addAll(orderList);
-                viewOrderAdapter.notifyDataSetChanged();
-            }
-        });
+
+
+        if(ResOrderApp.getUserDesignation().equalsIgnoreCase("Admin")){
+
+            VolleyGetService.syncOrderHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
+                @Override
+                public void processSyncOrder(List<Order> orderList) {
+                    viewOrder.clear();
+                    viewOrder.addAll(orderList);
+                    viewOrderAdapter.notifyDataSetChanged();
+                }
+            });
+
+        }else {
+            VolleyGetService.syncOrderUserHistory(getActivity(), "http://prod.kalesystems.com:3000/api/acct/salesreceipts", new VolleyGetService.ViewOrderDelegate() {
+                @Override
+                public void processSyncOrder(List<Order> orderList) {
+                    viewOrder.clear();
+                    viewOrder.addAll(orderList);
+                    viewOrderAdapter.notifyDataSetChanged();
+                }
+            });
+        }
 
     }
 

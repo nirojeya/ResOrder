@@ -251,7 +251,101 @@ public class VolleyGetService {
 
                         Order order = new Order();
 
-                        if (!odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
+                       // if (!odObj.isNull("cashier_id") && odObj.getString("cashier_id").equals(ResOrderApp.getUserId())) {
+
+                            // Sync only 1005
+                            if (!odObj.isNull("order_id")
+                                    && !odObj.isNull("order_status") && odObj.getString("order_status").equals("1001")) {
+
+                                order.setOrderId(String.valueOf(odObj.getInt("order_id")));
+                            }
+
+                            if (!odObj.isNull("created")) {
+                                //order.setDate(ReadableDateFormat.UTCToLocalTime(odObj.getString("created")));
+                                order.setDate(odObj.getString("created"));
+
+                            }
+
+                            /*if (!odObj.isNull("payment_method")) {
+                                order.setPaymentMethod(odObj.getInt("payment_method"));
+                            }*/
+
+                            /*if (!odObj.isNull("discount_total")) {
+                                order.setDiscountTotal(odObj.getDouble("discount_total"));
+                            }*/
+
+                            if (!odObj.isNull("total")) {
+                                order.setOrderTotal(odObj.getDouble("total"));
+                            }
+
+
+
+
+                            //syncAllOrderAndOrderDetails(context,baseURL+"api/acct/salesreceipt/"+order.getId());
+
+                       // }
+
+                        orderList.add(order);
+                    }
+
+
+
+                    viewOrderDelegate.processSyncOrder(orderList);
+
+
+                } catch (JSONException e){
+                    e.printStackTrace();
+                    Log.e("JSONERR",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Log.e("RES_ERR",error.toString());
+            }
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+        };
+
+        VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
+    public static void syncOrderUserHistory(Context con, String url,ViewOrderDelegate vod) {
+        /*
+         * Server tab (Sign_up) only need to sync all order.
+         * This function will call by server tab.
+         * So, no nee to check COMPANY_ID.
+         * Before sync order need to check database by (order id and company id) unique
+         * Join tab will show only join tab's sales.
+         *
+         * tk */
+
+        context = con;
+        viewOrderDelegate = vod;
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("okGood",response.toString());
+
+
+
+                try {
+
+                    JSONArray jsonArray = response.getJSONArray("salesreceipt");
+
+                    List<Order> orderList = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject odObj = jsonArray.getJSONObject(i);
+
+                        Order order = new Order();
+
+                        if (!odObj.isNull("cashier_id") && odObj.getString("cashier_id").equals(ResOrderApp.getUserId())) {
 
                             // Sync only 1005
                             if (!odObj.isNull("order_id")
@@ -313,6 +407,7 @@ public class VolleyGetService {
 
         VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
+
 
     public static void syncOrdersDetails(Context con,String url,ViewOrderDetailsDelrgate r) {
         viewOrderDetailsDelrgate = r;
