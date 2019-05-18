@@ -386,9 +386,11 @@ public class VolleyGetService {
 
                             //syncAllOrderAndOrderDetails(context,baseURL+"api/acct/salesreceipt/"+order.getId());
 
+                            orderList.add(order);
+
+
                         }
 
-                        orderList.add(order);
                     }
 
 
