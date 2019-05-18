@@ -47,7 +47,12 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
        // Log.e("orderDate",order.getDate());
 
         viewOrderHolder.orderDate.setText(order.getDate());
-        viewOrderHolder.orderStatus.setText(String.valueOf(order.getOrderStatus()));
+
+        if(order.getOrderStatus()== 0){
+            viewOrderHolder.orderStatus.setText("Pending..");
+        }else{
+            viewOrderHolder.orderStatus.setText("");
+        }
         viewOrderHolder.orderId.setText(order.getOrderId());
         viewOrderHolder.orderTotal.setText(String.valueOf(order.getOrderTotal()));
 

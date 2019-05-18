@@ -246,11 +246,6 @@ public class ItemSelectionFragment extends Fragment implements ItemSelectionAdap
 
     private int calOrderQty(){
         return selectedItemList.size();
-        /*for (OrderDetail orderDetail:selectedItemList){
-            orderQty= orderQty + orderDetail.getItemQty();
-
-            //Log.e("DDDDDDDF","orderQty "+orderQty+" item.getItemQty() "+item.getItemQty());
-        }*/
 
     }
 
