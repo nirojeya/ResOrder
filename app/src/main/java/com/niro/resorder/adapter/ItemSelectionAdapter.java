@@ -45,7 +45,7 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
         holder.itemDesc.setText(item.getItemDesc());
         holder.itemPrice.setText(df.format(item.getItemPrice()));
 
-        switch (position){
+        /*switch (position){
             case 0:
                 holder.itemImage.setImageResource(R.drawable.burger);
                 break;
@@ -60,7 +60,9 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
                 break;
             default:
                 holder.itemImage.setImageResource(R.drawable.salad);
-        }
+        }*/
+
+        setCategoryImages(holder,item.getItemCategory(),position);
 
         //holder.itemImage.setImageResource(R.drawable.salad);
 
@@ -83,6 +85,106 @@ public class ItemSelectionAdapter extends RecyclerView.Adapter<ItemSelectionAdap
     @Override
     public int getItemCount() {
         return itemList.size();
+    }
+
+    private void setCategoryImages(ItemSelectViewHolder holder,String category,int position){
+
+        switch (category){
+            case "Biriyani":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani); // wrong imgge
+                }else if(position == 1){
+                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+
+                }else if(position == 2){
+                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
+
+                }else if(position == 3){
+                    holder.itemImage.setImageResource(R.drawable.vegbiriyani);
+
+                }
+                break;
+
+            case "Juice":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.orangejuice);
+                }else if(position == 1){
+                    holder.itemImage.setImageResource(R.drawable.applejuice);
+
+                }else if(position == 2){
+                    holder.itemImage.setImageResource(R.drawable.mangojuice);
+
+                }else if(position == 3){
+                    holder.itemImage.setImageResource(R.drawable.pineapplejuice);
+
+                }
+                break;
+
+            case "Fride Rice":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.friderice);
+                }else if(position == 1){
+                    holder.itemImage.setImageResource(R.drawable.friderice);
+
+                }else if(position == 2){
+                    holder.itemImage.setImageResource(R.drawable.friderice);
+
+                }else if(position == 3){
+                    holder.itemImage.setImageResource(R.drawable.friderice);
+
+                }
+                break;
+
+            case "Vegetarian":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.chickenbiriyani);
+                }else if(position == 1){
+                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+
+                }else if(position == 2){
+                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
+
+                }else if(position == 3){
+                    holder.itemImage.setImageResource(R.drawable.vegbiriyani);
+
+                }
+                break;
+
+            case "Rice":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.chickenbiriyani);
+                }else if(position == 1){
+                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+
+                }else if(position == 2){
+                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
+
+                }else if(position == 3){
+                    holder.itemImage.setImageResource(R.drawable.vegbiriyani);
+
+                }
+                break;
+
+            case "Ice Cream":
+                if(position == 0){
+                    holder.itemImage.setImageResource(R.drawable.chickenbiriyani);
+                }else if(position == 1){
+                    holder.itemImage.setImageResource(R.drawable.muttonbiriyani);
+
+                }else if(position == 2){
+                    holder.itemImage.setImageResource(R.drawable.eggbiriyani);
+
+                }else if(position == 3){
+                    holder.itemImage.setImageResource(R.drawable.vegbiriyani);
+
+                }
+                break;
+
+
+
+
+
+        }
     }
 
     class ItemSelectViewHolder extends RecyclerView.ViewHolder{
