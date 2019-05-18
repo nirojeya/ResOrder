@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,10 +31,13 @@ public class VolleyGetService {
     private static CategoryDelegate categoryDelegate;
     private static ViewOrderDelegate viewOrderDelegate;
     private static ViewOrderDetailsDelrgate viewOrderDetailsDelrgate;
+    private static SearchItemDelegate searchItemDelegate;
 
     private static Context context;
     private static List<String> categoryList;
     private static List<Item> itemInvList;
+
+    private static DecimalFormat df = new DecimalFormat("0.00###");
 
 
     public interface ItemDelegate{
@@ -54,6 +58,10 @@ public class VolleyGetService {
 
     public interface LoginUserDelegate{
         void checkValidUser(boolean isValid);
+    }
+
+    public interface SearchItemDelegate{
+        void itemFromServerResult(List<Item> itemList);
     }
 
 
@@ -526,6 +534,187 @@ public class VolleyGetService {
 
         VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
+
+
+    public static void syncItem(Context con,String url,SearchItemDelegate s) {
+        //itemList.clear();
+        final List<Item> searchList = new ArrayList<>();
+        context = con;
+
+        searchItemDelegate = s;
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("okfeffsdsdsgsgg123",response.toString());
+
+
+                try {
+
+
+                    JSONArray jsonArray = response.getJSONArray("item");
+
+                    /*if(itemList.size() > 0){
+                        itemList.clear();
+
+                    }*/
+
+
+
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        Item item = new Item();
+
+                        //Log.e("COUNTCCC","come");
+
+//                if(object.getInt("id") >= 0){
+//
+//                }
+                        /*if (!object.isNull("client_id") &&
+                                object.getString("client_id").equalsIgnoreCase(AppSettings.getClientId(context))) {
+                        */    //Log.e("COUNTCCC","also come "+object.getString("item_number"));
+
+                        if (!object.isNull("category")) {
+                            item.setItemCategory(object.getString("category"));
+                        }
+                        /*if (!object.isNull("max_discount_type")) {
+                            item.setMaxDiscountType(object.getInt("max_discount_type"));
+                            //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                        }*/
+                        if (!object.isNull("item_desc")) {
+                            item.setItemDesc(object.getString("item_desc"));
+                        }
+
+                        if (!object.isNull("item_number")) {
+                            item.setItemNumber(object.getString("item_number"));
+
+                        }
+                        /*if (!object.isNull("default_discount")) {
+                            item.setDefaultDiscount(object.getDouble("default_discount"));
+                        }
+                        if (!object.isNull("max_discount")) {
+                            item.setMaxDiscount(object.getDouble("max_discount"));
+                            //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                        }*/
+                        if (!object.isNull("subcategory")) {
+                            item.setItemSubCategory(object.getString("subcategory"));
+                        }
+                        /*if(!object.isNull("type")){
+                            if(object.getInt("type") == 0){
+                                item.setProductType("p");
+                            }else if(object.getInt("type") == 1){
+                                item.setProductType("M");
+                            }
+                        }
+                        if(!object.isNull("track_inventory")){
+                            item.setItemTrackLevel(object.getString("track_inventory"));
+                        }
+                        if (!object.isNull("uom")) {
+                            item.setUom(object.getString("uom"));
+                        }
+                        if (!object.isNull("default_discount_type")) {
+                            item.setDefaultDiscountType(object.getInt("default_discount_type"));
+                            //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                        }*/
+                        if (!object.isNull("selling_price")) {
+                            //Log.e("XXXXCCCJCLO",""+object.getDouble("selling_price"));
+                            item.setItemPrice(Double.parseDouble(df.format(object.getDouble("selling_price"))));
+                            //Log.e("XXXXCCCJCLO",""+item.getItemPrice());
+
+                        }
+                        if (!object.isNull("bid")) {
+                            item.setBid(object.getInt("bid"));
+                        }
+                        /*if (!object.isNull("vat_code")) {
+                            item.setVatCode(String.valueOf(object.getInt("vat_code")));
+                        }
+
+                        if (!object.isNull("bid_text")) {
+                            item.setBidText(object.getString("bid_text"));
+                        }*/
+                        if (!object.isNull("qoh")) {
+                            item.setItemQty(object.getDouble("qoh"));
+                        }
+                        if (!object.isNull("item_number")) {
+                            item.setItemNumber(object.getString("item_number"));
+                        }
+                        /*if (!object.isNull("bid_exp_date")) {
+                            item.setBidExpDate(ReadableDateFormat.UTCToLocalTime(object.getString("bid_exp_date")));
+                        }
+                            *//*if (!object.isNull("location_desc")) {
+                                item.setLocation(object.getString("location_desc"));
+                            }
+*//*
+                        if (!object.isNull("location_id")) {
+                            item.setLocationid(Integer.parseInt(object.getString("location_id")));
+                        }
+
+                        if (!object.isNull("purchase_price")) {
+                            item.setPurchasePrice(Double.parseDouble(df.format(object.getDouble("purchase_price"))));
+                        }
+                        if (!object.isNull("track_inventory")) {
+                            item.setItemTrackLevel(object.getString("track_inventory"));
+                        }
+
+                        if (!object.isNull("supplier_id")) {
+                            item.setSupplierId(object.getString("supplier_id"));
+                        }
+
+                        if (!object.isNull("reorder_qty")) {
+                            item.setItemReorderQuantity(object.getDouble("reorder_qty"));
+                            //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                        }
+                        if (!object.isNull("bid_rcd_qty")) {
+                            item.setItemPurchaseQty(object.getDouble("bid_rcd_qty"));
+                            //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                        }*/
+                        if (!object.isNull("bid")) {
+                            item.setBid(object.getInt("bid"));
+                            //Log.e("MAX_DIS",""+object.getDouble("max_discount"));
+                        }
+
+
+                            /*if(itemList.size() > 0){
+                                itemList.clear();
+                            }*/
+
+                        //itemList.add(item);
+
+                        searchList.add(item);
+                        // }
+                    }
+
+                    searchItemDelegate.itemFromServerResult(searchList);
+                    //storeItemsDB(clQueue,callingFrom);
+
+                } catch (JSONException e){
+                    e.printStackTrace();
+                    Log.e("JSONERR",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("RES_ERR",error.toString());
+                if(error.toString().trim().equalsIgnoreCase("com.android.volley.TimeoutError") ||
+                        error.toString().trim().equalsIgnoreCase("com.android.volley.NoConnectionError: java.net.SocketException: Network is unreachable")) {
+                    // Log.e("respomce_order_err","come error");
+                    //OrderHomeFragment.updateNetwork(context, "TimeOut");
+                }
+            }
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+        };
+
+        VolleySingleton.getmInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+
 
 
 

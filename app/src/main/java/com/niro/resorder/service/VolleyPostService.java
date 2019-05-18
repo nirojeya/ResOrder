@@ -572,6 +572,106 @@ public class VolleyPostService {
     }
 
 
+    public static void postInventoryItem(Context ctx,String url , final Item item){
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("respomce_inv",response.toString());
+                /*if(response.toString().contains("{")){
+                    Item i = ItemsJSONParser.sendItem(ctx,response.toString());
+
+                    Log.e("respomce_inven"," num "+i.getItemNumber()+" bid "+i.getBid());
+                    //ItemsJSONParser.sendItem(context,i);
+                    db.updateItemSyncStatus(i);
+
+
+                }*/
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("respomce_inv_err",error.toString());
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return setHeaderData();
+            }
+
+            @Override
+            public byte[] getBody() {
+                return setInventoryParams(item);
+            }
+        };
+
+        // now volley retry policy is 20s
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(20000),
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getmInstance(ctx.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+
+    private static byte[] setInventoryParams(Item item){
+
+        //String clientId = AppSettings.getClientId(context);
+        //String companyId = AppSettings.getCompanyId(context);
+        //DBHandler dbHandler = DBSingleton.getInstance(context);
+        //User user = dbHandler.getUserAuth(AppSettings.getUserSession(context));
+
+        String clientId = "E7kctRDMnb5JRyoW5B4rRMH797uz5zNmQOFfVQLV";
+        String companyId = "bf21636d3f29957e";
+
+
+        JSONObject params = new JSONObject();
+        String body = null;
+        try{
+            //Here are your parameters:
+
+            //Log.e("SEND_INV","date "+item.getBidExpDate()+" con "+date);
+
+            //params.put("uom", item.getUom());
+            params.put("client_id", clientId);
+            params.put("company_id", companyId);
+            params.put("item_number", item.getItemNumber());
+            params.put("bid", item.getBid());
+            params.put("qoh", item.getItemQty());
+            params.put("qoh_count", item.getItemQty());
+            params.put("reorder_qty", 0.0);
+            //params.put("track_inventory", item.getItemTrackLevel());
+            params.put("location_id",1);
+            params.put("location_desc","Main store");
+            params.put("purchase_price", 0.0);
+            params.put("avg_cost", 0.0); // todo avg cost
+            params.put("bid_text", "n/l");
+            params.put("bid_exp_date", "n/l"); // this is convertion date
+            params.put("bid_rcd_qty", item.getItemQty());
+            params.put("supplier_id", "1");
+
+            body = params.toString();
+
+            Log.e("SEND_INV",body);
+
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        try{
+            return body.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
     private static Map<String, String> setHeaderData(){
         Map<String, String> headers = new HashMap<>();
 

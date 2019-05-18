@@ -1,10 +1,14 @@
 package com.niro.resorder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +17,11 @@ import android.widget.EditText;
 
 import com.niro.resorder.helper.Utils;
 import com.niro.resorder.pojo.Item;
+import com.niro.resorder.service.VolleyGetService;
 import com.niro.resorder.service.VolleyPostService;
+import com.niro.resorder.service.VolleyUpdateService;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -26,7 +33,7 @@ import java.util.Objects;
  * Use the {@link AddItemFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddItemFragment extends Fragment implements View.OnClickListener{
+public class AddItemFragment extends Fragment implements View.OnClickListener,VolleyGetService.SearchItemDelegate{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,6 +47,8 @@ public class AddItemFragment extends Fragment implements View.OnClickListener{
     private EditText itemSubCategory;
 
     private Button buttonAddItem;
+
+    private int bid;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -100,15 +109,61 @@ public class AddItemFragment extends Fragment implements View.OnClickListener{
 
         buttonAddItem.setOnClickListener(this);
 
-
+        itemNumberTextWacther();
 
     }
+
+    private void itemNumberTextWacther(){
+        itemNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchItemInServer(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void searchItemInServer(final CharSequence s){
+        @SuppressLint("StaticFieldLeak") AsyncTask search = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                String url =  "http://prod.kalesystems.com:3000/"+ "api/inv/item/inventory/" + s;
+
+                VolleyGetService.syncItem(getActivity(),url,AddItemFragment.this);
+
+                return null;
+            }
+        };
+
+        search.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
 
     private void processAddItem(Item item){
         String  itemURL = "http://prod.kalesystems.com:3000/"+"api/item/item";
 
         VolleyPostService.postItem(Objects.requireNonNull(getActivity()),itemURL,item);
     }
+
+    private void processUpdateItem(Item item){
+
+        String itemURL = "http://prod.kalesystems.com:3000/" + "api/item/item";
+        String inventoryURL = "http://prod.kalesystems.com:3000/" + "api/inv/item/inventory";
+
+        VolleyUpdateService.updateItem(Objects.requireNonNull(getActivity()),itemURL,item);
+        VolleyPostService.postInventoryItem(getActivity(),inventoryURL,item);
+
+    }
+
 
     private void processClear(){
         itemNumber.setText("");
@@ -117,6 +172,16 @@ public class AddItemFragment extends Fragment implements View.OnClickListener{
         itemPrice.setText("");
         itemCategory.setText("");
         itemSubCategory.setText("");
+    }
+
+    private void processFillData(Item item){
+        itemNumber.setText(item.getItemNumber());
+        itemName.setText(item.getItemDesc());
+        itemQty.setText(String.valueOf(item.getItemQty()));
+        itemPrice.setText(String.valueOf(item.getItemPrice()));
+        itemCategory.setText(item.getItemCategory());
+        itemSubCategory.setText(item.getItemSubCategory());
+        bid = item.getBid();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -145,6 +210,17 @@ public class AddItemFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+
+        if(buttonAddItem.getText().toString().equalsIgnoreCase("Add item")){
+            processGetInputForAddItem();
+        }else {
+            processGetInputForUpdateItem();
+        }
+
+
+    }
+
+    private void processGetInputForAddItem(){
         if(Utils.checkNotNullEditText(itemNumber) && Utils.checkNotNullEditText(itemName)
                 && Utils.checkNotNullEditText(itemQty) && Utils.checkNotNullEditText(itemPrice)){
 
@@ -184,7 +260,65 @@ public class AddItemFragment extends Fragment implements View.OnClickListener{
             processClear();
         }
 
+    }
 
+    private void processGetInputForUpdateItem(){
+        if(Utils.checkNotNullEditText(itemNumber) && Utils.checkNotNullEditText(itemName)
+                && Utils.checkNotNullEditText(itemQty) && Utils.checkNotNullEditText(itemPrice)){
+
+            Item item;
+
+
+            String itemNo,itemDesc,itemCat,itemSubCat;
+            double itemQtatity,itemPcs;
+
+
+            itemNo = Utils.getInput(itemNumber);
+            itemDesc = Utils.getInput(itemName);
+            itemQtatity = Double.parseDouble(Utils.getInput(itemQty));
+            itemPcs = Double.parseDouble(Utils.getInput(itemPrice));
+
+            if(Utils.checkNotNullEditText(itemCategory)){
+                itemCat = Utils.getInput(itemCategory);
+            }else {
+                itemCat = "Others";
+            }
+
+            if(Utils.checkNotNullEditText(itemSubCategory)){
+                itemSubCat = Utils.getInput(itemSubCategory);
+            }else {
+                itemSubCat = "Others";
+            }
+
+            item = new Item();
+            item.setItemNumber(itemNo);
+            item.setItemDesc(itemDesc);
+            item.setItemQty(itemQtatity);
+            item.setItemPrice(itemPcs);
+            item.setItemCategory(itemCat);
+            item.setItemSubCategory(itemSubCat);
+            item.setBid(bid);
+
+            processUpdateItem(item);
+            processClear();
+        }
+
+    }
+
+
+
+
+    @Override
+    public void itemFromServerResult(List<Item> itemList) {
+        if(itemList.size() > 0){
+            buttonAddItem.setText("Update item");
+            for(Item item : itemList){
+                processFillData(item);
+            }
+        }else {
+            buttonAddItem.setText("Add item");
+
+        }
     }
 
     /**
