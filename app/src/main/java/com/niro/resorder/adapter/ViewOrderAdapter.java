@@ -41,9 +41,9 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
          final Order order = orderList.get(i);
 
 //        Log.e("orderDate",order.getDate());
-        Log.e("orderStatus",order.getOrderStatus()+"");
+       // Log.e("orderStatus",order.getOrderStatus()+"");
 //        Log.e("orderId",order.getOrderId());
-        Log.e("orderTotal",order.getOrderTotal()+"");
+       // Log.e("orderTotal",order.getOrderTotal()+"");
        // Log.e("orderDate",order.getDate());
 
         viewOrderHolder.orderDate.setText(order.getDate());
