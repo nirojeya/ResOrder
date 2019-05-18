@@ -122,7 +122,9 @@ public class AddItemFragment extends Fragment implements View.OnClickListener,Vo
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchItemInServer(charSequence);
+                if(charSequence.length() > 0) {
+                    searchItemInServer(charSequence);
+                }
             }
 
             @Override
@@ -175,7 +177,7 @@ public class AddItemFragment extends Fragment implements View.OnClickListener,Vo
     }
 
     private void processFillData(Item item){
-        itemNumber.setText(item.getItemNumber());
+        //itemNumber.setText(item.getItemNumber());
         itemName.setText(item.getItemDesc());
         itemQty.setText(String.valueOf(item.getItemQty()));
         itemPrice.setText(String.valueOf(item.getItemPrice()));
